@@ -1,0 +1,5024 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>每天30分钟 중국어</title>
+  <style>
+:root {
+  --bg: #faf7f2;
+  --panel: #ffffff;
+  --text: #2b2623;
+  --muted: #7a716a;
+  --accent: #c8102e;
+  --accent-soft: #fbe9ec;
+  --good: #2e7d32;
+  --bad: #c62828;
+  --line: #e7e0d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1b1816;
+    --panel: #26221f;
+    --text: #f2ece6;
+    --muted: #a39a92;
+    --accent: #ff5a6e;
+    --accent-soft: #3a2427;
+    --good: #66bb6a;
+    --bad: #ef5350;
+    --line: #3a3430;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1b1816; --panel: #26221f; --text: #f2ece6; --muted: #a39a92;
+  --accent: #ff5a6e; --accent-soft: #3a2427; --good: #66bb6a; --bad: #ef5350; --line: #3a3430;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Noto Sans KR", "Noto Sans SC", sans-serif;
+  line-height: 1.5;
+}
+header {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px 16px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+h1 { margin: 0; font-size: 1.25rem; color: var(--accent); }
+h1 small { color: var(--muted); font-weight: 400; font-size: 0.8rem; }
+nav { display: flex; gap: 4px; }
+nav button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+nav button.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+main { max-width: 760px; margin: 0 auto; padding: 8px 16px 48px; }
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.center { text-align: center; }
+h2 { margin: 0 0 8px; font-size: 1.15rem; }
+.hint { color: var(--muted); font-size: 0.9rem; margin: 0 0 12px; }
+.muted { color: var(--muted); }
+.stage { color: var(--accent); font-weight: 600; font-size: 0.85rem; }
+.plan { padding-left: 20px; margin: 12px 0; }
+.plan li { margin: 4px 0; }
+.stats-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 0; }
+.stat { flex: 1 1 110px; background: var(--bg); border-radius: 12px; padding: 10px 12px; text-align: center; }
+.stat b { display: block; font-size: 1.4rem; color: var(--accent); }
+.steps { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.dot { font-size: 0.75rem; padding: 3px 10px; border: 0; border-radius: 999px; background: var(--bg); color: var(--muted); cursor: pointer; }
+.dot:hover:not(:disabled) { outline: 2px solid var(--accent); }
+.dot.done { background: var(--accent-soft); color: var(--accent); }
+.dot.done::before { content: '✓ '; }
+.dot.now { background: var(--accent); color: #fff; }
+
+/* 눌러서 보기 */
+.rv-btn { font-size: 0.8rem; padding: 3px 10px; margin: 6px 6px 0 0; border-style: dashed; color: var(--muted); border-radius: 999px; }
+.rv-btn::after { content: ' ▾'; }
+.rv-btn.on { color: var(--accent); border-color: var(--accent); border-style: solid; }
+.rv-btn.on::after { content: ' ▴'; }
+.rv-body { margin-top: 4px; }
+.rv-base.ko.big { font-size: 1.2rem; }
+button {
+  font: inherit;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:disabled { opacity: 0.6; cursor: default; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+button.good { border-color: var(--good); color: var(--good); }
+button.bad { border-color: var(--bad); color: var(--bad); }
+button.icon { padding: 4px 10px; }
+.row { display: flex; gap: 10px; justify-content: center; margin: 14px 0 0; flex-wrap: wrap; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.card {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+.card.big { padding: 28px 16px; margin-bottom: 8px; min-height: 140px; }
+.hanzi { font-size: 2rem; font-weight: 600; letter-spacing: 0.05em; }
+.hanzi.sm { font-size: 1.4rem; }
+.py { color: var(--accent); font-size: 0.95rem; }
+.ko { color: var(--muted); font-size: 0.95rem; }
+.ko.big { color: var(--text); font-size: 1.5rem; }
+.opts { display: grid; gap: 8px; }
+.opt { text-align: left; font-size: 1.05rem; }
+.opt.right { background: var(--good); border-color: var(--good); color: #fff; }
+.opt.wrong { background: var(--bad); border-color: var(--bad); color: #fff; }
+.line {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.line .sp { color: var(--accent); width: 1.5em; }
+.line .ctl { display: flex; gap: 6px; }
+.mic-result { grid-column: 2 / 4; font-size: 0.85rem; color: var(--muted); }
+.grammar { margin-bottom: 18px; }
+.grammar h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.example { padding: 6px 0 6px 12px; border-left: 3px solid var(--accent-soft); margin: 8px 0; }
+.cells { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 4px; margin-top: 10px; }
+.cell { font-size: 0.7rem; text-align: center; padding: 6px 0; border-radius: 6px; background: var(--bg); color: var(--muted); }
+.cell.done { background: var(--accent-soft); color: var(--accent); }
+.cell.now { background: var(--accent); color: #fff; font-weight: 700; }
+.stage-item { padding: 8px 0; border-bottom: 1px solid var(--line); }
+.stage-item:last-child { border-bottom: 0; }
+code { background: var(--bg); padding: 1px 6px; border-radius: 6px; }
+.small { font-size: 0.8rem; }
+
+/* 진척률 */
+.prog-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.prog-pct { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.bar { height: 12px; background: var(--bg); border-radius: 999px; overflow: hidden; margin-bottom: 8px; }
+.bar > div { height: 100%; background: var(--accent); border-radius: 999px; min-width: 0; transition: width 0.3s; }
+
+/* 이전 / 현재 / 다음 차시 */
+.lessons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.lesson {
+  display: flex; flex-direction: column; gap: 2px; text-align: left;
+  padding: 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel);
+}
+.lesson .lab { font-size: 0.75rem; color: var(--muted); }
+.lesson b { font-size: 1.05rem; }
+.lesson.now { border-color: var(--accent); background: var(--accent-soft); }
+.lesson.off { opacity: 0.45; border-style: dashed; }
+@media (max-width: 560px) { .lessons { grid-template-columns: 1fr; } }
+
+/* 차시(주차) 화면 */
+.days { list-style: none; padding: 0; margin: 12px 0; }
+.day {
+  display: grid; grid-template-columns: 52px 1fr auto; gap: 8px; align-items: center;
+  padding: 8px 10px; border-radius: 10px; margin-bottom: 4px;
+}
+.day .dn { color: var(--muted); font-size: 0.85rem; }
+.day.done .dn { color: var(--good); }
+.day.now { background: var(--accent-soft); }
+
+/* 로드맵 칸 (버튼) */
+button.cell { border: 0; padding: 6px 0; border-radius: 6px; cursor: pointer; }
+button.cell:hover { outline: 2px solid var(--accent); }
+
+/* 녹음 */
+button.rec { white-space: nowrap; }
+button.recording { background: var(--bad); border-color: var(--bad); color: #fff; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.6; } }
+.recs { grid-column: 2 / 4; }
+.rec { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.rec audio { height: 34px; max-width: 100%; }
+a.icon.dl {
+  text-decoration: none; color: var(--text); border: 1px solid var(--line);
+  border-radius: 10px; padding: 4px 10px; background: var(--panel);
+}
+/* 단어 쓰기: 한자 따라 쓰기 / 병음 입력 */
+.pad-wrap { display: flex; justify-content: center; margin: 12px 0; }
+.pad { position: relative; background: var(--panel); border-radius: 8px; }
+.pad canvas { position: absolute; left: 0; top: 0; touch-action: none; }
+#pad-draw { cursor: crosshair; }
+.type-row { display: flex; gap: 8px; margin: 12px 0; }
+.type-row input {
+  flex: 1; min-width: 0; font: inherit; font-size: 1.15rem; padding: 10px 12px;
+  border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--text);
+}
+.type-row input:focus { outline: 2px solid var(--accent); }
+.type-row input:disabled { opacity: 0.7; }
+.tones { margin: 4px 0 8px; }
+.tones summary { cursor: pointer; color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
+.tonepad { display: flex; flex-wrap: wrap; gap: 8px 14px; justify-content: center; }
+.tg { display: flex; gap: 4px; }
+button.tone { padding: 4px 10px; font-size: 1.05rem; }
+
+/* 정답 후 줄: 한자 · 🔊 · 병음 힌트 버튼을 한 줄에 유지 (긴 문장은 한자만 줄바꿈) */
+.solved-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.solved-row .hanzi { min-width: 0; overflow-wrap: anywhere; }
+.solved-row button { flex-shrink: 0; white-space: nowrap; }
+.solved-row #b-py { font-size: 0.8rem; padding: 4px 8px; }
+
+/* 문장 만들기 */
+.answer {
+  min-height: 62px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  padding: 10px; margin-bottom: 12px; border: 2px dashed var(--line); border-radius: 12px;
+}
+.bank { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 8px; }
+.chip { font-size: 1.3rem; padding: 8px 16px; border-radius: 10px; }
+.chip.used { opacity: 0.2; }
+.chip.ok { background: var(--good); border-color: var(--good); color: #fff; }
+.chip.bad { background: var(--bad); border-color: var(--bad); color: #fff; }
+.chip:disabled.ok, .chip:disabled.bad { opacity: 1; }
+.build-msg { min-height: 1.5em; margin: 6px 0; text-align: center; font-size: 0.95rem; }
+.build-msg.good { color: var(--good); font-weight: 600; }
+.build-msg.bad { color: var(--bad); }
+
+/* 툴팁 / 학습 화면 돌아가기 */
+#tip {
+  position: fixed; left: 0; top: 0; z-index: 20; pointer-events: none;
+  background: var(--text); color: var(--bg); padding: 6px 10px; border-radius: 8px;
+  font-size: 0.85rem; max-width: min(320px, calc(100vw - 16px)); opacity: 0; transition: opacity 0.1s;
+}
+#tip.on { opacity: 1; }
+.sess-top { margin-bottom: 10px; }
+.sess-top button { padding: 4px 12px; font-size: 0.9rem; color: var(--muted); }
+.rec-week { margin: 18px 0 6px; color: var(--accent); }
+.rec-group { padding: 10px 0; border-bottom: 1px solid var(--line); }
+
+/* 획순 쓰기 / 펜 굵기 */
+.seg { display: flex; gap: 0; margin: 10px 0; justify-content: center; }
+.seg button { border-radius: 0; padding: 6px 14px; font-size: 0.9rem; }
+.seg button:first-child { border-radius: 10px 0 0 10px; }
+.seg button:last-child { border-radius: 0 10px 10px 0; margin-left: -1px; }
+.seg button.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.pen-row { display: flex; gap: 6px; align-items: center; justify-content: center; margin: 10px 0 0; }
+.pen-btn { padding: 3px 10px; font-size: 0.8rem; border-radius: 999px; }
+.pen-btn.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.hw-box { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin: 12px 0 4px; }
+.hw-cell {
+  border: 1px solid var(--line); border-radius: 8px; background: var(--panel); touch-action: none;
+  background-image:
+    linear-gradient(to right, transparent calc(50% - 0.5px), var(--line) calc(50% - 0.5px), var(--line) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(50% - 0.5px), var(--line) calc(50% - 0.5px), var(--line) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+}
+.hw-cell.active { border-color: var(--accent); }
+.hw-cell svg { display: block; }
+
+/* 앱 안 확인창 / 백업 입력칸 */
+.modal-ov { position: fixed; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, 0.45); }
+.modal { background: var(--panel); color: var(--text); border-radius: 14px; padding: 18px; width: min(420px, 100%); border: 1px solid var(--line); }
+.modal-msg { margin: 0 0 4px; white-space: pre-line; }
+#bk-text { width: 100%; margin-top: 10px; font: inherit; font-size: 0.8rem; padding: 8px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--text); }
+
+</style>
+</head>
+<body>
+  <header>
+    <h1>每天30分钟 <small>중국어 회화</small></h1>
+    <nav>
+      <button data-view="home" class="on">오늘</button>
+      <button data-view="roadmap">로드맵</button>
+      <button data-view="recs">녹음</button>
+      <button data-view="stats">기록</button>
+    </nav>
+  </header>
+  <main id="app">
+    <section class="panel" id="boot-msg">
+      <h2>앱을 불러오는 중…</h2>
+      <p class="hint">이 문구가 계속 보이면 지금 화면(카카오톡·메일·파일 미리보기 등)이 프로그램 실행을 막고 있는 것입니다.
+        링크를 Safari/Chrome 같은 브라우저에서 열어 주세요.</p>
+    </section>
+  </main>
+  <script>
+/* =====================================================================
+   학습 데이터 (메모장으로 수정하세요)
+
+   새 주차 추가 방법:
+   1) 맨 아래 주차 블록 전체(중괄호 포함)를 복사해서 그 뒤에 붙여 넣기
+   2) 앞 블록 끝에 쉼표(,)가 있는지 확인
+   3) 이름을 "data/week-013.json" 처럼 바꾸고 내용을 수정
+   4) 파일 저장 후 브라우저에서 새로고침(F5)
+
+   주의: 따옴표(")와 쉼표(,)를 빠뜨리면 앱이 열리지 않습니다.
+   ===================================================================== */
+window.CN_DATA = {
+  /* ===== data/curriculum.json ===== */
+  "data/curriculum.json": {
+  "totalWeeks": 104,
+  "dailyMinutes": 30,
+  "stages": [
+    {
+      "from": 1,
+      "to": 12,
+      "title": "기초 회화",
+      "hsk": "HSK 1",
+      "goal": "인사·자기소개·일상 기본 문형을 입으로 말한다"
+    },
+    {
+      "from": 13,
+      "to": 36,
+      "title": "초급 회화",
+      "hsk": "HSK 2~3",
+      "goal": "쇼핑·길 묻기·약속 잡기 등 생활 상황에서 대화한다"
+    },
+    {
+      "from": 37,
+      "to": 64,
+      "title": "중급 회화",
+      "hsk": "HSK 4",
+      "goal": "의견·경험·계획을 접속 표현으로 이어 말한다"
+    },
+    {
+      "from": 65,
+      "to": 90,
+      "title": "중고급 회화",
+      "hsk": "HSK 5",
+      "goal": "토론, 뉴스·영상 이해, 설명과 설득을 한다"
+    },
+    {
+      "from": 91,
+      "to": 104,
+      "title": "고급 회화",
+      "hsk": "HSK 5~6",
+      "goal": "자유 대화, 심화 주제, 격식·비격식 전환을 익힌다"
+    }
+  ]
+},
+  /* ===== data/week-001.json ===== */
+  "data/week-001.json": {
+  "week": 1,
+  "theme": "인사와 자기소개",
+  "goal": "처음 만난 사람과 인사하고 이름·국적·직업을 말한다",
+  "vocab": [
+    {
+      "zh": "你好",
+      "py": "nǐ hǎo",
+      "ko": "안녕하세요"
+    },
+    {
+      "zh": "谢谢",
+      "py": "xièxie",
+      "ko": "고맙습니다"
+    },
+    {
+      "zh": "不客气",
+      "py": "bú kèqi",
+      "ko": "천만에요"
+    },
+    {
+      "zh": "对不起",
+      "py": "duìbuqǐ",
+      "ko": "죄송합니다"
+    },
+    {
+      "zh": "没关系",
+      "py": "méi guānxi",
+      "ko": "괜찮습니다"
+    },
+    {
+      "zh": "再见",
+      "py": "zàijiàn",
+      "ko": "안녕히 계세요, 또 봐요"
+    },
+    {
+      "zh": "我",
+      "py": "wǒ",
+      "ko": "나, 저"
+    },
+    {
+      "zh": "你",
+      "py": "nǐ",
+      "ko": "너, 당신"
+    },
+    {
+      "zh": "他",
+      "py": "tā",
+      "ko": "그"
+    },
+    {
+      "zh": "是",
+      "py": "shì",
+      "ko": "~이다"
+    },
+    {
+      "zh": "叫",
+      "py": "jiào",
+      "ko": "~라고 부르다"
+    },
+    {
+      "zh": "什么",
+      "py": "shénme",
+      "ko": "무엇, 무슨"
+    },
+    {
+      "zh": "名字",
+      "py": "míngzi",
+      "ko": "이름"
+    },
+    {
+      "zh": "学生",
+      "py": "xuésheng",
+      "ko": "학생"
+    },
+    {
+      "zh": "老师",
+      "py": "lǎoshī",
+      "ko": "선생님"
+    },
+    {
+      "zh": "韩国人",
+      "py": "Hánguórén",
+      "ko": "한국인"
+    },
+    {
+      "zh": "中国人",
+      "py": "Zhōngguórén",
+      "ko": "중국인"
+    },
+    {
+      "zh": "认识",
+      "py": "rènshi",
+      "ko": "알게 되다, 알다"
+    },
+    {
+      "zh": "高兴",
+      "py": "gāoxìng",
+      "ko": "기쁘다"
+    },
+    {
+      "zh": "很",
+      "py": "hěn",
+      "ko": "매우, 아주"
+    },
+    {
+      "zh": "也",
+      "py": "yě",
+      "ko": "~도, 또한"
+    },
+    {
+      "zh": "呢",
+      "py": "ne",
+      "ko": "~는요? (되묻기)"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "你好！我叫金敏。",
+      "py": "Nǐ hǎo! Wǒ jiào Jīn Mǐn.",
+      "ko": "안녕하세요! 저는 김민이라고 합니다."
+    },
+    {
+      "zh": "你叫什么名字？",
+      "py": "Nǐ jiào shénme míngzi?",
+      "ko": "이름이 무엇입니까?"
+    },
+    {
+      "zh": "我是韩国人，他是中国人。",
+      "py": "Wǒ shì Hánguórén, tā shì Zhōngguórén.",
+      "ko": "저는 한국인이고, 그는 중국인입니다."
+    },
+    {
+      "zh": "我是学生，他是老师。",
+      "py": "Wǒ shì xuésheng, tā shì lǎoshī.",
+      "ko": "저는 학생이고, 그는 선생님입니다."
+    },
+    {
+      "zh": "认识你，我很高兴。",
+      "py": "Rènshi nǐ, wǒ hěn gāoxìng.",
+      "ko": "만나서 반갑습니다."
+    },
+    {
+      "zh": "对不起！没关系。",
+      "py": "Duìbuqǐ! Méi guānxi.",
+      "ko": "죄송합니다! 괜찮습니다."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "A 是 B (A는 B이다)",
+      "rule": "是(shì)는 '~이다'입니다. 부정은 不是(bú shì)이며, 주어 + 是 + 명사 순서입니다.",
+      "examples": [
+        {
+          "zh": "我是韩国人。",
+          "py": "Wǒ shì Hánguórén.",
+          "ko": "저는 한국인입니다."
+        },
+        {
+          "zh": "他不是老师。",
+          "py": "Tā bú shì lǎoshī.",
+          "ko": "그는 선생님이 아닙니다."
+        }
+      ]
+    },
+    {
+      "title": "很 + 형용사",
+      "rule": "중국어 형용사 문장은 보통 很(hěn)을 붙입니다. 이때 很은 '매우'라는 뜻이 약해질 수 있습니다.",
+      "examples": [
+        {
+          "zh": "我很高兴。",
+          "py": "Wǒ hěn gāoxìng.",
+          "ko": "저는 기쁩니다."
+        }
+      ]
+    },
+    {
+      "title": "也 와 呢",
+      "rule": "也(yě)는 동사·형용사 앞에 놓습니다. 呢(ne)는 문장 끝에서 '~는요?'라고 되묻습니다.",
+      "examples": [
+        {
+          "zh": "我也是学生。",
+          "py": "Wǒ yě shì xuésheng.",
+          "ko": "저도 학생입니다."
+        },
+        {
+          "zh": "我叫金敏，你呢？",
+          "py": "Wǒ jiào Jīn Mǐn, nǐ ne?",
+          "ko": "저는 김민입니다. 당신은요?"
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "你好！你叫什么名字？",
+      "py": "Nǐ hǎo! Nǐ jiào shénme míngzi?",
+      "ko": "안녕하세요! 이름이 무엇입니까?"
+    },
+    {
+      "sp": "B",
+      "zh": "你好！我叫王明。你呢？",
+      "py": "Nǐ hǎo! Wǒ jiào Wáng Míng. Nǐ ne?",
+      "ko": "안녕하세요! 저는 왕밍입니다. 당신은요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我叫金敏。认识你，我很高兴。",
+      "py": "Wǒ jiào Jīn Mǐn. Rènshi nǐ, wǒ hěn gāoxìng.",
+      "ko": "저는 김민입니다. 만나서 반갑습니다."
+    },
+    {
+      "sp": "B",
+      "zh": "我也很高兴。我是中国人，你呢？",
+      "py": "Wǒ yě hěn gāoxìng. Wǒ shì Zhōngguórén, nǐ ne?",
+      "ko": "저도 반갑습니다. 저는 중국인인데, 당신은요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我是韩国人，我是学生。再见！",
+      "py": "Wǒ shì Hánguórén, wǒ shì xuésheng. Zàijiàn!",
+      "ko": "저는 한국인이고 학생입니다. 안녕히 가세요!"
+    },
+    {
+      "sp": "B",
+      "zh": "再见！",
+      "py": "Zàijiàn!",
+      "ko": "안녕히 가세요!"
+    }
+  ]
+},
+  /* ===== data/week-002.json ===== */
+  "data/week-002.json": {
+  "week": 2,
+  "theme": "국적·나이·사는 곳·좋아하는 것",
+  "goal": "상대에게 국적, 나이, 사는 곳, 좋아하는 음식을 묻고 답한다",
+  "vocab": [
+    {
+      "zh": "哪国人",
+      "py": "nǎ guó rén",
+      "ko": "어느 나라 사람"
+    },
+    {
+      "zh": "哪儿",
+      "py": "nǎr",
+      "ko": "어디"
+    },
+    {
+      "zh": "多大",
+      "py": "duō dà",
+      "ko": "몇 살, 나이가 얼마"
+    },
+    {
+      "zh": "今年",
+      "py": "jīnnián",
+      "ko": "올해"
+    },
+    {
+      "zh": "岁",
+      "py": "suì",
+      "ko": "~살"
+    },
+    {
+      "zh": "住",
+      "py": "zhù",
+      "ko": "살다, 거주하다"
+    },
+    {
+      "zh": "在",
+      "py": "zài",
+      "ko": "~에(서)"
+    },
+    {
+      "zh": "首尔",
+      "py": "Shǒu'ěr",
+      "ko": "서울"
+    },
+    {
+      "zh": "喜欢",
+      "py": "xǐhuan",
+      "ko": "좋아하다"
+    },
+    {
+      "zh": "吃",
+      "py": "chī",
+      "ko": "먹다"
+    },
+    {
+      "zh": "喝",
+      "py": "hē",
+      "ko": "마시다"
+    },
+    {
+      "zh": "米饭",
+      "py": "mǐfàn",
+      "ko": "밥"
+    },
+    {
+      "zh": "茶",
+      "py": "chá",
+      "ko": "차"
+    },
+    {
+      "zh": "水",
+      "py": "shuǐ",
+      "ko": "물"
+    },
+    {
+      "zh": "想",
+      "py": "xiǎng",
+      "ko": "~하고 싶다"
+    },
+    {
+      "zh": "朋友",
+      "py": "péngyou",
+      "ko": "친구"
+    },
+    {
+      "zh": "的",
+      "py": "de",
+      "ko": "~의"
+    },
+    {
+      "zh": "家",
+      "py": "jiā",
+      "ko": "집"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "你是哪国人？",
+      "py": "Nǐ shì nǎ guó rén?",
+      "ko": "당신은 어느 나라 사람입니까?"
+    },
+    {
+      "zh": "你今年多大？",
+      "py": "Nǐ jīnnián duō dà?",
+      "ko": "올해 몇 살입니까?"
+    },
+    {
+      "zh": "我今年三十岁。",
+      "py": "Wǒ jīnnián sānshí suì.",
+      "ko": "저는 올해 서른 살입니다. (숫자는 본인 나이로 바꿔 말해 보세요)"
+    },
+    {
+      "zh": "你住在哪儿？",
+      "py": "Nǐ zhù zài nǎr?",
+      "ko": "어디에 사십니까?"
+    },
+    {
+      "zh": "我住在首尔。",
+      "py": "Wǒ zhù zài Shǒu'ěr.",
+      "ko": "저는 서울에 삽니다."
+    },
+    {
+      "zh": "你喜欢吃什么？",
+      "py": "Nǐ xǐhuan chī shénme?",
+      "ko": "무엇을 먹는 것을 좋아합니까?"
+    },
+    {
+      "zh": "我喜欢吃米饭，也喜欢喝茶。",
+      "py": "Wǒ xǐhuan chī mǐfàn, yě xǐhuan hē chá.",
+      "ko": "저는 밥 먹는 것을 좋아하고, 차 마시는 것도 좋아합니다."
+    },
+    {
+      "zh": "他是我的朋友。",
+      "py": "Tā shì wǒ de péngyou.",
+      "ko": "그는 제 친구입니다."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "哪 + 명사 / 哪儿 (어느, 어디)",
+      "rule": "哪(nǎ)는 '어느'이고 뒤에 명사를 붙입니다. 哪儿(nǎr)은 '어디'로 장소를 묻습니다.",
+      "examples": [
+        {
+          "zh": "你是哪国人？",
+          "py": "Nǐ shì nǎ guó rén?",
+          "ko": "어느 나라 사람입니까?"
+        },
+        {
+          "zh": "你的家在哪儿？",
+          "py": "Nǐ de jiā zài nǎr?",
+          "ko": "당신의 집은 어디에 있습니까?"
+        }
+      ]
+    },
+    {
+      "title": "住在 + 장소 / 나이 = 숫자 + 岁",
+      "rule": "'~에 살다'는 住在 + 장소입니다. 나이는 今年 + 숫자 + 岁로 말합니다.",
+      "examples": [
+        {
+          "zh": "我住在首尔。",
+          "py": "Wǒ zhù zài Shǒu'ěr.",
+          "ko": "저는 서울에 삽니다."
+        },
+        {
+          "zh": "我今年三十岁。",
+          "py": "Wǒ jīnnián sānshí suì.",
+          "ko": "저는 올해 서른 살입니다."
+        }
+      ]
+    },
+    {
+      "title": "喜欢 / 想 + 동사",
+      "rule": "喜欢(좋아하다), 想(~하고 싶다) 뒤에 동사를 바로 붙입니다.",
+      "examples": [
+        {
+          "zh": "我喜欢吃米饭。",
+          "py": "Wǒ xǐhuan chī mǐfàn.",
+          "ko": "저는 밥 먹는 것을 좋아합니다."
+        },
+        {
+          "zh": "我想喝水。",
+          "py": "Wǒ xiǎng hē shuǐ.",
+          "ko": "저는 물을 마시고 싶습니다."
+        }
+      ]
+    },
+    {
+      "title": "的 (소유·수식)",
+      "rule": "A 的 B는 'A의 B'입니다. 친구·가족처럼 가까운 관계에서는 的를 생략하기도 합니다.",
+      "examples": [
+        {
+          "zh": "他是我的朋友。",
+          "py": "Tā shì wǒ de péngyou.",
+          "ko": "그는 제 친구입니다."
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "你是哪国人？",
+      "py": "Nǐ shì nǎ guó rén?",
+      "ko": "어느 나라 사람입니까?"
+    },
+    {
+      "sp": "B",
+      "zh": "我是韩国人。你呢？",
+      "py": "Wǒ shì Hánguórén. Nǐ ne?",
+      "ko": "저는 한국인입니다. 당신은요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我是中国人。你住在哪儿？",
+      "py": "Wǒ shì Zhōngguórén. Nǐ zhù zài nǎr?",
+      "ko": "저는 중국인입니다. 어디에 사세요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我住在首尔。你喜欢吃什么？",
+      "py": "Wǒ zhù zài Shǒu'ěr. Nǐ xǐhuan chī shénme?",
+      "ko": "저는 서울에 삽니다. 무엇을 즐겨 드세요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我喜欢吃米饭，也喜欢喝茶。",
+      "py": "Wǒ xǐhuan chī mǐfàn, yě xǐhuan hē chá.",
+      "ko": "저는 밥을 좋아하고, 차 마시는 것도 좋아합니다."
+    },
+    {
+      "sp": "B",
+      "zh": "我也喜欢喝茶！你是我的朋友。",
+      "py": "Wǒ yě xǐhuan hē chá! Nǐ shì wǒ de péngyou.",
+      "ko": "저도 차를 좋아해요! 당신은 제 친구예요."
+    }
+  ]
+},
+  /* ===== data/week-003.json ===== */
+  "data/week-003.json": {
+  "week": 3,
+  "theme": "숫자와 전화번호",
+  "goal": "숫자를 읽고, 나이와 전화번호를 묻고 답한다",
+  "vocab": [
+    {
+      "zh": "一",
+      "py": "yī",
+      "ko": "일, 하나"
+    },
+    {
+      "zh": "二",
+      "py": "èr",
+      "ko": "이, 둘"
+    },
+    {
+      "zh": "三",
+      "py": "sān",
+      "ko": "삼, 셋"
+    },
+    {
+      "zh": "四",
+      "py": "sì",
+      "ko": "사, 넷"
+    },
+    {
+      "zh": "五",
+      "py": "wǔ",
+      "ko": "오, 다섯"
+    },
+    {
+      "zh": "六",
+      "py": "liù",
+      "ko": "육, 여섯"
+    },
+    {
+      "zh": "七",
+      "py": "qī",
+      "ko": "칠, 일곱"
+    },
+    {
+      "zh": "八",
+      "py": "bā",
+      "ko": "팔, 여덟"
+    },
+    {
+      "zh": "九",
+      "py": "jiǔ",
+      "ko": "구, 아홉"
+    },
+    {
+      "zh": "十",
+      "py": "shí",
+      "ko": "십, 열"
+    },
+    {
+      "zh": "零",
+      "py": "líng",
+      "ko": "영, 0"
+    },
+    {
+      "zh": "百",
+      "py": "bǎi",
+      "ko": "백, 100"
+    },
+    {
+      "zh": "多少",
+      "py": "duōshao",
+      "ko": "얼마, 몇 (수량 제한 없음)"
+    },
+    {
+      "zh": "几",
+      "py": "jǐ",
+      "ko": "몇 (10 미만의 수를 예상할 때)"
+    },
+    {
+      "zh": "号码",
+      "py": "hàomǎ",
+      "ko": "번호"
+    },
+    {
+      "zh": "手机",
+      "py": "shǒujī",
+      "ko": "휴대폰"
+    },
+    {
+      "zh": "电话",
+      "py": "diànhuà",
+      "ko": "전화"
+    },
+    {
+      "zh": "请问",
+      "py": "qǐngwèn",
+      "ko": "실례지만, 여쭙겠습니다"
+    },
+    {
+      "zh": "您",
+      "py": "nín",
+      "ko": "당신 (존칭)"
+    },
+    {
+      "zh": "好",
+      "py": "hǎo",
+      "ko": "좋다, 알겠다"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "请问，你的手机号码是多少？",
+      "py": "Qǐngwèn, nǐ de shǒujī hàomǎ shì duōshao?",
+      "ko": "실례지만, 휴대폰 번호가 어떻게 되세요?"
+    },
+    {
+      "zh": "我的号码是零一零，一二三四，五六七八。",
+      "py": "Wǒ de hàomǎ shì líng yāo líng, yāo èr sān sì, wǔ liù qī bā.",
+      "ko": "제 번호는 010-1234-5678입니다. (번호에서 1은 yāo로 읽습니다)"
+    },
+    {
+      "zh": "您今年多大？",
+      "py": "Nín jīnnián duō dà?",
+      "ko": "올해 연세가 어떻게 되십니까?"
+    },
+    {
+      "zh": "我今年二十五岁。",
+      "py": "Wǒ jīnnián èrshíwǔ suì.",
+      "ko": "저는 올해 스물다섯 살입니다. (숫자는 본인 나이로 바꿔 말해 보세요)"
+    },
+    {
+      "zh": "你几岁？我七岁。",
+      "py": "Nǐ jǐ suì? Wǒ qī suì.",
+      "ko": "몇 살이니? 저는 일곱 살이에요. (아이에게 묻는 말)"
+    },
+    {
+      "zh": "一，二，三，四，五，六，七，八，九，十！",
+      "py": "Yī, èr, sān, sì, wǔ, liù, qī, bā, jiǔ, shí!",
+      "ko": "숫자 읽기 연습"
+    }
+  ],
+  "grammar": [
+    {
+      "title": "11~99 숫자 만들기",
+      "rule": "十(10)을 기준으로 숫자를 조합합니다. 100은 一百이고, 중간에 0이 끼면 零(líng)을 읽습니다.",
+      "examples": [
+        {
+          "zh": "十一",
+          "py": "shíyī",
+          "ko": "11"
+        },
+        {
+          "zh": "二十五",
+          "py": "èrshíwǔ",
+          "ko": "25"
+        },
+        {
+          "zh": "九十九",
+          "py": "jiǔshíjiǔ",
+          "ko": "99"
+        },
+        {
+          "zh": "一百零五",
+          "py": "yìbǎi líng wǔ",
+          "ko": "105 (중간의 0은 零)"
+        }
+      ]
+    },
+    {
+      "title": "번호는 한 자리씩, 1은 yāo",
+      "rule": "전화번호·방 번호는 숫자를 한 자리씩 읽습니다. 이때 1은 7(qī)과 헷갈리지 않도록 yāo로 읽는 것이 보통입니다.",
+      "examples": [
+        {
+          "zh": "零一零",
+          "py": "líng yāo líng",
+          "ko": "010"
+        },
+        {
+          "zh": "你的电话号码是多少？",
+          "py": "Nǐ de diànhuà hàomǎ shì duōshao?",
+          "ko": "전화번호가 어떻게 되세요?"
+        }
+      ]
+    },
+    {
+      "title": "几 와 多少",
+      "rule": "几는 10 미만의 작은 수를 예상할 때 쓰고, 뒤에 양사가 붙습니다. 多少는 수량 제한 없이 쓰며 양사가 꼭 필요하지 않습니다.",
+      "examples": [
+        {
+          "zh": "你几岁？",
+          "py": "Nǐ jǐ suì?",
+          "ko": "몇 살이니? (아이에게)"
+        },
+        {
+          "zh": "你的号码是多少？",
+          "py": "Nǐ de hàomǎ shì duōshao?",
+          "ko": "번호가 몇 번이에요?"
+        }
+      ]
+    },
+    {
+      "title": "您 (존칭)",
+      "rule": "您(nín)은 你의 높임말입니다. 윗사람이나 처음 만난 사람에게 씁니다.",
+      "examples": [
+        {
+          "zh": "您好！",
+          "py": "Nín hǎo!",
+          "ko": "안녕하십니까!"
+        },
+        {
+          "zh": "请问，您今年多大？",
+          "py": "Qǐngwèn, nín jīnnián duō dà?",
+          "ko": "실례지만, 연세가 어떻게 되십니까?"
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "请问，您今年多大？",
+      "py": "Qǐngwèn, nín jīnnián duō dà?",
+      "ko": "실례지만, 올해 연세가 어떻게 되십니까?"
+    },
+    {
+      "sp": "B",
+      "zh": "我今年三十岁。你呢？",
+      "py": "Wǒ jīnnián sānshí suì. Nǐ ne?",
+      "ko": "저는 올해 서른입니다. 당신은요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我二十五岁。你的手机号码是多少？",
+      "py": "Wǒ èrshíwǔ suì. Nǐ de shǒujī hàomǎ shì duōshao?",
+      "ko": "저는 스물다섯입니다. 휴대폰 번호가 어떻게 되세요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我的号码是零一零，一二三四，五六七八。",
+      "py": "Wǒ de hàomǎ shì líng yāo líng, yāo èr sān sì, wǔ liù qī bā.",
+      "ko": "제 번호는 010-1234-5678입니다."
+    },
+    {
+      "sp": "A",
+      "zh": "好，谢谢！",
+      "py": "Hǎo, xièxie!",
+      "ko": "네, 감사합니다!"
+    },
+    {
+      "sp": "B",
+      "zh": "不客气。",
+      "py": "Bú kèqi.",
+      "ko": "천만에요."
+    }
+  ]
+},
+  /* ===== data/week-004.json ===== */
+  "data/week-004.json": {
+  "week": 4,
+  "theme": "가족 소개",
+  "goal": "가족 구성원을 묻고 답하며, 있다/없다를 말한다",
+  "vocab": [
+    {
+      "zh": "爸爸",
+      "py": "bàba",
+      "ko": "아빠"
+    },
+    {
+      "zh": "妈妈",
+      "py": "māma",
+      "ko": "엄마"
+    },
+    {
+      "zh": "哥哥",
+      "py": "gēge",
+      "ko": "형, 오빠"
+    },
+    {
+      "zh": "姐姐",
+      "py": "jiějie",
+      "ko": "누나, 언니"
+    },
+    {
+      "zh": "弟弟",
+      "py": "dìdi",
+      "ko": "남동생"
+    },
+    {
+      "zh": "妹妹",
+      "py": "mèimei",
+      "ko": "여동생"
+    },
+    {
+      "zh": "谁",
+      "py": "shéi",
+      "ko": "누구"
+    },
+    {
+      "zh": "有",
+      "py": "yǒu",
+      "ko": "있다, 가지고 있다"
+    },
+    {
+      "zh": "没有",
+      "py": "méiyǒu",
+      "ko": "없다"
+    },
+    {
+      "zh": "吗",
+      "py": "ma",
+      "ko": "~입니까? (의문 조사)"
+    },
+    {
+      "zh": "个",
+      "py": "ge",
+      "ko": "개, 명 (일반 양사)"
+    },
+    {
+      "zh": "两",
+      "py": "liǎng",
+      "ko": "둘 (수량 앞에서)"
+    },
+    {
+      "zh": "她",
+      "py": "tā",
+      "ko": "그녀"
+    },
+    {
+      "zh": "他们",
+      "py": "tāmen",
+      "ko": "그들"
+    },
+    {
+      "zh": "我们",
+      "py": "wǒmen",
+      "ko": "우리"
+    },
+    {
+      "zh": "口",
+      "py": "kǒu",
+      "ko": "식구 수를 세는 양사"
+    },
+    {
+      "zh": "和",
+      "py": "hé",
+      "ko": "~와(과)"
+    },
+    {
+      "zh": "都",
+      "py": "dōu",
+      "ko": "모두, 다"
+    },
+    {
+      "zh": "孩子",
+      "py": "háizi",
+      "ko": "아이, 자녀"
+    },
+    {
+      "zh": "家人",
+      "py": "jiārén",
+      "ko": "가족"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "你家有几口人？",
+      "py": "Nǐ jiā yǒu jǐ kǒu rén?",
+      "ko": "가족이 몇 명이에요?"
+    },
+    {
+      "zh": "我家有四口人：爸爸、妈妈、姐姐和我。",
+      "py": "Wǒ jiā yǒu sì kǒu rén: bàba, māma, jiějie hé wǒ.",
+      "ko": "우리 가족은 네 명입니다. 아빠, 엄마, 누나(언니)와 저예요."
+    },
+    {
+      "zh": "你有哥哥吗？",
+      "py": "Nǐ yǒu gēge ma?",
+      "ko": "형(오빠)이 있어요?"
+    },
+    {
+      "zh": "我没有哥哥，我有两个妹妹。",
+      "py": "Wǒ méiyǒu gēge, wǒ yǒu liǎng ge mèimei.",
+      "ko": "형(오빠)은 없고, 여동생이 둘 있어요."
+    },
+    {
+      "zh": "她是谁？她是我姐姐。",
+      "py": "Tā shì shéi? Tā shì wǒ jiějie.",
+      "ko": "그녀는 누구예요? 제 누나(언니)예요."
+    },
+    {
+      "zh": "我们都是学生。",
+      "py": "Wǒmen dōu shì xuésheng.",
+      "ko": "우리는 모두 학생입니다."
+    },
+    {
+      "zh": "你有孩子吗？我有一个孩子。",
+      "py": "Nǐ yǒu háizi ma? Wǒ yǒu yí ge háizi.",
+      "ko": "자녀가 있어요? 아이가 한 명 있어요."
+    },
+    {
+      "zh": "他们是我的家人。",
+      "py": "Tāmen shì wǒ de jiārén.",
+      "ko": "그들은 제 가족입니다."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "吗 의문문",
+      "rule": "평서문 끝에 吗(ma)를 붙이면 '~입니까?'라는 예/아니오 질문이 됩니다.",
+      "examples": [
+        {
+          "zh": "你是学生吗？",
+          "py": "Nǐ shì xuésheng ma?",
+          "ko": "학생이에요?"
+        },
+        {
+          "zh": "你有姐姐吗？",
+          "py": "Nǐ yǒu jiějie ma?",
+          "ko": "누나(언니)가 있어요?"
+        }
+      ]
+    },
+    {
+      "title": "有 와 没有",
+      "rule": "有의 부정은 没有(méiyǒu)입니다. 不有라고는 하지 않습니다.",
+      "examples": [
+        {
+          "zh": "我有哥哥。",
+          "py": "Wǒ yǒu gēge.",
+          "ko": "저는 형(오빠)이 있습니다."
+        },
+        {
+          "zh": "我没有哥哥。",
+          "py": "Wǒ méiyǒu gēge.",
+          "ko": "저는 형(오빠)이 없습니다."
+        }
+      ]
+    },
+    {
+      "title": "양사 个 와 两",
+      "rule": "수 + 양사 + 명사 순서입니다. 양사 앞에서 2는 二이 아니라 两(liǎng)을 씁니다.",
+      "examples": [
+        {
+          "zh": "我有两个妹妹。",
+          "py": "Wǒ yǒu liǎng ge mèimei.",
+          "ko": "저는 여동생이 둘 있습니다."
+        },
+        {
+          "zh": "一个孩子",
+          "py": "yí ge háizi",
+          "ko": "아이 한 명"
+        }
+      ]
+    },
+    {
+      "title": "都 (모두)",
+      "rule": "都(dōu)는 동사·형용사 바로 앞에 놓습니다. 주어가 여러 명일 때 씁니다.",
+      "examples": [
+        {
+          "zh": "我们都是学生。",
+          "py": "Wǒmen dōu shì xuésheng.",
+          "ko": "우리는 모두 학생입니다."
+        },
+        {
+          "zh": "他们都有哥哥。",
+          "py": "Tāmen dōu yǒu gēge.",
+          "ko": "그들은 모두 형(오빠)이 있습니다."
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "你家有几口人？",
+      "py": "Nǐ jiā yǒu jǐ kǒu rén?",
+      "ko": "가족이 몇 명이에요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我家有四口人：爸爸、妈妈、姐姐和我。你呢？",
+      "py": "Wǒ jiā yǒu sì kǒu rén: bàba, māma, jiějie hé wǒ. Nǐ ne?",
+      "ko": "우리 가족은 네 명이에요. 아빠, 엄마, 누나(언니)와 저예요. 당신은요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我家有六口人。我有一个弟弟和两个妹妹。",
+      "py": "Wǒ jiā yǒu liù kǒu rén. Wǒ yǒu yí ge dìdi hé liǎng ge mèimei.",
+      "ko": "우리 가족은 여섯 명이에요. 남동생 하나와 여동생 둘이 있어요."
+    },
+    {
+      "sp": "B",
+      "zh": "你的弟弟和妹妹都是学生吗？",
+      "py": "Nǐ de dìdi hé mèimei dōu shì xuésheng ma?",
+      "ko": "남동생과 여동생은 모두 학생이에요?"
+    },
+    {
+      "sp": "A",
+      "zh": "是，他们都是学生。",
+      "py": "Shì, tāmen dōu shì xuésheng.",
+      "ko": "네, 그들은 모두 학생이에요."
+    },
+    {
+      "sp": "B",
+      "zh": "认识你，我很高兴！",
+      "py": "Rènshi nǐ, wǒ hěn gāoxìng!",
+      "ko": "만나서 반가워요!"
+    }
+  ]
+},
+  /* ===== data/week-005.json ===== */
+  "data/week-005.json": {
+  "week": 5,
+  "theme": "날짜·시간·요일",
+  "goal": "날짜, 요일, 시각을 묻고 답하며 하루 일과를 말한다",
+  "vocab": [
+    {
+      "zh": "年",
+      "py": "nián",
+      "ko": "년"
+    },
+    {
+      "zh": "月",
+      "py": "yuè",
+      "ko": "월, 달"
+    },
+    {
+      "zh": "号",
+      "py": "hào",
+      "ko": "일 (날짜)"
+    },
+    {
+      "zh": "星期",
+      "py": "xīngqī",
+      "ko": "요일, 주"
+    },
+    {
+      "zh": "今天",
+      "py": "jīntiān",
+      "ko": "오늘"
+    },
+    {
+      "zh": "明天",
+      "py": "míngtiān",
+      "ko": "내일"
+    },
+    {
+      "zh": "昨天",
+      "py": "zuótiān",
+      "ko": "어제"
+    },
+    {
+      "zh": "现在",
+      "py": "xiànzài",
+      "ko": "지금"
+    },
+    {
+      "zh": "点",
+      "py": "diǎn",
+      "ko": "시 (시각)"
+    },
+    {
+      "zh": "分",
+      "py": "fēn",
+      "ko": "분"
+    },
+    {
+      "zh": "半",
+      "py": "bàn",
+      "ko": "반, 30분"
+    },
+    {
+      "zh": "上午",
+      "py": "shàngwǔ",
+      "ko": "오전"
+    },
+    {
+      "zh": "下午",
+      "py": "xiàwǔ",
+      "ko": "오후"
+    },
+    {
+      "zh": "晚上",
+      "py": "wǎnshang",
+      "ko": "저녁, 밤"
+    },
+    {
+      "zh": "什么时候",
+      "py": "shénme shíhou",
+      "ko": "언제"
+    },
+    {
+      "zh": "生日",
+      "py": "shēngrì",
+      "ko": "생일"
+    },
+    {
+      "zh": "快乐",
+      "py": "kuàilè",
+      "ko": "즐겁다, 행복하다"
+    },
+    {
+      "zh": "起床",
+      "py": "qǐchuáng",
+      "ko": "일어나다"
+    },
+    {
+      "zh": "睡觉",
+      "py": "shuìjiào",
+      "ko": "자다"
+    },
+    {
+      "zh": "吃饭",
+      "py": "chī fàn",
+      "ko": "밥을 먹다"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "今天几月几号？",
+      "py": "Jīntiān jǐ yuè jǐ hào?",
+      "ko": "오늘은 몇 월 며칠이에요?"
+    },
+    {
+      "zh": "今天十一月十八号，星期三。",
+      "py": "Jīntiān shíyī yuè shíbā hào, xīngqī sān.",
+      "ko": "오늘은 11월 18일 수요일입니다."
+    },
+    {
+      "zh": "明天星期几？明天星期四。",
+      "py": "Míngtiān xīngqī jǐ? Míngtiān xīngqī sì.",
+      "ko": "내일은 무슨 요일이에요? 내일은 목요일이에요."
+    },
+    {
+      "zh": "现在几点？现在八点半。",
+      "py": "Xiànzài jǐ diǎn? Xiànzài bā diǎn bàn.",
+      "ko": "지금 몇 시예요? 지금은 여덟 시 반이에요."
+    },
+    {
+      "zh": "你什么时候起床？我七点起床。",
+      "py": "Nǐ shénme shíhou qǐchuáng? Wǒ qī diǎn qǐchuáng.",
+      "ko": "언제 일어나요? 저는 일곱 시에 일어나요."
+    },
+    {
+      "zh": "你的生日是什么时候？",
+      "py": "Nǐ de shēngrì shì shénme shíhou?",
+      "ko": "생일이 언제예요?"
+    },
+    {
+      "zh": "我的生日是三月五号。",
+      "py": "Wǒ de shēngrì shì sān yuè wǔ hào.",
+      "ko": "제 생일은 3월 5일이에요."
+    },
+    {
+      "zh": "我晚上十一点睡觉。",
+      "py": "Wǒ wǎnshang shíyī diǎn shuìjiào.",
+      "ko": "저는 밤 열한 시에 자요."
+    },
+    {
+      "zh": "今年是二零二六年。",
+      "py": "Jīnnián shì èr líng èr liù nián.",
+      "ko": "올해는 2026년이에요. (연도는 숫자를 한 자리씩 읽습니다)"
+    },
+    {
+      "zh": "我上午七点起床，下午六点吃饭。",
+      "py": "Wǒ shàngwǔ qī diǎn qǐchuáng, xiàwǔ liù diǎn chī fàn.",
+      "ko": "저는 오전 7시에 일어나고 오후 6시에 밥을 먹어요."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "날짜와 요일 말하기",
+      "rule": "날짜는 큰 단위에서 작은 단위 순서(年-月-号)로 말합니다. 요일은 星期 + 숫자이며 일요일은 星期天 또는 星期日입니다.",
+      "examples": [
+        {
+          "zh": "今天十一月十八号。",
+          "py": "Jīntiān shíyī yuè shíbā hào.",
+          "ko": "오늘은 11월 18일입니다."
+        },
+        {
+          "zh": "昨天星期二。",
+          "py": "Zuótiān xīngqī èr.",
+          "ko": "어제는 화요일이었습니다."
+        },
+        {
+          "zh": "星期天",
+          "py": "xīngqītiān",
+          "ko": "일요일"
+        }
+      ]
+    },
+    {
+      "title": "시각 말하기",
+      "rule": "시각은 숫자 + 点, 분은 숫자 + 分, 30분은 半입니다. 2시는 二点이 아니라 两点(liǎng diǎn)입니다.",
+      "examples": [
+        {
+          "zh": "八点十分",
+          "py": "bā diǎn shí fēn",
+          "ko": "8시 10분"
+        },
+        {
+          "zh": "八点半",
+          "py": "bā diǎn bàn",
+          "ko": "8시 반"
+        },
+        {
+          "zh": "现在两点。",
+          "py": "Xiànzài liǎng diǎn.",
+          "ko": "지금은 두 시입니다."
+        }
+      ]
+    },
+    {
+      "title": "시간어의 위치",
+      "rule": "시간을 나타내는 말은 동사 앞에 놓습니다. 주어 바로 뒤에 두거나 문장 맨 앞에 둘 수 있습니다.",
+      "examples": [
+        {
+          "zh": "我七点起床。",
+          "py": "Wǒ qī diǎn qǐchuáng.",
+          "ko": "저는 일곱 시에 일어납니다."
+        },
+        {
+          "zh": "七点我起床。",
+          "py": "Qī diǎn wǒ qǐchuáng.",
+          "ko": "일곱 시에 저는 일어납니다."
+        }
+      ]
+    },
+    {
+      "title": "几点 과 什么时候",
+      "rule": "几点은 정확한 시각을, 什么时候는 시각·날짜를 포함한 넓은 '언제'를 묻습니다.",
+      "examples": [
+        {
+          "zh": "你几点吃饭？",
+          "py": "Nǐ jǐ diǎn chī fàn?",
+          "ko": "몇 시에 밥을 먹어요?"
+        },
+        {
+          "zh": "你什么时候吃饭？",
+          "py": "Nǐ shénme shíhou chī fàn?",
+          "ko": "언제 밥을 먹어요?"
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "今天几月几号？",
+      "py": "Jīntiān jǐ yuè jǐ hào?",
+      "ko": "오늘은 몇 월 며칠이에요?"
+    },
+    {
+      "sp": "B",
+      "zh": "今天十一月十八号，星期三。",
+      "py": "Jīntiān shíyī yuè shíbā hào, xīngqī sān.",
+      "ko": "오늘은 11월 18일 수요일이에요."
+    },
+    {
+      "sp": "A",
+      "zh": "你的生日是什么时候？",
+      "py": "Nǐ de shēngrì shì shénme shíhou?",
+      "ko": "생일이 언제예요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我的生日是三月五号。你呢？",
+      "py": "Wǒ de shēngrì shì sān yuè wǔ hào. Nǐ ne?",
+      "ko": "제 생일은 3월 5일이에요. 당신은요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我的生日是明天！",
+      "py": "Wǒ de shēngrì shì míngtiān!",
+      "ko": "제 생일은 내일이에요!"
+    },
+    {
+      "sp": "B",
+      "zh": "明天星期四，生日快乐！",
+      "py": "Míngtiān xīngqī sì, shēngrì kuàilè!",
+      "ko": "내일은 목요일이네요, 생일 축하해요!"
+    }
+  ]
+},
+  /* ===== data/week-006.json ===== */
+  "data/week-006.json": {
+  "week": 6,
+  "theme": "쇼핑과 가격",
+  "goal": "물건의 값을 묻고, 사고 싶은 것을 말하며 가볍게 흥정한다",
+  "vocab": [
+    {
+      "zh": "买",
+      "py": "mǎi",
+      "ko": "사다"
+    },
+    {
+      "zh": "钱",
+      "py": "qián",
+      "ko": "돈"
+    },
+    {
+      "zh": "块",
+      "py": "kuài",
+      "ko": "위안 (구어체 화폐 단위)"
+    },
+    {
+      "zh": "这",
+      "py": "zhè",
+      "ko": "이, 이것"
+    },
+    {
+      "zh": "那",
+      "py": "nà",
+      "ko": "저, 그, 저것"
+    },
+    {
+      "zh": "苹果",
+      "py": "píngguǒ",
+      "ko": "사과"
+    },
+    {
+      "zh": "东西",
+      "py": "dōngxi",
+      "ko": "물건"
+    },
+    {
+      "zh": "衣服",
+      "py": "yīfu",
+      "ko": "옷"
+    },
+    {
+      "zh": "杯子",
+      "py": "bēizi",
+      "ko": "컵"
+    },
+    {
+      "zh": "大",
+      "py": "dà",
+      "ko": "크다"
+    },
+    {
+      "zh": "小",
+      "py": "xiǎo",
+      "ko": "작다"
+    },
+    {
+      "zh": "贵",
+      "py": "guì",
+      "ko": "비싸다"
+    },
+    {
+      "zh": "便宜",
+      "py": "piányi",
+      "ko": "싸다"
+    },
+    {
+      "zh": "要",
+      "py": "yào",
+      "ko": "원하다, 필요하다"
+    },
+    {
+      "zh": "太",
+      "py": "tài",
+      "ko": "너무, 매우"
+    },
+    {
+      "zh": "斤",
+      "py": "jīn",
+      "ko": "근 (500g)"
+    },
+    {
+      "zh": "看",
+      "py": "kàn",
+      "ko": "보다"
+    },
+    {
+      "zh": "件",
+      "py": "jiàn",
+      "ko": "벌 (옷의 양사)"
+    },
+    {
+      "zh": "不",
+      "py": "bù",
+      "ko": "아니다, ~않다"
+    },
+    {
+      "zh": "一点儿",
+      "py": "yìdiǎnr",
+      "ko": "조금"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "这个多少钱？",
+      "py": "Zhège duōshao qián?",
+      "ko": "이건 얼마예요?"
+    },
+    {
+      "zh": "这个苹果五块钱一斤。",
+      "py": "Zhège píngguǒ wǔ kuài qián yì jīn.",
+      "ko": "이 사과는 한 근에 5위안이에요."
+    },
+    {
+      "zh": "太贵了！",
+      "py": "Tài guì le!",
+      "ko": "너무 비싸요!"
+    },
+    {
+      "zh": "那件衣服很便宜。",
+      "py": "Nà jiàn yīfu hěn piányi.",
+      "ko": "저 옷은 아주 싸요."
+    },
+    {
+      "zh": "我想买两斤苹果。",
+      "py": "Wǒ xiǎng mǎi liǎng jīn píngguǒ.",
+      "ko": "사과 두 근을 사고 싶어요."
+    },
+    {
+      "zh": "我要这个，不要那个。",
+      "py": "Wǒ yào zhège, bú yào nàge.",
+      "ko": "이걸로 할게요, 저건 필요 없어요."
+    },
+    {
+      "zh": "这个杯子太小了，那个大。",
+      "py": "Zhège bēizi tài xiǎo le, nàge dà.",
+      "ko": "이 컵은 너무 작아요, 저건 커요."
+    },
+    {
+      "zh": "我想看看那件衣服。",
+      "py": "Wǒ xiǎng kànkan nà jiàn yīfu.",
+      "ko": "저 옷을 좀 보고 싶어요."
+    },
+    {
+      "zh": "我想买东西。",
+      "py": "Wǒ xiǎng mǎi dōngxi.",
+      "ko": "물건을 사고 싶어요."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "这 / 那 + 양사 + 명사",
+      "rule": "이것저것을 가리킬 때는 这/那 뒤에 양사를 붙입니다. 일반 물건은 个, 옷은 件을 씁니다.",
+      "examples": [
+        {
+          "zh": "这个杯子",
+          "py": "zhège bēizi",
+          "ko": "이 컵"
+        },
+        {
+          "zh": "那件衣服",
+          "py": "nà jiàn yīfu",
+          "ko": "저 옷"
+        }
+      ]
+    },
+    {
+      "title": "太 + 형용사 + 了",
+      "rule": "太…了(tài…le)는 '너무 ~하다'입니다. 불만이나 감탄을 나타낼 때 자주 씁니다.",
+      "examples": [
+        {
+          "zh": "太贵了！",
+          "py": "Tài guì le!",
+          "ko": "너무 비싸요!"
+        },
+        {
+          "zh": "太大了。",
+          "py": "Tài dà le.",
+          "ko": "너무 커요."
+        }
+      ]
+    },
+    {
+      "title": "不 의 성조 변화",
+      "rule": "不(bù)는 뒤에 4성이 오면 bú로 읽습니다. 그 외에는 bù입니다.",
+      "examples": [
+        {
+          "zh": "不要",
+          "py": "bú yào",
+          "ko": "필요 없어요"
+        },
+        {
+          "zh": "不贵",
+          "py": "bú guì",
+          "ko": "비싸지 않아요"
+        },
+        {
+          "zh": "不小",
+          "py": "bù xiǎo",
+          "ko": "작지 않아요"
+        }
+      ]
+    },
+    {
+      "title": "가격 말하기",
+      "rule": "가격은 숫자 + 块(钱)이며, 단위 수량 앞에 가격을 둡니다. 一点儿은 '조금'이라는 뜻으로 흥정할 때 씁니다.",
+      "examples": [
+        {
+          "zh": "五块钱一斤",
+          "py": "wǔ kuài qián yì jīn",
+          "ko": "한 근에 5위안"
+        },
+        {
+          "zh": "便宜一点儿",
+          "py": "piányi yìdiǎnr",
+          "ko": "조금 싸게"
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "你好！你要买什么？",
+      "py": "Nǐ hǎo! Nǐ yào mǎi shénme?",
+      "ko": "안녕하세요! 뭘 사시겠어요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我想买苹果。这个多少钱？",
+      "py": "Wǒ xiǎng mǎi píngguǒ. Zhège duōshao qián?",
+      "ko": "사과를 사고 싶어요. 이건 얼마예요?"
+    },
+    {
+      "sp": "A",
+      "zh": "五块钱一斤。",
+      "py": "Wǔ kuài qián yì jīn.",
+      "ko": "한 근에 5위안이에요."
+    },
+    {
+      "sp": "B",
+      "zh": "太贵了！那个呢？",
+      "py": "Tài guì le! Nàge ne?",
+      "ko": "너무 비싸요! 저건요?"
+    },
+    {
+      "sp": "A",
+      "zh": "那个便宜，四块钱一斤。",
+      "py": "Nàge piányi, sì kuài qián yì jīn.",
+      "ko": "저건 싸요, 한 근에 4위안이에요."
+    },
+    {
+      "sp": "B",
+      "zh": "好，我要两斤。",
+      "py": "Hǎo, wǒ yào liǎng jīn.",
+      "ko": "좋아요, 두 근 주세요."
+    }
+  ]
+},
+  /* ===== data/week-007.json ===== */
+  "data/week-007.json": {
+  "week": 7,
+  "theme": "식당에서 주문하기",
+  "goal": "식당에서 주문하고, 맛을 묻고, 계산을 요청한다",
+  "vocab": [
+    {
+      "zh": "饭店",
+      "py": "fàndiàn",
+      "ko": "식당, 호텔"
+    },
+    {
+      "zh": "服务员",
+      "py": "fúwùyuán",
+      "ko": "종업원"
+    },
+    {
+      "zh": "菜",
+      "py": "cài",
+      "ko": "요리, 채소"
+    },
+    {
+      "zh": "点菜",
+      "py": "diǎn cài",
+      "ko": "음식을 주문하다"
+    },
+    {
+      "zh": "面条",
+      "py": "miàntiáo",
+      "ko": "국수, 면"
+    },
+    {
+      "zh": "牛肉",
+      "py": "niúròu",
+      "ko": "소고기"
+    },
+    {
+      "zh": "鸡蛋",
+      "py": "jīdàn",
+      "ko": "달걀"
+    },
+    {
+      "zh": "咖啡",
+      "py": "kāfēi",
+      "ko": "커피"
+    },
+    {
+      "zh": "啤酒",
+      "py": "píjiǔ",
+      "ko": "맥주"
+    },
+    {
+      "zh": "请",
+      "py": "qǐng",
+      "ko": "~해 주세요, 청하다"
+    },
+    {
+      "zh": "来",
+      "py": "lái",
+      "ko": "오다, (주문) ~주세요"
+    },
+    {
+      "zh": "碗",
+      "py": "wǎn",
+      "ko": "그릇 (양사)"
+    },
+    {
+      "zh": "杯",
+      "py": "bēi",
+      "ko": "잔 (양사)"
+    },
+    {
+      "zh": "好吃",
+      "py": "hǎochī",
+      "ko": "맛있다"
+    },
+    {
+      "zh": "辣",
+      "py": "là",
+      "ko": "맵다"
+    },
+    {
+      "zh": "买单",
+      "py": "mǎidān",
+      "ko": "계산하다"
+    },
+    {
+      "zh": "饿",
+      "py": "è",
+      "ko": "배고프다"
+    },
+    {
+      "zh": "渴",
+      "py": "kě",
+      "ko": "목마르다"
+    },
+    {
+      "zh": "给",
+      "py": "gěi",
+      "ko": "주다"
+    },
+    {
+      "zh": "你们",
+      "py": "nǐmen",
+      "ko": "너희, 당신들"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "服务员，我们想点菜。",
+      "py": "Fúwùyuán, wǒmen xiǎng diǎn cài.",
+      "ko": "종업원, 주문할게요."
+    },
+    {
+      "zh": "请给我一碗面条。",
+      "py": "Qǐng gěi wǒ yì wǎn miàntiáo.",
+      "ko": "국수 한 그릇 주세요."
+    },
+    {
+      "zh": "我要一杯咖啡，一杯水。",
+      "py": "Wǒ yào yì bēi kāfēi, yì bēi shuǐ.",
+      "ko": "커피 한 잔, 물 한 잔 주세요."
+    },
+    {
+      "zh": "这个菜辣不辣？",
+      "py": "Zhège cài là bu là?",
+      "ko": "이 요리는 매워요?"
+    },
+    {
+      "zh": "不辣，很好吃。",
+      "py": "Bú là, hěn hǎochī.",
+      "ko": "맵지 않고 아주 맛있어요."
+    },
+    {
+      "zh": "我想吃面条和鸡蛋。",
+      "py": "Wǒ xiǎng chī miàntiáo hé jīdàn.",
+      "ko": "국수와 달걀을 먹고 싶어요."
+    },
+    {
+      "zh": "我很渴，来一杯啤酒！",
+      "py": "Wǒ hěn kě, lái yì bēi píjiǔ!",
+      "ko": "목말라요, 맥주 한 잔 주세요!"
+    },
+    {
+      "zh": "服务员，买单！",
+      "py": "Fúwùyuán, mǎidān!",
+      "ko": "종업원, 계산해 주세요!"
+    },
+    {
+      "zh": "这个饭店的菜很好吃。",
+      "py": "Zhège fàndiàn de cài hěn hǎochī.",
+      "ko": "이 식당 요리는 아주 맛있어요."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "수량 주문: 来 / 要 + 수 + 양사 + 명사",
+      "rule": "주문할 때는 来 또는 要 뒤에 수량과 양사를 붙입니다. 음식은 碗, 음료는 杯를 씁니다.",
+      "examples": [
+        {
+          "zh": "来一杯咖啡。",
+          "py": "Lái yì bēi kāfēi.",
+          "ko": "커피 한 잔 주세요."
+        },
+        {
+          "zh": "我要两碗面条。",
+          "py": "Wǒ yào liǎng wǎn miàntiáo.",
+          "ko": "국수 두 그릇 주세요."
+        }
+      ]
+    },
+    {
+      "title": "请 + 동사 (공손한 요청)",
+      "rule": "请(qǐng)을 문장 앞에 붙이면 공손한 부탁이 됩니다. 请给我…는 '…를 주세요'입니다.",
+      "examples": [
+        {
+          "zh": "请给我一杯水。",
+          "py": "Qǐng gěi wǒ yì bēi shuǐ.",
+          "ko": "물 한 잔 주세요."
+        },
+        {
+          "zh": "请来一杯咖啡。",
+          "py": "Qǐng lái yì bēi kāfēi.",
+          "ko": "커피 한 잔 부탁합니다."
+        }
+      ]
+    },
+    {
+      "title": "정반의문문 (V不V)",
+      "rule": "동사나 형용사를 긍정+부정 순서로 나열하면 '~입니까, 아닙니까?'라는 질문이 됩니다. 이때 不는 가볍게 읽습니다.",
+      "examples": [
+        {
+          "zh": "你是不是学生？",
+          "py": "Nǐ shì bu shì xuésheng?",
+          "ko": "학생이에요, 아니에요?"
+        },
+        {
+          "zh": "你有没有哥哥？",
+          "py": "Nǐ yǒu méiyǒu gēge?",
+          "ko": "형(오빠)이 있어요, 없어요?"
+        }
+      ]
+    },
+    {
+      "title": "很 + 饿 / 渴",
+      "rule": "상태를 말할 때는 형용사 앞에 很을 붙입니다. 배고프다, 목마르다도 같은 방식입니다.",
+      "examples": [
+        {
+          "zh": "我很饿。",
+          "py": "Wǒ hěn è.",
+          "ko": "배고파요."
+        },
+        {
+          "zh": "我想吃牛肉。",
+          "py": "Wǒ xiǎng chī niúròu.",
+          "ko": "소고기를 먹고 싶어요."
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "B",
+      "zh": "你好！请问，你们想吃什么？",
+      "py": "Nǐ hǎo! Qǐngwèn, nǐmen xiǎng chī shénme?",
+      "ko": "안녕하세요! 무엇을 드시겠어요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我很饿，我要一碗面条和两个鸡蛋。",
+      "py": "Wǒ hěn è, wǒ yào yì wǎn miàntiáo hé liǎng ge jīdàn.",
+      "ko": "배고파요, 국수 한 그릇과 달걀 두 개 주세요."
+    },
+    {
+      "sp": "B",
+      "zh": "好的。这个菜不辣。你想喝什么？",
+      "py": "Hǎo de. Zhège cài bú là. Nǐ xiǎng hē shénme?",
+      "ko": "알겠습니다. 이 요리는 맵지 않아요. 뭘 마시겠어요?"
+    },
+    {
+      "sp": "A",
+      "zh": "请给我一杯咖啡。你们有啤酒吗？",
+      "py": "Qǐng gěi wǒ yì bēi kāfēi. Nǐmen yǒu píjiǔ ma?",
+      "ko": "커피 한 잔 주세요. 맥주도 있어요?"
+    },
+    {
+      "sp": "B",
+      "zh": "有。",
+      "py": "Yǒu.",
+      "ko": "있어요."
+    },
+    {
+      "sp": "A",
+      "zh": "好，我也要一杯啤酒。",
+      "py": "Hǎo, wǒ yě yào yì bēi píjiǔ.",
+      "ko": "좋아요, 저도 맥주 한 잔 주세요."
+    }
+  ]
+},
+  /* ===== data/week-008.json ===== */
+  "data/week-008.json": {
+  "week": 8,
+  "theme": "장소와 길 묻기",
+  "goal": "장소의 위치와 가는 방법을 묻고 답한다",
+  "vocab": [
+    {
+      "zh": "去",
+      "py": "qù",
+      "ko": "가다"
+    },
+    {
+      "zh": "学校",
+      "py": "xuéxiào",
+      "ko": "학교"
+    },
+    {
+      "zh": "医院",
+      "py": "yīyuàn",
+      "ko": "병원"
+    },
+    {
+      "zh": "银行",
+      "py": "yínháng",
+      "ko": "은행"
+    },
+    {
+      "zh": "商店",
+      "py": "shāngdiàn",
+      "ko": "상점, 가게"
+    },
+    {
+      "zh": "地铁",
+      "py": "dìtiě",
+      "ko": "지하철"
+    },
+    {
+      "zh": "车站",
+      "py": "chēzhàn",
+      "ko": "정류장, 역"
+    },
+    {
+      "zh": "前面",
+      "py": "qiánmian",
+      "ko": "앞쪽"
+    },
+    {
+      "zh": "后面",
+      "py": "hòumian",
+      "ko": "뒤쪽"
+    },
+    {
+      "zh": "左边",
+      "py": "zuǒbian",
+      "ko": "왼쪽"
+    },
+    {
+      "zh": "右边",
+      "py": "yòubian",
+      "ko": "오른쪽"
+    },
+    {
+      "zh": "旁边",
+      "py": "pángbiān",
+      "ko": "옆"
+    },
+    {
+      "zh": "远",
+      "py": "yuǎn",
+      "ko": "멀다"
+    },
+    {
+      "zh": "近",
+      "py": "jìn",
+      "ko": "가깝다"
+    },
+    {
+      "zh": "离",
+      "py": "lí",
+      "ko": "~에서, ~로부터 (거리)"
+    },
+    {
+      "zh": "走",
+      "py": "zǒu",
+      "ko": "걷다, 가다"
+    },
+    {
+      "zh": "坐",
+      "py": "zuò",
+      "ko": "앉다, (교통수단을) 타다"
+    },
+    {
+      "zh": "到",
+      "py": "dào",
+      "ko": "도착하다"
+    },
+    {
+      "zh": "怎么",
+      "py": "zěnme",
+      "ko": "어떻게"
+    },
+    {
+      "zh": "这儿",
+      "py": "zhèr",
+      "ko": "여기"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "你去哪儿？我去学校。",
+      "py": "Nǐ qù nǎr? Wǒ qù xuéxiào.",
+      "ko": "어디 가요? 학교에 가요."
+    },
+    {
+      "zh": "银行在哪儿？银行在医院旁边。",
+      "py": "Yínháng zài nǎr? Yínháng zài yīyuàn pángbiān.",
+      "ko": "은행이 어디예요? 병원 옆에 있어요."
+    },
+    {
+      "zh": "商店在车站前面。",
+      "py": "Shāngdiàn zài chēzhàn qiánmian.",
+      "ko": "가게는 정류장 앞에 있어요."
+    },
+    {
+      "zh": "学校离我家很近。",
+      "py": "Xuéxiào lí wǒ jiā hěn jìn.",
+      "ko": "학교는 우리 집에서 아주 가까워요."
+    },
+    {
+      "zh": "你家离学校远不远？",
+      "py": "Nǐ jiā lí xuéxiào yuǎn bu yuǎn?",
+      "ko": "집이 학교에서 멀어요?"
+    },
+    {
+      "zh": "去医院怎么走？",
+      "py": "Qù yīyuàn zěnme zǒu?",
+      "ko": "병원에는 어떻게 가요?"
+    },
+    {
+      "zh": "你坐地铁去吗？我坐地铁去。",
+      "py": "Nǐ zuò dìtiě qù ma? Wǒ zuò dìtiě qù.",
+      "ko": "지하철 타고 가요? 지하철 타고 가요."
+    },
+    {
+      "zh": "我到车站了。",
+      "py": "Wǒ dào chēzhàn le.",
+      "ko": "정류장에 도착했어요."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "在 + 장소 / 방위",
+      "rule": "'~에 있다'는 在를 씁니다. 在 뒤에 장소나 '장소 + 방위어(前面·后面·旁边…)'를 붙입니다.",
+      "examples": [
+        {
+          "zh": "银行在哪儿？",
+          "py": "Yínháng zài nǎr?",
+          "ko": "은행이 어디에 있어요?"
+        },
+        {
+          "zh": "医院在学校后面。",
+          "py": "Yīyuàn zài xuéxiào hòumian.",
+          "ko": "병원은 학교 뒤에 있어요."
+        }
+      ]
+    },
+    {
+      "title": "A 离 B 远 / 近",
+      "rule": "离(lí)는 두 장소 사이의 거리를 말할 때 씁니다. A 离 B + 远/近 순서입니다.",
+      "examples": [
+        {
+          "zh": "学校离我家很近。",
+          "py": "Xuéxiào lí wǒ jiā hěn jìn.",
+          "ko": "학교는 우리 집에서 가까워요."
+        },
+        {
+          "zh": "你家离学校远吗？",
+          "py": "Nǐ jiā lí xuéxiào yuǎn ma?",
+          "ko": "집이 학교에서 멀어요?"
+        }
+      ]
+    },
+    {
+      "title": "坐 + 교통수단 + 去 / 怎么走",
+      "rule": "교통수단을 타고 간다는 말은 坐 + 교통수단 + 去입니다. 길을 물을 때는 怎么走(어떻게 가요)를 씁니다.",
+      "examples": [
+        {
+          "zh": "我坐地铁去。",
+          "py": "Wǒ zuò dìtiě qù.",
+          "ko": "저는 지하철 타고 가요."
+        },
+        {
+          "zh": "去银行怎么走？",
+          "py": "Qù yínháng zěnme zǒu?",
+          "ko": "은행에는 어떻게 가요?"
+        }
+      ]
+    },
+    {
+      "title": "문장 끝의 了 (도착·완료)",
+      "rule": "문장 끝에 了(le)를 붙이면 어떤 일이 이루어졌거나 상태가 바뀌었음을 나타냅니다.",
+      "examples": [
+        {
+          "zh": "我到了。",
+          "py": "Wǒ dào le.",
+          "ko": "도착했어요."
+        },
+        {
+          "zh": "我到车站了。",
+          "py": "Wǒ dào chēzhàn le.",
+          "ko": "정류장에 도착했어요."
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "请问，去银行怎么走？",
+      "py": "Qǐngwèn, qù yínháng zěnme zǒu?",
+      "ko": "실례지만, 은행에는 어떻게 가요?"
+    },
+    {
+      "sp": "B",
+      "zh": "银行在医院旁边。你坐地铁去。",
+      "py": "Yínháng zài yīyuàn pángbiān. Nǐ zuò dìtiě qù.",
+      "ko": "은행은 병원 옆에 있어요. 지하철을 타고 가세요."
+    },
+    {
+      "sp": "A",
+      "zh": "离这儿远吗？",
+      "py": "Lí zhèr yuǎn ma?",
+      "ko": "여기서 멀어요?"
+    },
+    {
+      "sp": "B",
+      "zh": "不远，很近。",
+      "py": "Bù yuǎn, hěn jìn.",
+      "ko": "멀지 않아요, 아주 가까워요."
+    },
+    {
+      "sp": "A",
+      "zh": "医院在左边吗？",
+      "py": "Yīyuàn zài zuǒbian ma?",
+      "ko": "병원은 왼쪽에 있어요?"
+    },
+    {
+      "sp": "B",
+      "zh": "不是，在右边。",
+      "py": "Bú shì, zài yòubian.",
+      "ko": "아니요, 오른쪽에 있어요."
+    }
+  ]
+},
+  /* ===== data/week-009.json ===== */
+  "data/week-009.json": {
+  "week": 9,
+  "theme": "취미와 주말",
+  "goal": "할 수 있는 것과 좋아하는 활동을 말하고 제안한다",
+  "vocab": [
+    {
+      "zh": "电视",
+      "py": "diànshì",
+      "ko": "텔레비전"
+    },
+    {
+      "zh": "电影",
+      "py": "diànyǐng",
+      "ko": "영화"
+    },
+    {
+      "zh": "听",
+      "py": "tīng",
+      "ko": "듣다"
+    },
+    {
+      "zh": "音乐",
+      "py": "yīnyuè",
+      "ko": "음악"
+    },
+    {
+      "zh": "说",
+      "py": "shuō",
+      "ko": "말하다"
+    },
+    {
+      "zh": "汉语",
+      "py": "Hànyǔ",
+      "ko": "중국어"
+    },
+    {
+      "zh": "韩语",
+      "py": "Hányǔ",
+      "ko": "한국어"
+    },
+    {
+      "zh": "会",
+      "py": "huì",
+      "ko": "~할 수 있다 (배워서), ~할 것이다"
+    },
+    {
+      "zh": "写",
+      "py": "xiě",
+      "ko": "쓰다"
+    },
+    {
+      "zh": "字",
+      "py": "zì",
+      "ko": "글자"
+    },
+    {
+      "zh": "做",
+      "py": "zuò",
+      "ko": "하다, 만들다"
+    },
+    {
+      "zh": "打",
+      "py": "dǎ",
+      "ko": "치다, (구기 종목을) 하다"
+    },
+    {
+      "zh": "篮球",
+      "py": "lánqiú",
+      "ko": "농구"
+    },
+    {
+      "zh": "唱歌",
+      "py": "chàng gē",
+      "ko": "노래하다"
+    },
+    {
+      "zh": "玩",
+      "py": "wán",
+      "ko": "놀다"
+    },
+    {
+      "zh": "周末",
+      "py": "zhōumò",
+      "ko": "주말"
+    },
+    {
+      "zh": "常常",
+      "py": "chángcháng",
+      "ko": "자주"
+    },
+    {
+      "zh": "书",
+      "py": "shū",
+      "ko": "책"
+    },
+    {
+      "zh": "一起",
+      "py": "yìqǐ",
+      "ko": "함께"
+    },
+    {
+      "zh": "学",
+      "py": "xué",
+      "ko": "배우다"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "我在学汉语。",
+      "py": "Wǒ zài xué Hànyǔ.",
+      "ko": "저는 중국어를 배우고 있어요."
+    },
+    {
+      "zh": "你会说汉语吗？",
+      "py": "Nǐ huì shuō Hànyǔ ma?",
+      "ko": "중국어를 할 줄 알아요?"
+    },
+    {
+      "zh": "我会说一点儿汉语。",
+      "py": "Wǒ huì shuō yìdiǎnr Hànyǔ.",
+      "ko": "중국어를 조금 할 줄 알아요."
+    },
+    {
+      "zh": "我会写这个字。",
+      "py": "Wǒ huì xiě zhège zì.",
+      "ko": "이 글자는 쓸 줄 알아요."
+    },
+    {
+      "zh": "你周末常常做什么？",
+      "py": "Nǐ zhōumò chángchang zuò shénme?",
+      "ko": "주말에 자주 뭘 해요?"
+    },
+    {
+      "zh": "我周末常常看电影，听音乐。",
+      "py": "Wǒ zhōumò chángchang kàn diànyǐng, tīng yīnyuè.",
+      "ko": "주말에 자주 영화를 보고 음악을 들어요."
+    },
+    {
+      "zh": "我喜欢打篮球，不喜欢看书。",
+      "py": "Wǒ xǐhuan dǎ lánqiú, bù xǐhuan kàn shū.",
+      "ko": "농구하는 건 좋아하고 책 읽는 건 안 좋아해요."
+    },
+    {
+      "zh": "他会唱歌，我不会。",
+      "py": "Tā huì chàng gē, wǒ bú huì.",
+      "ko": "그는 노래를 할 줄 알지만 저는 못해요."
+    },
+    {
+      "zh": "我会说韩语，周末常常和朋友玩。",
+      "py": "Wǒ huì shuō Hányǔ, zhōumò chángchang hé péngyou wán.",
+      "ko": "저는 한국어를 할 줄 알고, 주말에 자주 친구와 놀아요."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "会 + 동사 (배워서 할 수 있다)",
+      "rule": "会(huì)는 배우거나 익혀서 할 수 있는 능력을 말합니다. 부정은 不会(bú huì)입니다.",
+      "examples": [
+        {
+          "zh": "我会说汉语。",
+          "py": "Wǒ huì shuō Hànyǔ.",
+          "ko": "저는 중국어를 할 줄 압니다."
+        },
+        {
+          "zh": "我不会唱歌。",
+          "py": "Wǒ bú huì chàng gē.",
+          "ko": "저는 노래를 못합니다."
+        }
+      ]
+    },
+    {
+      "title": "在 + 동사 (진행)",
+      "rule": "동사 앞에 在를 붙이면 '~하고 있다'는 진행의 뜻이 됩니다.",
+      "examples": [
+        {
+          "zh": "我在学汉语。",
+          "py": "Wǒ zài xué Hànyǔ.",
+          "ko": "저는 중국어를 배우고 있어요."
+        },
+        {
+          "zh": "他在看电视。",
+          "py": "Tā zài kàn diànshì.",
+          "ko": "그는 텔레비전을 보고 있어요."
+        }
+      ]
+    },
+    {
+      "title": "빈도·시간어는 동사 앞",
+      "rule": "常常(자주), 周末(주말) 같은 말은 동사 앞에 놓습니다. 한국어와 달리 동사 뒤에 두지 않습니다.",
+      "examples": [
+        {
+          "zh": "我周末常常看电影。",
+          "py": "Wǒ zhōumò chángchang kàn diànyǐng.",
+          "ko": "저는 주말에 자주 영화를 봅니다."
+        }
+      ]
+    },
+    {
+      "title": "喜欢 + 동사 / 一点儿",
+      "rule": "喜欢 뒤에 동사를 바로 붙여 '~하는 것을 좋아하다'를 만듭니다. 一点儿은 '조금'입니다.",
+      "examples": [
+        {
+          "zh": "我喜欢听音乐。",
+          "py": "Wǒ xǐhuan tīng yīnyuè.",
+          "ko": "저는 음악 듣는 걸 좋아해요."
+        },
+        {
+          "zh": "我会说一点儿汉语。",
+          "py": "Wǒ huì shuō yìdiǎnr Hànyǔ.",
+          "ko": "저는 중국어를 조금 할 줄 알아요."
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "你周末常常做什么？",
+      "py": "Nǐ zhōumò chángchang zuò shénme?",
+      "ko": "주말에 자주 뭘 해요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我常常看电影，听音乐。你呢？",
+      "py": "Wǒ chángchang kàn diànyǐng, tīng yīnyuè. Nǐ ne?",
+      "ko": "자주 영화를 보고 음악을 들어요. 당신은요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我喜欢打篮球。你会打篮球吗？",
+      "py": "Wǒ xǐhuan dǎ lánqiú. Nǐ huì dǎ lánqiú ma?",
+      "ko": "저는 농구를 좋아해요. 농구할 줄 알아요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我不会，我想学。",
+      "py": "Wǒ bú huì, wǒ xiǎng xué.",
+      "ko": "못해요, 배우고 싶어요."
+    },
+    {
+      "sp": "A",
+      "zh": "好！我们周末一起打篮球。",
+      "py": "Hǎo! Wǒmen zhōumò yìqǐ dǎ lánqiú.",
+      "ko": "좋아요! 우리 주말에 같이 농구해요."
+    },
+    {
+      "sp": "B",
+      "zh": "太好了！",
+      "py": "Tài hǎo le!",
+      "ko": "정말 좋아요!"
+    }
+  ]
+},
+  /* ===== data/week-010.json ===== */
+  "data/week-010.json": {
+  "week": 10,
+  "theme": "날씨와 건강",
+  "goal": "날씨를 말하고, 아플 때 증상을 설명하며 조언을 주고받는다",
+  "vocab": [
+    {
+      "zh": "天气",
+      "py": "tiānqì",
+      "ko": "날씨"
+    },
+    {
+      "zh": "怎么样",
+      "py": "zěnmeyàng",
+      "ko": "어때요"
+    },
+    {
+      "zh": "冷",
+      "py": "lěng",
+      "ko": "춥다"
+    },
+    {
+      "zh": "热",
+      "py": "rè",
+      "ko": "덥다, 뜨겁다"
+    },
+    {
+      "zh": "雨",
+      "py": "yǔ",
+      "ko": "비"
+    },
+    {
+      "zh": "下",
+      "py": "xià",
+      "ko": "내리다"
+    },
+    {
+      "zh": "雪",
+      "py": "xuě",
+      "ko": "눈"
+    },
+    {
+      "zh": "累",
+      "py": "lèi",
+      "ko": "피곤하다"
+    },
+    {
+      "zh": "忙",
+      "py": "máng",
+      "ko": "바쁘다"
+    },
+    {
+      "zh": "感冒",
+      "py": "gǎnmào",
+      "ko": "감기 (에 걸리다)"
+    },
+    {
+      "zh": "头",
+      "py": "tóu",
+      "ko": "머리"
+    },
+    {
+      "zh": "疼",
+      "py": "téng",
+      "ko": "아프다"
+    },
+    {
+      "zh": "医生",
+      "py": "yīshēng",
+      "ko": "의사"
+    },
+    {
+      "zh": "药",
+      "py": "yào",
+      "ko": "약"
+    },
+    {
+      "zh": "休息",
+      "py": "xiūxi",
+      "ko": "쉬다"
+    },
+    {
+      "zh": "身体",
+      "py": "shēntǐ",
+      "ko": "몸, 건강"
+    },
+    {
+      "zh": "多",
+      "py": "duō",
+      "ko": "많다, 많이"
+    },
+    {
+      "zh": "伞",
+      "py": "sǎn",
+      "ko": "우산"
+    },
+    {
+      "zh": "带",
+      "py": "dài",
+      "ko": "지니다, 가져가다"
+    },
+    {
+      "zh": "吧",
+      "py": "ba",
+      "ko": "~하자, ~하세요 (제안·권유)"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "今天天气怎么样？",
+      "py": "Jīntiān tiānqì zěnmeyàng?",
+      "ko": "오늘 날씨는 어때요?"
+    },
+    {
+      "zh": "今天很冷，明天会下雪。",
+      "py": "Jīntiān hěn lěng, míngtiān huì xià xuě.",
+      "ko": "오늘은 춥고 내일은 눈이 올 거예요."
+    },
+    {
+      "zh": "现在在下雨，请带伞。",
+      "py": "Xiànzài zài xià yǔ, qǐng dài sǎn.",
+      "ko": "지금 비가 오고 있으니 우산을 가져가세요."
+    },
+    {
+      "zh": "我很累，也很忙。",
+      "py": "Wǒ hěn lèi, yě hěn máng.",
+      "ko": "저는 피곤하고 바빠요."
+    },
+    {
+      "zh": "你怎么了？我感冒了。",
+      "py": "Nǐ zěnme le? Wǒ gǎnmào le.",
+      "ko": "어떻게 된 거예요? 감기에 걸렸어요."
+    },
+    {
+      "zh": "我头疼，身体不好。",
+      "py": "Wǒ tóu téng, shēntǐ bù hǎo.",
+      "ko": "머리가 아프고 몸이 안 좋아요."
+    },
+    {
+      "zh": "你去医院看医生吧。",
+      "py": "Nǐ qù yīyuàn kàn yīshēng ba.",
+      "ko": "병원에 가서 진찰받아 보세요."
+    },
+    {
+      "zh": "多喝水，多休息。",
+      "py": "Duō hē shuǐ, duō xiūxi.",
+      "ko": "물 많이 마시고 많이 쉬세요."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "怎么样 (어때요?)",
+      "rule": "怎么样(zěnmeyàng)은 상태나 의견을 묻는 말입니다. 날씨, 건강, 음식 등 폭넓게 씁니다.",
+      "examples": [
+        {
+          "zh": "今天天气怎么样？",
+          "py": "Jīntiān tiānqì zěnmeyàng?",
+          "ko": "오늘 날씨 어때요?"
+        },
+        {
+          "zh": "你的身体怎么样？",
+          "py": "Nǐ de shēntǐ zěnmeyàng?",
+          "ko": "건강은 어때요?"
+        }
+      ]
+    },
+    {
+      "title": "会 (~일 것이다)",
+      "rule": "会는 앞에서 '할 줄 안다'였지만, 미래나 예측을 말할 때도 씁니다. '~일 것이다'로 해석합니다.",
+      "examples": [
+        {
+          "zh": "明天会下雨。",
+          "py": "Míngtiān huì xià yǔ.",
+          "ko": "내일은 비가 올 거예요."
+        },
+        {
+          "zh": "明天会很热。",
+          "py": "Míngtiān huì hěn rè.",
+          "ko": "내일은 아주 더울 거예요."
+        }
+      ]
+    },
+    {
+      "title": "문장 끝의 了 (상태 변화)",
+      "rule": "了(le)는 새로운 상태가 되었음을 나타냅니다. 감기에 걸렸다, 약을 먹었다처럼 일이 일어난 것에도 씁니다.",
+      "examples": [
+        {
+          "zh": "我感冒了。",
+          "py": "Wǒ gǎnmào le.",
+          "ko": "감기에 걸렸어요."
+        },
+        {
+          "zh": "我吃药了。",
+          "py": "Wǒ chī yào le.",
+          "ko": "약을 먹었어요."
+        },
+        {
+          "zh": "你怎么了？",
+          "py": "Nǐ zěnme le?",
+          "ko": "무슨 일이에요? / 어디 안 좋아요?"
+        }
+      ]
+    },
+    {
+      "title": "多 + 동사 / 吧",
+      "rule": "多 + 동사는 '많이 ~하세요'라는 권유입니다. 문장 끝의 吧(ba)는 제안이나 부드러운 권유를 만듭니다.",
+      "examples": [
+        {
+          "zh": "多喝水。",
+          "py": "Duō hē shuǐ.",
+          "ko": "물을 많이 마시세요."
+        },
+        {
+          "zh": "你去医院吧。",
+          "py": "Nǐ qù yīyuàn ba.",
+          "ko": "병원에 가 보세요."
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "你怎么了？",
+      "py": "Nǐ zěnme le?",
+      "ko": "어디 안 좋아요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我头疼，我感冒了。",
+      "py": "Wǒ tóu téng, wǒ gǎnmào le.",
+      "ko": "머리가 아파요, 감기에 걸렸어요."
+    },
+    {
+      "sp": "A",
+      "zh": "你去医院看医生吧，多休息。",
+      "py": "Nǐ qù yīyuàn kàn yīshēng ba, duō xiūxi.",
+      "ko": "병원에 가서 진찰받고 많이 쉬세요."
+    },
+    {
+      "sp": "B",
+      "zh": "好。今天天气怎么样？",
+      "py": "Hǎo. Jīntiān tiānqì zěnmeyàng?",
+      "ko": "네. 오늘 날씨는 어때요?"
+    },
+    {
+      "sp": "A",
+      "zh": "今天很冷，在下雨，请带伞。",
+      "py": "Jīntiān hěn lěng, zài xià yǔ, qǐng dài sǎn.",
+      "ko": "오늘은 춥고 비가 오고 있으니 우산을 가져가세요."
+    },
+    {
+      "sp": "B",
+      "zh": "谢谢！",
+      "py": "Xièxie!",
+      "ko": "고맙습니다!"
+    }
+  ]
+},
+  /* ===== data/week-011.json ===== */
+  "data/week-011.json": {
+  "week": 11,
+  "theme": "직장과 학교",
+  "goal": "하는 일과 하루 일과를 말하고, 이유를 설명한다",
+  "vocab": [
+    {
+      "zh": "工作",
+      "py": "gōngzuò",
+      "ko": "일, 일하다"
+    },
+    {
+      "zh": "公司",
+      "py": "gōngsī",
+      "ko": "회사"
+    },
+    {
+      "zh": "同事",
+      "py": "tóngshì",
+      "ko": "동료"
+    },
+    {
+      "zh": "上班",
+      "py": "shàngbān",
+      "ko": "출근하다"
+    },
+    {
+      "zh": "下班",
+      "py": "xiàbān",
+      "ko": "퇴근하다"
+    },
+    {
+      "zh": "老板",
+      "py": "lǎobǎn",
+      "ko": "사장"
+    },
+    {
+      "zh": "经理",
+      "py": "jīnglǐ",
+      "ko": "매니저, 팀장"
+    },
+    {
+      "zh": "大学",
+      "py": "dàxué",
+      "ko": "대학교"
+    },
+    {
+      "zh": "大学生",
+      "py": "dàxuéshēng",
+      "ko": "대학생"
+    },
+    {
+      "zh": "专业",
+      "py": "zhuānyè",
+      "ko": "전공"
+    },
+    {
+      "zh": "学习",
+      "py": "xuéxí",
+      "ko": "공부하다"
+    },
+    {
+      "zh": "电脑",
+      "py": "diànnǎo",
+      "ko": "컴퓨터"
+    },
+    {
+      "zh": "开会",
+      "py": "kāi huì",
+      "ko": "회의하다"
+    },
+    {
+      "zh": "每天",
+      "py": "měitiān",
+      "ko": "매일"
+    },
+    {
+      "zh": "午饭",
+      "py": "wǔfàn",
+      "ko": "점심밥"
+    },
+    {
+      "zh": "同学",
+      "py": "tóngxué",
+      "ko": "같은 반 친구, 학우"
+    },
+    {
+      "zh": "英语",
+      "py": "Yīngyǔ",
+      "ko": "영어"
+    },
+    {
+      "zh": "还",
+      "py": "hái",
+      "ko": "또, 게다가, 아직"
+    },
+    {
+      "zh": "为什么",
+      "py": "wèishénme",
+      "ko": "왜"
+    },
+    {
+      "zh": "因为",
+      "py": "yīnwèi",
+      "ko": "왜냐하면, ~때문에"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "你做什么工作？我在公司工作。",
+      "py": "Nǐ zuò shénme gōngzuò? Wǒ zài gōngsī gōngzuò.",
+      "ko": "무슨 일을 해요? 회사에서 일해요."
+    },
+    {
+      "zh": "我在公司上班，他是我的同事。",
+      "py": "Wǒ zài gōngsī shàngbān, tā shì wǒ de tóngshì.",
+      "ko": "저는 회사에 다니고, 그는 제 동료예요."
+    },
+    {
+      "zh": "我每天八点上班，六点下班。",
+      "py": "Wǒ měitiān bā diǎn shàngbān, liù diǎn xiàbān.",
+      "ko": "저는 매일 8시에 출근하고 6시에 퇴근해요."
+    },
+    {
+      "zh": "我们十二点一起吃午饭。",
+      "py": "Wǒmen shí'èr diǎn yìqǐ chī wǔfàn.",
+      "ko": "우리는 12시에 같이 점심을 먹어요."
+    },
+    {
+      "zh": "你的专业是什么？我是大学生，我学习英语。",
+      "py": "Nǐ de zhuānyè shì shénme? Wǒ shì dàxuéshēng, wǒ xuéxí Yīngyǔ.",
+      "ko": "전공이 뭐예요? 저는 대학생이고 영어를 공부해요."
+    },
+    {
+      "zh": "今天我不想上班。",
+      "py": "Jīntiān wǒ bù xiǎng shàngbān.",
+      "ko": "오늘은 출근하기 싫어요."
+    },
+    {
+      "zh": "你为什么不想上班？因为我很累，还要开会。",
+      "py": "Nǐ wèishénme bù xiǎng shàngbān? Yīnwèi wǒ hěn lèi, hái yào kāihuì.",
+      "ko": "왜 출근하기 싫어요? 피곤한데 회의도 해야 해서요."
+    },
+    {
+      "zh": "我的老板很忙，他每天都开会。",
+      "py": "Wǒ de lǎobǎn hěn máng, tā měitiān dōu kāihuì.",
+      "ko": "제 사장님은 바빠서 매일 회의를 해요."
+    },
+    {
+      "zh": "我的同学是经理。",
+      "py": "Wǒ de tóngxué shì jīnglǐ.",
+      "ko": "제 동창(학우)은 매니저예요."
+    },
+    {
+      "zh": "我的电脑在公司。",
+      "py": "Wǒ de diànnǎo zài gōngsī.",
+      "ko": "제 컴퓨터는 회사에 있어요."
+    }
+  ],
+  "grammar": [
+    {
+      "title": "在 + 장소 + 동사",
+      "rule": "'~에서 ~하다'는 在 + 장소를 동사 앞에 놓습니다. 장소가 동사 뒤로 가지 않습니다.",
+      "examples": [
+        {
+          "zh": "我在公司工作。",
+          "py": "Wǒ zài gōngsī gōngzuò.",
+          "ko": "저는 회사에서 일해요."
+        },
+        {
+          "zh": "他在大学学习。",
+          "py": "Tā zài dàxué xuéxí.",
+          "ko": "그는 대학에서 공부해요."
+        }
+      ]
+    },
+    {
+      "title": "주어 + 시간 + 장소 + 동사",
+      "rule": "시간어는 장소보다 앞에 옵니다. 중국어 문장은 대체로 '누가 - 언제 - 어디서 - 무엇을 한다' 순서입니다.",
+      "examples": [
+        {
+          "zh": "我每天八点在公司上班。",
+          "py": "Wǒ měitiān bā diǎn zài gōngsī shàngbān.",
+          "ko": "저는 매일 8시에 회사에서 근무해요."
+        }
+      ]
+    },
+    {
+      "title": "为什么…？因为…。",
+      "rule": "为什么는 이유를 묻고, 因为로 이유를 답합니다. 대답에서 因为만 말하고 짧게 끝낼 수도 있습니다.",
+      "examples": [
+        {
+          "zh": "你为什么学习英语？",
+          "py": "Nǐ wèishénme xuéxí Yīngyǔ?",
+          "ko": "왜 영어를 공부해요?"
+        },
+        {
+          "zh": "因为我想在公司工作。",
+          "py": "Yīnwèi wǒ xiǎng zài gōngsī gōngzuò.",
+          "ko": "회사에서 일하고 싶어서요."
+        }
+      ]
+    },
+    {
+      "title": "还 / 每天都",
+      "rule": "还(hái)는 '게다가, 또'를 뜻하며 동사 앞에 놓습니다. 每天都는 '매일 ~다 한다'로, 都를 꼭 붙입니다.",
+      "examples": [
+        {
+          "zh": "他很忙，还要开会。",
+          "py": "Tā hěn máng, hái yào kāihuì.",
+          "ko": "그는 바쁜데 회의도 해야 해요."
+        },
+        {
+          "zh": "我每天都学习。",
+          "py": "Wǒ měitiān dōu xuéxí.",
+          "ko": "저는 매일 공부해요."
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "你做什么工作？",
+      "py": "Nǐ zuò shénme gōngzuò?",
+      "ko": "무슨 일을 해요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我在公司上班。你呢？",
+      "py": "Wǒ zài gōngsī shàngbān. Nǐ ne?",
+      "ko": "회사에 다녀요. 당신은요?"
+    },
+    {
+      "sp": "A",
+      "zh": "我是大学生，我学习英语。",
+      "py": "Wǒ shì dàxuéshēng, wǒ xuéxí Yīngyǔ.",
+      "ko": "저는 대학생이고 영어를 공부해요."
+    },
+    {
+      "sp": "B",
+      "zh": "你每天都很忙吗？",
+      "py": "Nǐ měitiān dōu hěn máng ma?",
+      "ko": "매일 바빠요?"
+    },
+    {
+      "sp": "A",
+      "zh": "不太忙。你呢？",
+      "py": "Bú tài máng. Nǐ ne?",
+      "ko": "별로 안 바빠요. 당신은요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我很忙，因为我的老板每天都开会。",
+      "py": "Wǒ hěn máng, yīnwèi wǒ de lǎobǎn měitiān dōu kāihuì.",
+      "ko": "저는 바빠요, 사장님이 매일 회의를 하거든요."
+    }
+  ]
+},
+  /* ===== data/week-012.json ===== */
+  "data/week-012.json": {
+  "week": 12,
+  "theme": "대화 유지 표현과 자기소개 확장",
+  "goal": "못 알아들었을 때 되묻고, 이유와 의견을 덧붙여 대화를 이어 간다",
+  "vocab": [
+    {
+      "zh": "可以",
+      "py": "kěyǐ",
+      "ko": "~해도 된다, 가능하다"
+    },
+    {
+      "zh": "能",
+      "py": "néng",
+      "ko": "~할 수 있다 (조건·가능)"
+    },
+    {
+      "zh": "懂",
+      "py": "dǒng",
+      "ko": "이해하다"
+    },
+    {
+      "zh": "知道",
+      "py": "zhīdào",
+      "ko": "알다"
+    },
+    {
+      "zh": "慢",
+      "py": "màn",
+      "ko": "느리다"
+    },
+    {
+      "zh": "再",
+      "py": "zài",
+      "ko": "다시, 또"
+    },
+    {
+      "zh": "遍",
+      "py": "biàn",
+      "ko": "번, 회 (처음부터 끝까지의 횟수)"
+    },
+    {
+      "zh": "一下",
+      "py": "yíxià",
+      "ko": "좀, 잠깐 (동작을 부드럽게)"
+    },
+    {
+      "zh": "帮",
+      "py": "bāng",
+      "ko": "돕다"
+    },
+    {
+      "zh": "等",
+      "py": "děng",
+      "ko": "기다리다"
+    },
+    {
+      "zh": "但是",
+      "py": "dànshì",
+      "ko": "하지만"
+    },
+    {
+      "zh": "所以",
+      "py": "suǒyǐ",
+      "ko": "그래서"
+    },
+    {
+      "zh": "觉得",
+      "py": "juéde",
+      "ko": "~라고 생각하다, 느끼다"
+    },
+    {
+      "zh": "欢迎",
+      "py": "huānyíng",
+      "ko": "환영하다"
+    },
+    {
+      "zh": "有意思",
+      "py": "yǒu yìsi",
+      "ko": "재미있다"
+    },
+    {
+      "zh": "真",
+      "py": "zhēn",
+      "ko": "정말, 참"
+    },
+    {
+      "zh": "最",
+      "py": "zuì",
+      "ko": "가장"
+    },
+    {
+      "zh": "时间",
+      "py": "shíjiān",
+      "ko": "시간"
+    },
+    {
+      "zh": "中国",
+      "py": "Zhōngguó",
+      "ko": "중국"
+    },
+    {
+      "zh": "韩国",
+      "py": "Hánguó",
+      "ko": "한국"
+    }
+  ],
+  "sentences": [
+    {
+      "zh": "对不起，我没听懂，请再说一遍。",
+      "tokens": [
+        "对不起",
+        "我",
+        "没",
+        "听懂",
+        "请",
+        "再",
+        "说",
+        "一",
+        "遍"
+      ],
+      "py": "Duìbuqǐ, wǒ méi tīngdǒng, qǐng zài shuō yí biàn.",
+      "ko": "죄송해요, 못 알아들었어요. 다시 한번 말해 주세요."
+    },
+    {
+      "zh": "请说慢一点儿。",
+      "py": "Qǐng shuō màn yìdiǎnr.",
+      "ko": "조금 천천히 말해 주세요."
+    },
+    {
+      "zh": "你能帮我一下吗？",
+      "py": "Nǐ néng bāng wǒ yíxià ma?",
+      "ko": "저를 좀 도와줄 수 있어요?"
+    },
+    {
+      "zh": "请等一下。",
+      "py": "Qǐng děng yíxià.",
+      "ko": "잠깐만 기다려 주세요."
+    },
+    {
+      "zh": "我可以坐这儿吗？",
+      "py": "Wǒ kěyǐ zuò zhèr ma?",
+      "ko": "여기 앉아도 될까요?"
+    },
+    {
+      "zh": "我的汉语不太好，但是我很喜欢学习汉语。",
+      "py": "Wǒ de Hànyǔ bú tài hǎo, dànshì wǒ hěn xǐhuan xuéxí Hànyǔ.",
+      "ko": "제 중국어는 그다지 좋지 않지만, 중국어 공부를 아주 좋아해요."
+    },
+    {
+      "zh": "汉语很有意思，所以我每天学习。",
+      "py": "Hànyǔ hěn yǒu yìsi, suǒyǐ wǒ měitiān xuéxí.",
+      "ko": "중국어가 재미있어서 매일 공부해요."
+    },
+    {
+      "zh": "我觉得汉语真有意思。",
+      "py": "Wǒ juéde Hànyǔ zhēn yǒu yìsi.",
+      "ko": "중국어는 정말 재미있다고 생각해요."
+    },
+    {
+      "zh": "你知道他的名字吗？",
+      "py": "Nǐ zhīdào tā de míngzi ma?",
+      "ko": "그의 이름을 알아요?"
+    }
+  ],
+  "grammar": [
+    {
+      "title": "会 / 能 / 可以 구분",
+      "rule": "会는 배워서 할 줄 아는 것, 能은 조건이 되어 할 수 있는 것과 부탁, 可以는 허락을 구할 때 주로 씁니다.",
+      "examples": [
+        {
+          "zh": "我会说汉语。",
+          "py": "Wǒ huì shuō Hànyǔ.",
+          "ko": "저는 중국어를 할 줄 알아요. (능력)"
+        },
+        {
+          "zh": "你能帮我一下吗？",
+          "py": "Nǐ néng bāng wǒ yíxià ma?",
+          "ko": "저를 좀 도와줄 수 있어요? (부탁)"
+        },
+        {
+          "zh": "我可以坐这儿吗？",
+          "py": "Wǒ kěyǐ zuò zhèr ma?",
+          "ko": "여기 앉아도 될까요? (허락)"
+        }
+      ]
+    },
+    {
+      "title": "请 + 동사 + 一下 / 再 + 동사 + 一遍",
+      "rule": "동사 뒤에 一下를 붙이면 '좀 ~해 주세요'처럼 부드러운 요청이 됩니다. 再…一遍은 '한 번 더 ~해 주세요'입니다.",
+      "examples": [
+        {
+          "zh": "请等一下。",
+          "py": "Qǐng děng yíxià.",
+          "ko": "잠깐만 기다려 주세요."
+        },
+        {
+          "zh": "请再说一遍。",
+          "py": "Qǐng zài shuō yí biàn.",
+          "ko": "다시 한번 말해 주세요."
+        }
+      ]
+    },
+    {
+      "title": "因为…所以… / 但是",
+      "rule": "因为는 이유, 所以는 결과를 이끕니다. 중국어는 因为와 所以를 함께 써도 됩니다. 但是는 앞과 반대되는 내용을 이어 줍니다.",
+      "examples": [
+        {
+          "zh": "因为汉语有意思，所以我每天学习。",
+          "py": "Yīnwèi Hànyǔ yǒu yìsi, suǒyǐ wǒ měitiān xuéxí.",
+          "ko": "중국어가 재미있어서 매일 공부해요."
+        },
+        {
+          "zh": "我的汉语不好，但是我喜欢。",
+          "py": "Wǒ de Hànyǔ bù hǎo, dànshì wǒ xǐhuan.",
+          "ko": "제 중국어는 좋지 않지만 좋아해요."
+        }
+      ]
+    },
+    {
+      "title": "觉得 + 문장 / 真·最",
+      "rule": "觉得는 '~라고 생각하다'입니다. 真(정말)과 最(가장)는 형용사 앞에 놓아 정도를 나타냅니다.",
+      "examples": [
+        {
+          "zh": "我觉得汉语最有意思。",
+          "py": "Wǒ juéde Hànyǔ zuì yǒu yìsi.",
+          "ko": "중국어가 가장 재미있다고 생각해요."
+        },
+        {
+          "zh": "你的汉语真好！",
+          "py": "Nǐ de Hànyǔ zhēn hǎo!",
+          "ko": "중국어를 정말 잘하시네요!"
+        },
+        {
+          "zh": "你有时间吗？",
+          "py": "Nǐ yǒu shíjiān ma?",
+          "ko": "시간 있어요?"
+        }
+      ]
+    }
+  ],
+  "dialogue": [
+    {
+      "sp": "A",
+      "zh": "你好！欢迎你！你叫什么名字？",
+      "py": "Nǐ hǎo! Huānyíng nǐ! Nǐ jiào shénme míngzi?",
+      "ko": "안녕하세요! 환영합니다! 이름이 뭐예요?"
+    },
+    {
+      "sp": "B",
+      "zh": "我叫金敏，我是韩国人。我在学习汉语。",
+      "py": "Wǒ jiào Jīn Mǐn, wǒ shì Hánguórén. Wǒ zài xuéxí Hànyǔ.",
+      "ko": "저는 김민이고 한국인이에요. 중국어를 공부하고 있어요."
+    },
+    {
+      "sp": "A",
+      "zh": "你的汉语很好！",
+      "py": "Nǐ de Hànyǔ hěn hǎo!",
+      "ko": "중국어를 잘하시네요!"
+    },
+    {
+      "sp": "B",
+      "zh": "不，我的汉语不太好，但是我觉得汉语很有意思。",
+      "py": "Bù, wǒ de Hànyǔ bú tài hǎo, dànshì wǒ juéde Hànyǔ hěn yǒu yìsi.",
+      "ko": "아니에요, 아직 잘 못하지만 중국어가 재미있다고 생각해요."
+    },
+    {
+      "sp": "A",
+      "zh": "你为什么学习汉语？",
+      "py": "Nǐ wèishénme xuéxí Hànyǔ?",
+      "ko": "왜 중국어를 공부해요?"
+    },
+    {
+      "sp": "B",
+      "zh": "因为我想和中国朋友说汉语，所以我每天学习。",
+      "py": "Yīnwèi wǒ xiǎng hé Zhōngguó péngyou shuō Hànyǔ, suǒyǐ wǒ měitiān xuéxí.",
+      "ko": "중국 친구와 중국어로 이야기하고 싶어서 매일 공부해요."
+    }
+  ]
+}
+};
+</script>
+<script>
+'use strict';
+
+/* ============ 설정 ============ */
+const STORE_KEY = 'cn-study-v1';
+const TOTAL_WEEKS = 104;
+const TOTAL_SESSIONS = TOTAL_WEEKS * 7;
+const INTERVALS = [0, 1, 2, 4, 8, 16, 32]; // 복습 간격(일), 상자 번호 = 인덱스
+const REC_MAX_MS = 60000; // 한 번에 녹음할 수 있는 최대 시간
+const DAY_TYPES = [
+  { id: 'words1', label: '단어 ①' },
+  { id: 'words2', label: '단어 ②' },
+  { id: 'sentences', label: '핵심 문장' },
+  { id: 'grammar', label: '문법 + 대화' },
+  { id: 'speaking', label: '말하기 연습' },
+  { id: 'review', label: '복습 퀴즈' },
+  { id: 'check', label: '주간 점검 · 문장 만들기' },
+];
+
+const app = document.getElementById('app');
+const cache = {};
+
+/* ============ 툴팁 (마우스를 올리면 즉시 표시) ============ */
+const tipEl = document.createElement('div');
+tipEl.id = 'tip';
+document.body.appendChild(tipEl);
+
+function showTip(el) {
+  const text = el.dataset.tip;
+  if (!text) return;
+  tipEl.textContent = text;
+  tipEl.classList.add('on');
+  const r = el.getBoundingClientRect();
+  const w = tipEl.offsetWidth, h = tipEl.offsetHeight;
+  const left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8)); // 화면 밖으로 안 나가게
+  let top = r.top - h - 8;
+  if (top < 8) top = r.bottom + 8; // 위쪽 공간이 없으면 아래에 표시
+  tipEl.style.left = left + 'px';
+  tipEl.style.top = top + 'px';
+}
+function hideTip() {
+  tipEl.classList.remove('on');
+}
+let S = loadState();
+let session = null;
+let curriculum = null;
+// 화면 전환마다 1씩 올립니다. 느리게 끝난 이전 화면의 비동기 그리기가 새 화면을 덮어쓰지 않게 막는 표식입니다.
+let viewToken = 0;
+
+/* ============ 유틸 ============ */
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const weekOf = (cursor) => Math.floor(cursor / 7) + 1;
+const dayOf = (cursor) => cursor % 7;
+const weekPath = (n) => `data/week-${String(n).padStart(3, '0')}.json`;
+
+function todayStr(d = new Date()) {
+  return d.toLocaleDateString('sv-SE'); // YYYY-MM-DD (로컬 시간대)
+}
+function addDays(str, n) {
+  const d = new Date(str + 'T00:00:00');
+  d.setDate(d.getDate() + n);
+  return todayStr(d);
+}
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+async function getJSON(path) {
+  if (path in cache) return cache[path];
+  // 단일 파일 버전: 내장 데이터(window.CN_DATA)가 있으면 fetch 없이 사용
+  if (window.CN_DATA) {
+    cache[path] = window.CN_DATA[path] || null;
+    return cache[path];
+  }
+  try {
+    const r = await fetch(path);
+    if (!r.ok) throw new Error(r.status);
+    cache[path] = await r.json();
+  } catch (e) {
+    cache[path] = null;
+  }
+  return cache[path];
+}
+
+/* ============ 저장 상태 ============ */
+function defaultState() {
+  // cursor: 완료한 학습 세션 수 (이걸로 주차/요일을 계산 → 하루 빠져도 진도가 밀리지 않음)
+  // progress: 오늘 학습에서 완료한 단계 {cursor, done:[kind...]} (나갔다 와도 이어서 학습)
+  return { cursor: 0, completed: {}, srs: {}, checks: {}, progress: null, pen: { w: 'normal', mode: 'order' } };
+}
+function loadState() {
+  try {
+    return Object.assign(defaultState(), JSON.parse(localStorage.getItem(STORE_KEY)) || {});
+  } catch (e) {
+    return defaultState();
+  }
+}
+function save() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(S));
+  } catch (e) { /* 저장 실패는 무시 */ }
+}
+function streak() {
+  let d = todayStr();
+  if (!S.completed[d]) d = addDays(d, -1);
+  let n = 0;
+  while (S.completed[d]) { n++; d = addDays(d, -1); }
+  return n;
+}
+const stageOf = (w) => curriculum.stages.find((s) => w >= s.from && w <= s.to);
+
+/* ============ 간격 반복(SRS) ============ */
+function dueCards() {
+  const t = todayStr();
+  return Object.entries(S.srs)
+    .filter(([, c]) => c.due <= t)
+    .sort((a, b) => a[1].due.localeCompare(b[1].due))
+    .slice(0, 12)
+    .map(([zh, c]) => ({ zh, ...c }));
+}
+function grade(item, ok) {
+  const c = S.srs[item.zh];
+  if (!c) return;
+  c.box = ok ? Math.min(c.box + 1, INTERVALS.length - 1) : 0;
+  c.due = addDays(todayStr(), INTERVALS[c.box]);
+  save();
+}
+
+/* ============ 음성 (듣기 / 음성 인식) ============ */
+function speak(text) {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'zh-CN';
+  u.rate = 0.85;
+  speechSynthesis.speak(u);
+}
+function listen(cb) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) return cb(null, '이 브라우저는 음성 인식을 지원하지 않습니다. Chrome을 권장합니다.');
+  const r = new SR();
+  r.lang = 'zh-CN';
+  r.onresult = (e) => cb(e.results[0][0].transcript);
+  r.onerror = (e) => cb(null, '인식 오류: ' + e.error);
+  r.start();
+}
+const norm = (s) => s.replace(/[\s，。！？、,.!?]/g, '');
+function similarity(heard, target) {
+  const A = norm(heard), B = norm(target);
+  if (!B) return 0;
+  let hit = 0;
+  for (const ch of B) if (A.includes(ch)) hit++;
+  return hit / B.length;
+}
+
+/* ============ 녹음 저장소 (IndexedDB) ============ */
+function withStore(mode, fn) {
+  return new Promise((resolve, reject) => {
+    if (!window.indexedDB) return reject(new Error('indexedDB 미지원'));
+    const open = indexedDB.open('cn-study-rec', 1);
+    open.onupgradeneeded = () => { open.result.createObjectStore('recs', { keyPath: 'id', autoIncrement: true }); };
+    open.onerror = () => reject(open.error);
+    open.onsuccess = () => {
+      const db = open.result;
+      const tx = db.transaction('recs', mode);
+      let result;
+      const req = fn(tx.objectStore('recs'));
+      if (req) req.onsuccess = () => { result = req.result; };
+      tx.oncomplete = () => { db.close(); resolve(result); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+      tx.onabort = () => { db.close(); reject(tx.error); };
+    };
+  });
+}
+const saveRec = (rec) => withStore('readwrite', (s) => s.add(rec));
+const listRecs = () => withStore('readonly', (s) => s.getAll());
+const deleteRec = (id) => withStore('readwrite', (s) => s.delete(id));
+
+// 앱 안에서 뜨는 확인창. (일부 휴대폰 앱·미리보기 화면은 기본 confirm()을 막기 때문)
+const nativeConfirm = window.confirm;
+function askConfirm(msg) {
+  if (window.confirm !== nativeConfirm) return Promise.resolve(window.confirm(msg));   // 테스트용 대체
+  return new Promise((resolve) => {
+    const ov = document.createElement('div');
+    ov.className = 'modal-ov';
+    ov.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><p class="modal-msg"></p>
+      <div class="row"><button type="button" data-no>취소</button><button type="button" class="primary" data-ok>확인</button></div></div>`;
+    ov.querySelector('.modal-msg').textContent = msg;
+    const end = (v) => { ov.remove(); resolve(v); };
+    ov.querySelector('[data-ok]').onclick = () => end(true);
+    ov.querySelector('[data-no]').onclick = () => end(false);
+    document.body.appendChild(ov);
+    ov.querySelector('[data-ok]').focus();
+  });
+}
+const blobToDataURL = (blob) => new Promise((res, rej) => {
+  const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = () => rej(fr.error); fr.readAsDataURL(blob);
+});
+// 브라우저가 저장 공간 부족 시 기록을 임의로 지우지 않도록 영구 저장 요청 (지원/허용될 때만)
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { /* ignore */ }
+
+/* ============ 녹음 (MediaRecorder) ============ */
+const REC = { active: null, timer: null };
+
+function recMsg(line, text) {
+  const m = line && line.querySelector('.mic-result');
+  if (m) m.textContent = text;
+}
+
+async function toggleRec(btn) {
+  const line = btn.closest('.line');
+  if (REC.active) {
+    const same = REC.active.btn === btn;
+    await stopRec();
+    if (same) return;
+  }
+  if (!navigator.mediaDevices || !window.MediaRecorder) {
+    recMsg(line, '이 브라우저는 녹음을 지원하지 않습니다. Chrome 또는 Edge를 사용하세요.');
+    return;
+  }
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (e) {
+    recMsg(line, '마이크를 사용할 수 없습니다. 주소창의 마이크 권한을 허용했는지 확인하세요.');
+    return;
+  }
+  const chunks = [];
+  const t0 = Date.now();
+  const mr = new MediaRecorder(stream);
+  mr.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+  const done = new Promise((resolve) => {
+    mr.onstop = async () => {
+      stream.getTracks().forEach((t) => t.stop());
+      clearTimeout(REC.timer);
+      const ms = Date.now() - t0;
+      btn.textContent = '⏺ 녹음';
+      btn.classList.remove('recording');
+      REC.active = null;
+      if (chunks.length) {
+        try {
+          await saveRec({
+            week: +line.dataset.lw,
+            zh: line.dataset.zh,
+            created: Date.now(),
+            ms,
+            blob: new Blob(chunks, { type: mr.mimeType || 'audio/webm' }),
+          });
+          recMsg(line, '저장했습니다. 아래에서 다시 들어 보세요.');
+        } catch (e) {
+          recMsg(line, '저장하지 못했습니다. 브라우저 저장 공간을 확인하세요.');
+        }
+      } else {
+        recMsg(line, '녹음된 소리가 없습니다. 다시 시도해 주세요.');
+      }
+      refreshRecUI();
+      resolve();
+    };
+  });
+  mr.start();
+  REC.active = { btn, mr, done };
+  btn.textContent = '⏹ 정지';
+  btn.classList.add('recording');
+  recMsg(line, '녹음 중… 문장을 읽고 ⏹ 정지를 누르세요. (최대 60초)');
+  REC.timer = setTimeout(stopRec, REC_MAX_MS);
+}
+
+function stopRec() {
+  const a = REC.active;
+  if (!a) return Promise.resolve();
+  a.mr.stop();
+  return a.done;
+}
+
+function refreshRecUI() {
+  if (document.getElementById('recview')) renderRecordings();
+  else hydrateRecs();
+}
+
+function recItemHTML(r) {
+  const url = URL.createObjectURL(r.blob);
+  const type = r.blob.type || '';
+  const ext = /mp4/.test(type) ? 'm4a' : /ogg/.test(type) ? 'ogg' : 'webm';
+  const when = new Date(r.created).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  return `<div class="rec" data-id="${r.id}">
+    <audio controls preload="none" src="${url}"></audio>
+    <span class="muted small">${esc(when)} · ${(r.ms / 1000).toFixed(1)}초</span>
+    <a class="icon dl" href="${url}" download="week${r.week}-${r.id}.${ext}" title="파일로 저장">⬇</a>
+    <button class="icon" data-delrec="${r.id}" title="삭제">🗑</button>
+  </div>`;
+}
+
+// 화면에 보이는 문장들 아래에 저장된 녹음(최근 3개)을 채운다
+async function hydrateRecs() {
+  const lines = app.querySelectorAll('.line[data-lw]');
+  if (!lines.length) return;
+  let all;
+  try { all = await listRecs(); } catch (e) { return; }
+  lines.forEach((line) => {
+    const box = line.querySelector('.recs');
+    if (!box) return;
+    const mine = all
+      .filter((r) => r.week === +line.dataset.lw && r.zh === line.dataset.zh)
+      .sort((a, b) => b.created - a.created)
+      .slice(0, 3);
+    box.innerHTML = mine.map(recItemHTML).join('');
+  });
+}
+
+/* ============ 학습 단계 구성 ============ */
+function buildSteps(w, type, practiceOnly, free) {
+  const steps = [];
+  if (!free) {
+    const due = dueCards();
+    if (due.length) steps.push({ kind: 'srs', title: '복습 카드', min: 5, cards: due });
+  }
+  if (practiceOnly) return steps;
+
+  const v = w.vocab;
+  const half = Math.ceil(v.length / 2);
+  const a = v.slice(0, half), b = v.slice(half);
+
+  switch (type.id) {
+    case 'words1':
+      steps.push({ kind: 'words', title: '오늘의 단어', min: 8, items: a },
+                 { kind: 'trace', title: '한자 쓰기', min: 6, items: a },
+                 { kind: 'typepy', title: '병음 쓰기', min: 6, items: a },
+                 { kind: 'quiz', title: '미니 퀴즈', min: 5, items: a, pool: v });
+      break;
+    case 'words2':
+      steps.push({ kind: 'words', title: '오늘의 단어', min: 8, items: b },
+                 { kind: 'trace', title: '한자 쓰기', min: 6, items: b },
+                 { kind: 'typepy', title: '병음 쓰기', min: 6, items: b },
+                 { kind: 'quiz', title: '미니 퀴즈', min: 5, items: b, pool: v });
+      break;
+    case 'sentences':
+      steps.push({ kind: 'sentences', title: '핵심 문장', min: 15, items: w.sentences },
+                 { kind: 'speak', title: '따라 말하기', min: 10, lines: w.sentences.slice(0, 4) });
+      break;
+    case 'grammar':
+      steps.push({ kind: 'grammar', title: '문법 포인트', min: 15, items: w.grammar },
+                 { kind: 'dialogue', title: '대화문 듣기', min: 10, lines: w.dialogue });
+      break;
+    case 'speaking':
+      steps.push({ kind: 'speak', title: '대화 롤플레이', min: 25, lines: w.dialogue, roleplay: true });
+      break;
+    case 'review':
+      steps.push({ kind: 'quiz', title: '복습 퀴즈', min: 25, items: shuffle(v).slice(0, 10), pool: v });
+      break;
+    case 'check':
+      // 7일차: 이 주차 문장을 단어 카드로 직접 만들어 보는 문장 만들기 (문제는 단계가 열릴 때 생성)
+      steps.push({ kind: 'build', title: '문장 만들기', min: 25, data: w });
+      break;
+  }
+  return steps;
+}
+
+const frame = (body) => `<section class="panel">
+  <div class="sess-top"><button data-exit>← ${session.free ? `${session.week}주차 화면으로 돌아가기` : '홈으로 돌아가기'}</button></div>
+  <div class="steps">${session.steps.map((s, k) =>
+    `<button type="button" class="dot ${s.done ? 'done' : ''} ${k === session.i ? 'now' : ''}" data-step="${k}">${esc(s.title)}</button>`).join('')}</div>
+  ${body}
+</section>`;
+
+/* ============ 화면: 홈 ============ */
+async function renderHome() {
+  const tk = ++viewToken;
+  const c = S.cursor;
+  const pct = Math.min(100, (c / TOTAL_SESSIONS) * 100);
+  const curWeek = Math.min(weekOf(c), TOTAL_WEEKS);
+  const progress = `<section class="panel">
+    <div class="prog-head"><b>전체 진척률</b><span class="prog-pct">${pct.toFixed(1)}%</span></div>
+    <div class="bar"><div style="width:${pct}%"></div></div>
+    <div class="muted small">${Math.min(c, TOTAL_SESSIONS)} / ${TOTAL_SESSIONS} 학습일 완료 · ${curWeek} / ${TOTAL_WEEKS}주차 진행 중</div>
+  </section>`;
+
+  if (c >= TOTAL_SESSIONS) {
+    app.innerHTML = progress + `<section class="panel center"><h2>🎓 2년 과정을 모두 마쳤습니다!</h2><p class="muted">수고하셨습니다. 기록 탭에서 전체 성장을 확인해 보세요.</p></section>`;
+    return;
+  }
+
+  const w = weekOf(c), type = DAY_TYPES[dayOf(c)];
+  const stage = stageOf(w);
+  const around = [w - 1, w, w + 1];
+  const datas = await Promise.all(around.map((n) => (n >= 1 && n <= TOTAL_WEEKS ? getJSON(weekPath(n)) : Promise.resolve(null))));
+  if (tk !== viewToken) return;
+  const data = datas[1];
+  const todayCount = Number(S.completed[todayStr()]) || 0;
+  const plan = data ? buildSteps(data, type, false, false) : [];
+  const prog = S.progress && S.progress.cursor === c ? S.progress.done : [];
+  plan.forEach((x) => { if (prog.includes(x.kind)) x.done = true; });
+  const dueCount = Object.values(S.srs).filter((x) => x.due <= todayStr()).length;
+
+  const labels = ['이전 차시', '현재 차시', '다음 차시'];
+  const lessons = around.map((n, k) => {
+    if (n < 1 || n > TOTAL_WEEKS) {
+      return `<div class="lesson off"><span class="lab">${labels[k]}</span><b>—</b><span class="muted">없음</span></div>`;
+    }
+    const d = datas[k];
+    return `<button class="lesson ${k === 1 ? 'now' : ''}" data-week="${n}">
+      <span class="lab">${labels[k]}</span><b>${n}주차</b><span>${d ? esc(d.theme) : '준비 중'}</span></button>`;
+  }).join('');
+
+  let action;
+  if (!data) {
+    action = `<p class="muted">이 주차 콘텐츠(<code>${weekPath(w)}</code>)가 아직 없습니다. 파일을 추가하면 바로 열립니다.</p>`;
+  } else {
+    action = `${todayCount ? `<p>✅ 오늘 ${todayCount}일차를 마쳤습니다. 더 공부하고 싶다면 다음 일차를 이어서 학습할 수 있어요.</p>` : ''}
+      <div class="row"><button id="start" class="primary">${prog.length ? '이어서 학습하기 →' : todayCount ? '다음 일차 학습하기 →' : '오늘 학습 시작 →'}</button>
+      ${todayCount ? `<button id="practice" ${dueCount ? '' : 'disabled'}>복습 카드 더 하기${dueCount ? ` (${dueCount})` : ''}</button>` : ''}</div>`;
+  }
+
+  app.innerHTML = progress + `
+    <section class="panel">
+      <h2>차시</h2>
+      <div class="lessons">${lessons}</div>
+      <p class="hint">차시를 누르면 그 주차의 7일 학습과 예제 문장 녹음 화면이 열립니다.</p>
+    </section>
+    <section class="panel">
+      <div class="stage">${esc(stage.title)} · ${esc(stage.hsk)} · ${w} / ${TOTAL_WEEKS}주차</div>
+      <h2>${data ? esc(data.theme) : `${w}주차`} — ${esc(type.label)}</h2>
+      ${data ? `<p class="hint">이번 주 목표: ${esc(data.goal)}</p>` : ''}
+      ${plan.length ? `<ol class="plan">${plan.map((s) => `<li>${s.done ? '✓ ' : ''}${esc(s.title)} · ${s.min}분</li>`).join('')}</ol>` : ''}
+      ${action}
+    </section>
+    <section class="panel">
+      <div class="stats-row">
+        <div class="stat"><b>${streak()}</b>연속 학습일</div>
+        <div class="stat"><b>${S.cursor}</b>완료 일차</div>
+        <div class="stat"><b>${todayCount}</b>오늘 완료</div>
+        <div class="stat"><b>${Object.keys(S.srs).length}</b>배운 단어</div>
+      </div>
+    </section>`;
+  const st = document.getElementById('start');
+  if (st) st.onclick = () => startSession(false);
+  const pr = document.getElementById('practice');
+  if (pr) pr.onclick = () => startSession(true);
+}
+
+/* ============ 화면: 차시(주차) ============ */
+async function renderWeek(n) {
+  const tk = ++viewToken;
+  hideTip();
+  stopRec();
+  session = null;
+  const data = await getJSON(weekPath(n));
+  if (tk !== viewToken) return;
+  if (!data) {
+    app.innerHTML = `<section class="panel"><button id="back">← 홈</button>
+      <h2>${n}주차</h2><p class="muted">이 주차 콘텐츠가 아직 없습니다.</p></section>`;
+    document.getElementById('back').onclick = () => go('home');
+    return;
+  }
+  const stage = stageOf(n);
+  const doneToday = !!S.completed[todayStr()];
+  const days = DAY_TYPES.map((t, d) => {
+    const idx = (n - 1) * 7 + d;
+    const state = idx < S.cursor ? 'done' : idx === S.cursor ? 'now' : 'todo';
+    const label = state === 'done' ? '다시 학습' : state === 'now' ? (S.progress && S.progress.cursor === S.cursor ? '이어서 학습' : doneToday ? '다음 일차 학습' : '오늘 학습 시작') : '미리 보기';
+    const disabled = '';
+    return `<li class="day ${state}">
+      <span class="dn">${d + 1}일차</span><span class="dl">${esc(t.label)}</span>
+      <button data-day="${d}" ${disabled} class="${state === 'now' ? 'primary' : ''}">${label}</button></li>`;
+  }).join('');
+
+  app.innerHTML = `
+    <section class="panel" data-weekpage="${n}">
+      <button id="back">← 홈</button>
+      <div class="stage">${esc(stage.title)} · ${esc(stage.hsk)}</div>
+      <h2>${n}주차 · ${esc(data.theme)}</h2>
+      <p class="hint">목표: ${esc(data.goal)}</p>
+      <ul class="days">${days}</ul>
+      <p class="hint">현재 진도가 아닌 날을 학습하면 복습·미리 보기로 진행되며 진척률에는 반영되지 않습니다.</p>
+    </section>
+    <section class="panel">
+      <h2>예제 문장 읽고 녹음하기</h2>
+      <p class="hint">🔊로 먼저 듣고, ⏺ 녹음을 눌러 문장을 읽은 뒤 ⏹ 정지를 누르세요. 녹음은 바로 아래에서 다시 들을 수 있고, 전체 목록은 '녹음' 탭에 모입니다.</p>
+      ${data.sentences.map((l) => lineHTML(l, { week: n, rec: true })).join('')}
+    </section>`;
+  document.getElementById('back').onclick = () => go('home');
+  hydrateRecs();
+}
+
+/* ============ 화면: 학습 세션 ============ */
+async function startSession(practice, target) {
+  const tk = ++viewToken;
+  const c = target ? (target.week - 1) * 7 + target.day : S.cursor;
+  const w = weekOf(c);
+  const data = await getJSON(weekPath(w));
+  if (!data || tk !== viewToken) return;
+  const type = DAY_TYPES[dayOf(c)];
+  const free = !practice && c !== S.cursor; // 현재 진도가 아닌 날: 진도에 반영하지 않음
+  const steps = buildSteps(data, type, practice, free);
+  if (!steps.length) return renderHome();
+  // 문장 만들기(7일차)는 '이 주차까지 배운 단어'가 필요하다
+  const lex = !practice && type.id === 'check' ? await cumulativeLex(w) : null;
+  if (tk !== viewToken) return;
+  session = { steps, i: 0, type, practice, free, week: w, checkScore: null, lex };
+  // 오늘 진도 학습: 이전에 완료한 단계 복원
+  if (!practice && !free && S.progress && S.progress.cursor === S.cursor) {
+    steps.forEach((x) => { if (S.progress.done.includes(x.kind)) x.done = true; });
+  }
+  const first = steps.findIndex((x) => !x.done);
+  if (first < 0) return finish();
+  session.i = first;
+  renderStep();
+}
+
+// 단계 완료 표시 (오늘 진도 학습이면 저장)
+function markDone(st) {
+  st.done = true;
+  if (session && !session.free && !session.practice) {
+    S.progress = { cursor: S.cursor, done: session.steps.filter((x) => x.done).map((x) => x.kind) };
+    save();
+  }
+}
+// 다음 미완료 단계로, 전부 끝났으면 그날 학습 완료
+function advance() {
+  const n = session.steps.length;
+  if (session.steps.every((x) => x.done)) return finish();
+  for (let k = 1; k <= n; k++) {
+    const j = (session.i + k) % n;
+    if (!session.steps[j].done) { session.i = j; break; }
+  }
+  renderStep();
+}
+
+function renderStep() {
+  viewToken++;
+  stopRec();
+  if (session.i >= session.steps.length) return finish();
+  const st = session.steps[session.i];
+  const next = () => { markDone(st); advance(); };
+  const handlers = {
+    srs: stepSRS, words: stepWords, sentences: stepSentences,
+    grammar: stepGrammar, speak: stepLines, dialogue: stepLines, quiz: stepQuiz, build: stepBuild,
+    trace: stepTrace, typepy: stepTypePinyin,
+  };
+  handlers[st.kind](st, next);
+  window.scrollTo(0, 0);
+}
+
+function stepSRS(st, next) {
+  let i = 0;
+  const show = () => {
+    if (i >= st.cards.length) return next();
+    const c = st.cards[i];
+    app.innerHTML = frame(`
+      <p class="hint">${i + 1} / ${st.cards.length} · 뜻이 기억나는지 먼저 떠올려 보세요.</p>
+      <div class="card big">
+        <div class="hanzi">${esc(c.zh)}</div>
+        <div id="ans" hidden><div class="py">${esc(c.py)}</div><div>${esc(c.ko)}</div></div>
+      </div>
+      <div class="row"><button class="icon" data-say="${esc(c.zh)}">🔊</button><button id="reveal">정답 보기</button></div>
+      <div class="row" id="rate" hidden>
+        <button id="no" class="bad">헷갈려요</button>
+        <button id="yes" class="good">알아요</button>
+      </div>`);
+    const reveal = document.getElementById('reveal');
+    reveal.onclick = () => {
+      document.getElementById('ans').hidden = false;
+      document.getElementById('rate').hidden = false;
+      reveal.hidden = true;
+    };
+    document.getElementById('yes').onclick = () => { grade(c, true); i++; show(); };
+    document.getElementById('no').onclick = () => { grade(c, false); i++; show(); };
+  };
+  show();
+}
+
+function stepWords(st, next) {
+  // 미리 보기(아직 진도가 안 된 주차)에서는 복습 카드에 단어를 등록하지 않는다
+  if (!session.free || session.week <= weekOf(S.cursor)) {
+    st.items.forEach((it) => {
+      if (!S.srs[it.zh]) S.srs[it.zh] = { py: it.py, ko: it.ko, box: 0, due: addDays(todayStr(), 1) };
+    });
+    save();
+  }
+  app.innerHTML = frame(`
+    <p class="hint">🔊를 눌러 듣고, 소리 내어 따라 읽으며 하나씩 눈에 익히세요.</p>
+    <div class="grid">${st.items.map((it) => `
+      <div class="card">
+        <div class="hanzi">${esc(it.zh)}</div>
+        <div class="py">${esc(it.py)}</div>
+        <div>${esc(it.ko)}</div>
+        <button class="icon" data-say="${esc(it.zh)}" aria-label="듣기">🔊</button>
+      </div>`).join('')}</div>
+    <div class="row"><button id="next" class="primary">다 봤어요 →</button></div>`);
+  document.getElementById('next').onclick = next;
+}
+
+const RV_LABEL = { zh: '한자', py: '한어병음', ko: '한글' };
+// 눌러서 보는 줄: base는 처음부터 보이고, hide에 든 항목은 버튼을 눌러야 보인다
+function revealItemHTML(l, base, hide) {
+  const cls = { zh: 'hanzi sm', py: 'py', ko: 'ko' };
+  return `<div class="rv-base ${base === 'ko' ? 'ko big sm' : 'hanzi sm'}">${esc(l[base])}</div>` +
+    hide.map((k) => `<button type="button" class="rv-btn" data-rv="${k}" aria-expanded="false">${RV_LABEL[k]}</button>
+      <div class="rv-body ${cls[k]}" data-rvb="${k}" hidden>${esc(l[k])}</div>`).join('');
+}
+function revealLineHTML(l, o = {}) {
+  const lw = o.week != null ? ` data-lw="${o.week}"` : '';
+  return `<div class="line rv-line" data-zh="${esc(l.zh)}"${lw}>
+    <b class="sp">${l.sp ? esc(l.sp) : ''}</b>
+    <div>${revealItemHTML(l, o.base, o.hide)}</div>
+    <div class="ctl">
+      <button class="icon" data-say="${esc(l.zh)}" title="듣기">🔊</button>
+      ${o.rec ? '<button class="icon rec" data-rec title="내 목소리 녹음">⏺ 녹음</button>' : ''}
+    </div>
+    <div class="mic-result"></div>
+    ${o.rec ? '<div class="recs"></div>' : ''}
+  </div>`;
+}
+
+function stepSentences(st, next) {
+  app.innerHTML = frame(`
+    <p class="hint">한글 뜻을 보고 중국어로 말해 본 뒤, '한자'·'한어병음' 버튼을 눌러 확인하세요. 🔊로 듣고 ⏺ 녹음으로 내 목소리를 남기면 나중에 다시 들을 수 있습니다.</p>
+    ${st.items.map((l) => revealLineHTML(l, { week: session.week, rec: true, base: 'ko', hide: ['zh', 'py'] })).join('')}
+    <div class="row"><button id="next" class="primary">다 봤어요 →</button></div>`);
+  document.getElementById('next').onclick = next;
+  hydrateRecs();
+}
+
+function stepGrammar(st, next) {
+  app.innerHTML = frame(`${st.items.map((g) => `
+    <div class="grammar">
+      <h3>${esc(g.title)}</h3>
+      <p class="hint">${esc(g.rule)}</p>
+      ${g.examples.map((e) => `<div class="example">
+        <span class="hanzi sm">${esc(e.zh)}</span> <button class="icon" data-say="${esc(e.zh)}">🔊</button>
+        <div class="rv-row"><button type="button" class="rv-btn" data-rv="py" aria-expanded="false">한어병음</button>
+        <button type="button" class="rv-btn" data-rv="ko" aria-expanded="false">한글</button></div>
+        <div class="rv-body py" data-rvb="py" hidden>${esc(e.py)}</div><div class="rv-body ko" data-rvb="ko" hidden>${esc(e.ko)}</div></div>`).join('')}
+    </div>`).join('')}
+    <div class="row"><button id="next" class="primary">다 봤어요 →</button></div>`);
+  document.getElementById('next').onclick = next;
+}
+
+function lineHTML(l, o = {}) {
+  const lw = o.week != null ? ` data-lw="${o.week}"` : '';
+  return `<div class="line" data-zh="${esc(l.zh)}"${lw}>
+    <b class="sp">${l.sp ? esc(l.sp) : ''}</b>
+    <div><div class="hanzi sm">${esc(l.zh)}</div><div class="py">${esc(l.py)}</div><div class="ko">${esc(l.ko)}</div></div>
+    <div class="ctl">
+      <button class="icon" data-say="${esc(l.zh)}" title="듣기">🔊</button>
+      ${o.mic ? '<button class="icon" data-mic title="음성 인식으로 확인">🎤</button>' : ''}
+      ${o.rec ? '<button class="icon rec" data-rec title="내 목소리 녹음">⏺ 녹음</button>' : ''}
+    </div>
+    <div class="mic-result"></div>
+    ${o.rec ? '<div class="recs"></div>' : ''}
+  </div>`;
+}
+
+function stepLines(st, next) {
+  const mic = st.kind === 'speak';
+  const hint = st.roleplay
+    ? 'A 대사는 🔊로 듣고, B 대사는 🎤로 말해 확인해 보세요. ⏺ 녹음으로 내 목소리를 남길 수도 있습니다. 다음에는 역할을 바꿔 보세요.'
+    : mic ? '🔊로 듣고 🎤로 따라 말해 보세요. ⏺ 녹음으로 내 목소리를 남길 수 있습니다. (음성 인식은 Chrome 권장)' : '🔊로 들으며 대화 흐름을 익히세요. 모르는 줄은 \'한어병음\'·\'한글\' 버튼으로 확인하세요.';
+  app.innerHTML = frame(`<p class="hint">${hint}</p>
+    ${st.lines.map((l) => mic ? lineHTML(l, { week: session.week, mic, rec: mic })
+      : revealLineHTML(l, { week: session.week, base: 'zh', hide: ['py', 'ko'] })).join('')}
+    <div class="row"><button id="next" class="primary">마쳤어요 →</button></div>`);
+  document.getElementById('next').onclick = next;
+  if (mic) hydrateRecs();
+}
+
+function stepQuiz(st, next) {
+  const qs = st.items.map((it, k) => {
+    const mode = k % 2 === 0 ? 'zh2ko' : 'ko2zh';
+    const others = shuffle(st.pool.filter((p) => p.zh !== it.zh && p.ko !== it.ko)).slice(0, 3);
+    return { it, mode, opts: shuffle([it, ...others]) };
+  });
+  let i = 0, score = 0;
+
+  const show = () => {
+    if (i >= qs.length) return result();
+    const q = qs[i];
+    const prompt = q.mode === 'zh2ko'
+      ? `<div class="hanzi">${esc(q.it.zh)}</div><button class="icon" data-say="${esc(q.it.zh)}">🔊</button>`
+      : `<div class="ko big">${esc(q.it.ko)}</div>`;
+    app.innerHTML = frame(`
+      <p class="hint">${i + 1} / ${qs.length}</p>
+      <div class="card big">${prompt}</div>
+      <div class="opts">${q.opts.map((o, k) =>
+        `<button class="opt" data-k="${k}">${esc(q.mode === 'zh2ko' ? o.ko : o.zh)}</button>`).join('')}</div>
+      <div class="row" id="after" hidden><button id="nx" class="primary">다음 →</button></div>`);
+    document.querySelectorAll('.opt').forEach((b) => {
+      b.onclick = () => {
+        const ok = q.opts[+b.dataset.k].zh === q.it.zh;
+        if (ok) score++;
+        grade(q.it, ok);
+        document.querySelectorAll('.opt').forEach((x) => {
+          x.disabled = true;
+          if (q.opts[+x.dataset.k].zh === q.it.zh) x.classList.add('right');
+          else if (x === b) x.classList.add('wrong');
+        });
+        document.getElementById('after').hidden = false;
+        document.getElementById('nx').onclick = () => { i++; show(); };
+      };
+    });
+  };
+
+  const result = () => {
+    const pct = Math.round((score / qs.length) * 100);
+    if (st.isCheck) session.checkScore = pct;
+    markDone(st);
+    const msg = pct >= 80 ? '훌륭해요! 👏' : '틀린 단어는 다음 학습 때 복습 카드로 다시 나옵니다.';
+    app.innerHTML = frame(`<div class="center"><h2>${score} / ${qs.length} (${pct}점)</h2>
+      <p class="muted">${msg}</p><button id="nx" class="primary">계속 →</button></div>`);
+    document.getElementById('nx').onclick = next;
+  };
+  show();
+}
+
+/* ============ 단어 쓰기 (1·2일차): 한자 따라 쓰기 + 병음 쓰기 ============ */
+const TONE_MARKS = { a: 'aāáǎà', e: 'eēéěè', i: 'iīíǐì', o: 'oōóǒò', u: 'uūúǔù', 'ü': 'üǖǘǚǜ' };
+const TONE_GROUPS = ['āáǎà', 'ēéěè', 'īíǐì', 'ōóǒò', 'ūúǔù', 'ǖǘǚǜ'];
+const WRITE_FONT = '"KaiTi","楷体","STKaiti","Noto Serif SC","Noto Sans SC","Microsoft YaHei","PingFang SC",serif';
+
+// 성조 숫자(1~4)를 알맞은 모음 위의 성조 표기로 바꾼다. 5(경성)는 표기 없음.
+// 규칙: a, e가 있으면 거기에, ou는 o에, 그 밖에는 마지막 모음에. (마지막 음절의 모음 덩어리 기준)
+function applyTone(chunk, tone) {
+  const t = +tone;
+  if (!(t >= 1 && t <= 4)) return chunk;
+  const m = /[aeiouü]+(?=[^aeiouü]*$)/.exec(chunk);
+  if (!m) return chunk;
+  const run = m[0];
+  let pos = run.indexOf('a');
+  if (pos < 0) pos = run.indexOf('e');
+  if (pos < 0) pos = run.indexOf('ou') >= 0 ? run.indexOf('ou') : run.length - 1;
+  const at = m.index + pos;
+  return chunk.slice(0, at) + TONE_MARKS[chunk[at]][t] + chunk.slice(at + 1);
+}
+
+// 병음 비교용으로 정리: 소문자, 공백·아포스트로피 제거, v→ü, 성조 숫자(ni3) → 성조 표기(nǐ)
+function normPy(s) {
+  const t = s.normalize('NFC').toLowerCase().replace(/[\s'’\-·]/g, '').replace(/v/g, 'ü');
+  return t.replace(/([a-zü]+)([1-5])/g, (_, c, d) => applyTone(c, d)).normalize('NFC');
+}
+const stripTone = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+// 'ok' = 정답, 'tone' = 글자는 맞고 성조만 다름, 'no' = 오답
+function judgePinyin(val, it, mode) {
+  const typed = val.normalize('NFC');
+  if (mode === 'ko' && /[一-鿿]/.test(typed)) {
+    return typed.replace(/[\s，。！？、,.!?]/g, '') === it.zh ? 'ok' : 'no'; // 한자 입력기로 쓴 경우
+  }
+  const a = normPy(typed), b = normPy(it.py);
+  if (a === b) return 'ok';
+  return stripTone(a) === stripTone(b) ? 'tone' : 'no';
+}
+
+// 한자 쓰기 칸: 아래층 canvas = 격자 + 연한 가이드 글자, 위층 canvas = 내가 쓰는 획
+function setupPad(zh, onStroke, penW) {
+  const chars = [...zh];
+  const box = document.getElementById('pad');
+  const avail = Math.min(box.parentElement.clientWidth || 360, 520);
+  const cell = Math.max(72, Math.min(180, Math.floor(avail / chars.length)));
+  const W = cell * chars.length, H = cell;
+  const dpr = window.devicePixelRatio || 1;
+  box.style.width = W + 'px';
+  box.style.height = H + 'px';
+  const guide = document.getElementById('pad-guide');
+  const draw = document.getElementById('pad-draw');
+  for (const c of [guide, draw]) {
+    c.width = Math.round(W * dpr);
+    c.height = Math.round(H * dpr);
+    c.style.width = W + 'px';
+    c.style.height = H + 'px';
+    c.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  const cs = getComputedStyle(document.documentElement);
+  const col = (name, fallback) => cs.getPropertyValue(name).trim() || fallback;
+  const g = guide.getContext('2d');
+  const d = draw.getContext('2d');
+  let showGuide = true;
+  let strokes = 0;
+
+  const paintGuide = () => {
+    g.clearRect(0, 0, W, H);
+    chars.forEach((ch, k) => {
+      const x = k * cell;
+      g.strokeStyle = col('--line', '#ddd');
+      g.lineWidth = 1;
+      g.setLineDash([]);
+      g.strokeRect(x + 0.5, 0.5, cell - 1, cell - 1);
+      g.setLineDash([4, 4]);
+      g.beginPath();
+      g.moveTo(x, cell / 2); g.lineTo(x + cell, cell / 2);
+      g.moveTo(x + cell / 2, 0); g.lineTo(x + cell / 2, cell);
+      g.stroke();
+      g.setLineDash([]);
+      if (showGuide) {
+        g.globalAlpha = 0.3;
+        g.fillStyle = col('--text', '#222');
+        g.font = `${Math.round(cell * 0.78)}px ${WRITE_FONT}`;
+        g.textAlign = 'center';
+        g.textBaseline = 'middle';
+        g.fillText(ch, x + cell / 2, cell / 2 + cell * 0.04);
+        g.globalAlpha = 1;
+      }
+    });
+  };
+  paintGuide();
+
+  d.lineCap = 'round';
+  d.lineJoin = 'round';
+  d.lineWidth = penW;
+  d.strokeStyle = col('--text', '#222');
+  d.fillStyle = d.strokeStyle;
+
+  let drawing = false, last = null;
+  const pt = (e) => { const r = draw.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+  draw.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    try { draw.setPointerCapture(e.pointerId); } catch (err) { /* 포인터 캡처 불가해도 그리기는 가능 */ }
+    drawing = true;
+    last = pt(e);
+    d.beginPath();
+    d.arc(last.x, last.y, d.lineWidth / 2, 0, Math.PI * 2); // 점 하나도 찍히게
+    d.fill();
+  });
+  draw.addEventListener('pointermove', (e) => {
+    if (!drawing) return;
+    const p = pt(e);
+    d.beginPath();
+    d.moveTo(last.x, last.y);
+    d.lineTo(p.x, p.y);
+    d.stroke();
+    last = p;
+  });
+  const end = () => { if (!drawing) return; drawing = false; strokes++; onStroke(strokes); };
+  draw.addEventListener('pointerup', end);
+  draw.addEventListener('pointercancel', end);
+
+  return {
+    clear() { d.clearRect(0, 0, W, H); strokes = 0; onStroke(0); },
+    toggleGuide() { showGuide = !showGuide; paintGuide(); return showGuide; },
+    setWidth(w) { d.lineWidth = w; },
+  };
+}
+
+// 펜 굵기: 자유 쓰기(px) / 획순 쓰기(Hanzi Writer drawingWidth)
+const PEN_LABEL = { thin: '가늘게', normal: '보통', thick: '굵게' };
+const PEN_FREE = { thin: 1.5, normal: 2.5, thick: 4.5 };
+const PEN_HW = { thin: 2, normal: 4, thick: 7 };
+// 획순 데이터는 Hanzi Writer 라이브러리(인터넷 필요)를 쓴다. 막혀 있으면 자유 쓰기로 대체.
+const HW_URLS = [
+  'https://cdn.jsdelivr.net/npm/hanzi-writer@3.5.0/dist/hanzi-writer.min.js',
+  'https://unpkg.com/hanzi-writer@3.5.0/dist/hanzi-writer.min.js',
+];
+let hwPromise = null;
+function loadHanziWriter() {
+  if (window.HanziWriter) return Promise.resolve(window.HanziWriter);
+  if (hwPromise) return hwPromise;
+  hwPromise = new Promise((resolve, reject) => {
+    let k = 0, settled = false;
+    const fail = () => { if (settled) return; settled = true; hwPromise = null; reject(new Error('hanzi-writer')); };
+    const tryNext = () => {
+      if (k >= HW_URLS.length) return fail();
+      const sc = document.createElement('script');
+      sc.src = HW_URLS[k++];
+      let over = false;
+      const timer = setTimeout(() => { over = true; tryNext(); }, 6000);
+      sc.onload = () => {
+        clearTimeout(timer);
+        if (settled) return;
+        if (window.HanziWriter) { settled = true; resolve(window.HanziWriter); } else if (!over) tryNext();
+      };
+      sc.onerror = () => { clearTimeout(timer); if (!over) tryNext(); };
+      document.head.appendChild(sc);
+    };
+    tryNext();
+  });
+  return hwPromise;
+}
+
+function stepTrace(st, next) {
+  let i = 0;
+  const pen = () => { if (!S.pen) S.pen = { w: 'normal', mode: 'order' }; return S.pen; };
+  const show = () => {
+    if (i >= st.items.length) return next();
+    const it = st.items[i];
+    const myTok = viewToken;
+    app.innerHTML = frame(`
+      <p class="hint" id="p-hint"></p>
+      <div class="card">
+        <div class="py">${esc(it.py)}</div>
+        <div>${esc(it.ko)} <button class="icon" data-say="${esc(it.zh)}" aria-label="듣기">🔊</button></div>
+      </div>
+      <div class="seg" role="group" aria-label="쓰기 방식">
+        <button type="button" data-mode="order">획순 따라 쓰기</button>
+        <button type="button" data-mode="free">자유 쓰기</button>
+      </div>
+      <div id="trace-area"></div>
+      <div class="pen-row"><span class="muted small">펜 굵기</span>
+        ${Object.keys(PEN_LABEL).map((k) => `<button type="button" class="pen-btn" data-pen="${k}">${PEN_LABEL[k]}</button>`).join('')}</div>
+      <div class="row">
+        <button id="p-done" class="primary" disabled>다 썼어요 →</button>
+        <button id="p-skip" class="icon">건너뛰기</button>
+      </div>`);
+    const done = document.getElementById('p-done');
+    const area = document.getElementById('trace-area');
+    const hint = document.getElementById('p-hint');
+    const alive = () => viewToken === myTok && document.body.contains(area);
+    done.onclick = () => { i++; show(); };
+    document.getElementById('p-skip').onclick = () => { i++; show(); };
+
+    const mark = () => {
+      document.querySelectorAll('[data-mode]').forEach((b) => b.classList.toggle('on', b.dataset.mode === pen().mode));
+      document.querySelectorAll('[data-pen]').forEach((b) => b.classList.toggle('on', b.dataset.pen === pen().w));
+    };
+
+    // ---- 자유 쓰기: 연한 가이드 글자를 따라 쓰는 canvas ----
+    const mountFree = () => {
+      done.disabled = true;
+      hint.textContent = `${i + 1} / ${st.items.length} · 연한 글자를 따라 써 보세요. 손가락·마우스·펜으로 쓸 수 있고, 익숙해지면 가이드를 숨기고 외워서 써 보세요.`;
+      area.innerHTML = `<div class="pad-wrap"><div class="pad" id="pad"><canvas id="pad-guide"></canvas><canvas id="pad-draw"></canvas></div></div>
+        <div class="row"><button id="p-clear">지우기</button><button id="p-guide">가이드 숨기기</button></div>`;
+      const padObj = setupPad(it.zh, (n) => { done.disabled = n === 0; }, PEN_FREE[pen().w]);
+      document.getElementById('p-clear').onclick = () => padObj.clear();
+      document.getElementById('p-guide').onclick = (e) => {
+        e.currentTarget.textContent = padObj.toggleGuide() ? '가이드 숨기기' : '가이드 보이기';
+      };
+      trace.setWidth = (w) => padObj.setWidth(PEN_FREE[w]);
+    };
+
+    // ---- 획순 쓰기: Hanzi Writer가 획순대로 쓰는지 채점 ----
+    const mountOrder = () => {
+      done.disabled = true;
+      hint.textContent = `${i + 1} / ${st.items.length} · 획순 연습을 준비하는 중…`;
+      area.innerHTML = '<p class="muted center">불러오는 중…</p>';
+      loadHanziWriter().then((HW) => {
+        if (!alive() || pen().mode !== 'order') return;
+        const chars = [...it.zh].filter((ch) => /[㐀-鿿]/.test(ch));
+        if (!chars.length) throw new Error('nochar');
+        const avail = Math.min(area.clientWidth || 360, 520);
+        const cell = Math.max(88, Math.min(200, Math.floor(avail / chars.length)));
+        const dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+        const cs = getComputedStyle(document.documentElement);
+        const textCol = cs.getPropertyValue('--text').trim() || '#222';
+        const accent = cs.getPropertyValue('--accent').trim() || '#c8102e';
+        area.innerHTML = `<div class="hw-box">${chars.map((_, k) => `<div class="hw-cell" id="hw-${k}" style="width:${cell}px;height:${cell}px"></div>`).join('')}</div>
+          <p class="build-msg" id="hw-msg"></p>
+          <div class="row"><button id="hw-anim">▶ 획순 보기</button><button id="hw-redo">✍ 처음부터 쓰기</button><button id="hw-hint">윤곽 숨기기</button></div>`;
+        const msg = document.getElementById('hw-msg');
+        let outline = true, mistakes = 0, token = 0, finished = false;
+        const setMsg = (t, cls) => { msg.textContent = t; msg.className = 'build-msg ' + (cls || ''); };
+        const writers = chars.map((ch, k) => HW.create(document.getElementById('hw-' + k), ch, {
+          width: cell, height: cell, padding: Math.round(cell * 0.06),
+          showOutline: true, showCharacter: false,
+          strokeColor: textCol, outlineColor: dark ? '#5a524c' : '#d8d0c4',
+          drawingColor: textCol, highlightColor: accent, drawingWidth: PEN_HW[pen().w],
+          strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250, showHintAfterMisses: 2, leniency: 1.1,
+          onLoadCharDataError: () => { if (alive()) fallback('획순 데이터를 불러오지 못했어요.'); },
+        }));
+        const cells = chars.map((_, k) => document.getElementById('hw-' + k));
+        const stop = () => { token++; writers.forEach((w) => { try { w.cancelQuiz(); } catch (e) { /* 퀴즈 중이 아니면 무시 */ } }); };
+        const quizFrom = (k, tk) => {
+          if (tk !== token || !alive()) return;
+          if (k >= writers.length) {
+            finished = true; done.disabled = false;
+            setMsg(mistakes ? `✅ 다 썼어요! (틀린 획 ${mistakes}번) 한 번 더 써 보면 더 좋아요.` : '✅ 완벽해요! 획순을 모두 맞게 썼어요.', 'good');
+            cells.forEach((c) => c.classList.remove('active'));
+            return;
+          }
+          cells.forEach((c, n) => c.classList.toggle('active', n === k));
+          setMsg(chars.length > 1 ? `${k + 1}번째 글자(${chars[k]})를 획순대로 써 보세요.` : '획순대로 한 획씩 써 보세요.');
+          writers[k].quiz({
+            onCorrectStroke: (d) => { if (tk === token) setMsg(d.strokesRemaining ? `✓ 좋아요! 남은 획 ${d.strokesRemaining}` : '✓ 글자 완성!', 'good'); },
+            onMistake: () => { if (tk === token) { mistakes++; setMsg('획순이나 모양이 달라요. 다시 써 보세요.', 'bad'); } },
+            onComplete: () => quizFrom(k + 1, tk),
+          });
+        };
+        const startQuiz = () => {
+          stop(); finished = false; mistakes = 0; done.disabled = true;
+          const tk = token;
+          writers.forEach((w) => { try { w.hideCharacter(); if (outline) w.showOutline(); } catch (e) { /* ignore */ } });
+          quizFrom(0, tk);
+        };
+        const animateAll = (k, tk) => {
+          if (tk !== token || !alive()) return;
+          if (k >= writers.length) { setMsg('이제 직접 써 보세요. ✍ 처음부터 쓰기를 누르세요.'); return; }
+          cells.forEach((c, n) => c.classList.toggle('active', n === k));
+          writers[k].animateCharacter({ onComplete: () => animateAll(k + 1, tk) });
+        };
+        document.getElementById('hw-anim').onclick = () => {
+          stop(); const tk = token; done.disabled = true;
+          writers.forEach((w) => { try { w.hideCharacter(); } catch (e) { /* ignore */ } });
+          setMsg('획순을 보여 드릴게요.');
+          animateAll(0, tk);
+        };
+        document.getElementById('hw-redo').onclick = startQuiz;
+        document.getElementById('hw-hint').onclick = (e) => {
+          outline = !outline;
+          writers.forEach((w) => { try { outline ? w.showOutline() : w.hideOutline(); } catch (err) { /* ignore */ } });
+          e.currentTarget.textContent = outline ? '윤곽 숨기기' : '윤곽 보이기';
+        };
+        hint.textContent = `${i + 1} / ${st.items.length} · 윤곽을 보고 획순대로 한 획씩 써 보세요. 모르겠으면 ▶ 획순 보기를 먼저 눌러 보세요.`;
+        trace.setWidth = null;       // 굵기 변경 시 다시 그리기
+        trace.stop = stop;
+        startQuiz();
+      }).catch(() => { if (alive()) fallback('획순 연습은 인터넷 연결이 필요해요. (회사 보안으로 막혔을 수 있어요)'); });
+    };
+
+    const trace = { setWidth: null, stop: null };
+    const fallback = (why) => {
+      pen().mode = 'free'; mark(); mountFree();
+      hint.textContent = why + ' 자유 쓰기로 연습하세요. ' + hint.textContent;
+    };
+    const mount = () => {
+      if (trace.stop) { try { trace.stop(); } catch (e) { /* ignore */ } }
+      trace.stop = null; trace.setWidth = null;
+      mark();
+      if (pen().mode === 'order') mountOrder(); else mountFree();
+    };
+    document.querySelectorAll('[data-mode]').forEach((b) => {
+      b.onclick = () => { if (pen().mode === b.dataset.mode) return; pen().mode = b.dataset.mode; save(); mount(); };
+    });
+    document.querySelectorAll('[data-pen]').forEach((b) => {
+      b.onclick = () => {
+        pen().w = b.dataset.pen; save(); mark();
+        if (trace.setWidth) trace.setWidth(pen().w);   // 자유 쓰기: 바로 적용
+        else if (pen().mode === 'order') mount();      // 획순 쓰기: 굵기를 바꾸면 이 글자를 처음부터
+      };
+    });
+    mount();
+  };
+  show();
+}
+
+function stepTypePinyin(st, next) {
+  // 한자를 보고 쓰기 / 뜻을 보고 쓰기를 번갈아 낸다
+  const qs = shuffle(st.items).map((it, k) => ({ it, mode: k % 2 === 0 ? 'hz' : 'ko', attempts: 0, solved: false, msg: '', value: '' }));
+  let i = 0, score = 0;
+  const missed = [];
+
+  const show = () => {
+    if (i >= qs.length) return result();
+    const q = qs[i];
+    const it = q.it;
+    const hz = q.mode === 'hz';
+    app.innerHTML = frame(`
+      <p class="hint">${i + 1} / ${qs.length} · ${hz ? '한자를 보고 병음을 쓰세요.' : '뜻을 보고 병음을 쓰세요. (한자 입력기가 있다면 한자로 써도 정답입니다.)'}
+        성조는 nǐ 처럼 써도 되고 ni3 처럼 숫자로 써도 됩니다.</p>
+      <div class="card big">
+        ${hz ? `<div class="hanzi">${esc(it.zh)}</div>` : `<div class="ko big">${esc(it.ko)}</div>`}
+        <button class="icon" data-say="${esc(it.zh)}" aria-label="듣기">🔊</button>
+      </div>
+      <form id="t-form" class="type-row" autocomplete="off">
+        <input id="t-in" type="text" value="${esc(q.value)}" placeholder="병음 입력" ${q.solved ? 'disabled' : ''}
+          autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" enterkeyhint="done">
+        ${q.solved ? '' : '<button type="submit" class="primary">확인</button>'}
+      </form>
+      ${q.solved ? '' : `<details class="tones" open><summary>성조 입력 도우미</summary>
+        <div class="tonepad">${TONE_GROUPS.map((gp) => `<span class="tg">${[...gp].map((ch) =>
+          `<button type="button" class="tone" data-ins="${ch}">${ch}</button>`).join('')}</span>`).join('')}</div></details>`}
+      <p class="build-msg ${q.solved ? 'good' : q.msg ? 'bad' : ''}">${q.msg}</p>
+      ${q.solved ? `<div class="center"><span class="hanzi sm">${esc(it.zh)}</span> <span class="py">${esc(it.py)}</span>
+        <button class="icon" data-say="${esc(it.zh)}">🔊</button><div class="ko">${esc(it.ko)}</div></div>` : ''}
+      <div class="row">${q.solved
+        ? `<button id="t-next" class="primary">${i + 1 < qs.length ? '다음 →' : '결과 보기 →'}</button>`
+        : (q.attempts >= 2 ? '<button id="t-reveal">정답 보기</button>' : '')}</div>`);
+
+    const input = document.getElementById('t-in');
+    if (!q.solved) {
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+      document.getElementById('t-form').onsubmit = (e) => {
+        e.preventDefault();
+        const val = input.value.trim();
+        if (!val) return;
+        q.value = val;
+        const res = judgePinyin(val, it, q.mode);
+        if (q.attempts === 0) { // 첫 시도 결과만 점수·복습 카드에 반영
+          grade(it, res === 'ok');
+          if (res === 'ok') score++; else missed.push(q);
+        }
+        if (res === 'ok') {
+          q.solved = true;
+          q.msg = q.attempts === 0 ? '정답입니다! 👏' : '정답입니다.';
+        } else {
+          q.attempts++;
+          q.msg = res === 'tone' ? '글자는 맞아요! 성조를 다시 확인해 보세요.' : '아쉬워요. 다시 써 보세요.';
+        }
+        show();
+      };
+      app.querySelectorAll('[data-ins]').forEach((b) => {
+        b.onmousedown = (e) => e.preventDefault(); // 버튼을 눌러도 입력칸 포커스 유지
+        b.onclick = () => {
+          const s = input.selectionStart == null ? input.value.length : input.selectionStart;
+          const e2 = input.selectionEnd == null ? s : input.selectionEnd;
+          input.value = input.value.slice(0, s) + b.dataset.ins + input.value.slice(e2);
+          input.focus();
+          input.setSelectionRange(s + 1, s + 1);
+        };
+      });
+    }
+    const rv = document.getElementById('t-reveal');
+    if (rv) rv.onclick = () => { q.solved = true; q.msg = '정답을 확인했습니다. 소리 내어 읽어 보세요.'; show(); };
+    const nx = document.getElementById('t-next');
+    if (nx) nx.onclick = () => { i++; show(); };
+  };
+
+  const result = () => {
+    markDone(st);
+    const review = missed.length
+      ? `<h3>다시 볼 단어</h3>${missed.map((q) => `<div class="example">
+          <span class="hanzi sm">${esc(q.it.zh)}</span> <button class="icon" data-say="${esc(q.it.zh)}">🔊</button>
+          <div class="py">${esc(q.it.py)}</div><div class="ko">${esc(q.it.ko)}</div></div>`).join('')}`
+      : '';
+    app.innerHTML = frame(`<div class="center"><h2>${score} / ${qs.length}</h2>
+      <p class="muted">${score === qs.length ? '완벽해요! 👏' : '틀린 단어는 복습 카드로 다시 나옵니다.'}</p></div>
+      ${review}
+      <div class="row"><button id="nx" class="primary">계속 →</button></div>`);
+    document.getElementById('nx').onclick = next;
+  };
+  show();
+}
+
+/* ============ 문장 만들기 (7일차 주간 점검) ============ */
+const BUILD_QUESTIONS = 10;   // 한 번에 푸는 문제 수
+const BUILD_DISTRACTORS = 2;  // 정답 단어 외에 섞어 넣는 '함정' 단어 수 (0이면 정답 단어만 나열)
+const BUILD_MIN = 3;          // 단어가 이보다 적은 문장은 문제로 쓰지 않음
+const BUILD_MAX = 12;         // 단어가 이보다 많은 문장도 제외
+const EXTRA_WORDS = ['金敏', '王明']; // 단어장에는 없지만 한 덩어리로 다룰 말(이름 등)
+const NUMERAL = /^[零一二三四五六七八九十百]+$/;
+const PUNCT = /[，。！？、：；,.!?:;\s]+/;
+
+// 이 주차까지 배운 단어 모음: 문장을 단어로 끊고, 함정 단어를 고르는 데 쓴다
+async function cumulativeLex(w) {
+  const words = [];
+  for (let n = 1; n <= w; n++) {
+    const d = await getJSON(weekPath(n));
+    if (d) d.vocab.forEach((v) => words.push(v.zh));
+  }
+  const uniq = [...new Set(words)];
+  const set = new Set([...uniq, ...EXTRA_WORDS]);
+  return { words: uniq, set, maxLen: Math.max(...[...set].map((x) => x.length)) };
+}
+
+// 문장을 '배운 단어' 단위로 끊는다. 가장 긴 단어부터 맞춰 보고, 없으면 글자 하나로 둔다.
+// 이어진 숫자(十一, 二十五 …)는 한 덩어리로 묶는다.
+// 데이터에 "tokens": ["我","是","学生"] 처럼 직접 적어 두면 그것을 우선한다.
+function lineTokens(line, lex) {
+  const clauses = line.zh.split(PUNCT).filter(Boolean);
+  if (Array.isArray(line.tokens) && line.tokens.join('') === clauses.join('')) return line.tokens.slice();
+  const out = [];
+  for (const clause of clauses) {
+    const part = [];
+    for (let i = 0; i < clause.length;) {
+      let hit = clause[i];
+      for (let L = Math.min(lex.maxLen, clause.length - i); L > 1; L--) {
+        const cand = clause.substr(i, L);
+        if (lex.set.has(cand)) { hit = cand; break; }
+      }
+      part.push(hit);
+      i += hit.length;
+    }
+    const merged = [];
+    for (const t of part) {
+      if (merged.length && NUMERAL.test(t) && NUMERAL.test(merged[merged.length - 1])) merged[merged.length - 1] += t;
+      else merged.push(t);
+    }
+    out.push(...merged);
+  }
+  return out;
+}
+
+function buildQuestions(data, lex) {
+  const seen = new Set();
+  const cands = [];
+  for (const l of [...data.sentences, ...data.dialogue]) {
+    if (seen.has(l.zh)) continue;
+    seen.add(l.zh);
+    const tokens = lineTokens(l, lex);
+    if (tokens.length >= BUILD_MIN && tokens.length <= BUILD_MAX) cands.push({ line: l, tokens });
+  }
+  return shuffle(cands).slice(0, BUILD_QUESTIONS).map((q) => {
+    const extra = shuffle(lex.words.filter((w) => !q.tokens.includes(w))).slice(0, BUILD_DISTRACTORS);
+    const items = [...q.tokens, ...extra].map((t) => ({ t }));
+    let bank, tries = 0;
+    do { bank = shuffle(items); tries++; } while (tries < 8 && bank.map((b) => b.t).join('|') === q.tokens.join('|'));
+    return { ...q, bank, picked: [], attempts: 0, solved: false, pyShown: false, checked: null, msg: '' };
+  });
+}
+
+function stepBuild(st, next) {
+  const qs = buildQuestions(st.data, session.lex);
+  if (!qs.length) return next();
+  let i = 0, score = 0;
+  const missed = [];
+
+  const show = () => {
+    if (i >= qs.length) return result();
+    const q = qs[i];
+    const target = q.tokens.join('');
+    const used = new Set(q.picked);
+    const $ = (id) => document.getElementById(id);
+
+    app.innerHTML = frame(`
+      <p class="hint">${i + 1} / ${qs.length} · 뜻에 맞게 단어를 순서대로 눌러 문장을 만드세요. 정답에 쓰이지 않는 함정 단어가 ${BUILD_DISTRACTORS}개 섞여 있습니다.</p>
+      <div class="card big">
+        <div class="ko big">${esc(q.line.ko)}</div>
+      </div>
+      <div class="answer">${q.picked.length
+        ? q.picked.map((k, pos) => `<button class="chip ${q.checked ? (q.checked[pos] ? 'ok' : 'bad') : ''}" data-a="${pos}" ${q.solved ? 'disabled' : ''}>${esc(q.bank[k].t)}</button>`).join('')
+        : '<span class="muted">아래 단어를 눌러 여기에 문장을 만드세요</span>'}</div>
+      <div class="bank">${q.bank.map((b, k) =>
+        `<button class="chip ${used.has(k) ? 'used' : ''}" data-b="${k}" ${used.has(k) || q.solved ? 'disabled' : ''}>${esc(b.t)}</button>`).join('')}</div>
+      <p class="build-msg ${q.solved ? 'good' : q.msg ? 'bad' : ''}">${q.msg}</p>
+      ${q.solved ? `<div class="center solved-row"><span class="hanzi sm">${esc(q.line.zh)}</span> <button class="icon" data-say="${esc(q.line.zh)}">🔊</button> <button id="b-py" class="icon">${q.pyShown ? '병음 숨기기' : '병음 힌트 보기'}</button></div>
+        ${q.pyShown ? `<div class="py center">${esc(q.line.py)}</div>` : ''}` : ''}
+      <div class="row">
+        ${q.solved
+          ? `<button id="b-next" class="primary">${i + 1 < qs.length ? '다음 문제 →' : '결과 보기 →'}</button>`
+          : `<button id="b-undo" ${q.picked.length ? '' : 'disabled'}>← 하나 지우기</button>
+             <button id="b-reset" ${q.picked.length ? '' : 'disabled'}>모두 지우기</button>
+             <button id="b-check" class="primary" ${q.picked.length ? '' : 'disabled'}>확인</button>
+             ${q.attempts >= 2 ? '<button id="b-reveal">정답 보기</button>' : ''}`}
+      </div>`);
+
+    const touch = () => { q.checked = null; q.msg = ''; };
+    app.querySelectorAll('[data-b]').forEach((b) => { b.onclick = () => { touch(); q.picked.push(+b.dataset.b); show(); }; });
+    app.querySelectorAll('[data-a]').forEach((b) => { b.onclick = () => { touch(); q.picked.splice(+b.dataset.a, 1); show(); }; });
+    if ($('b-py')) $('b-py').onclick = () => { q.pyShown = !q.pyShown; show(); };
+    if ($('b-undo')) $('b-undo').onclick = () => { touch(); q.picked.pop(); show(); };
+    if ($('b-reset')) $('b-reset').onclick = () => { touch(); q.picked = []; show(); };
+    if ($('b-check')) $('b-check').onclick = () => {
+      const got = q.picked.map((k) => q.bank[k].t);
+      if (got.join('') === target) {
+        q.solved = true;
+        q.checked = got.map(() => true);
+        if (q.attempts === 0) { score++; q.msg = '정답입니다! 👏'; }
+        else { missed.push(q); q.msg = '정답입니다. (처음에 틀려서 점수에는 포함되지 않아요)'; }
+      } else {
+        q.attempts++;
+        q.checked = got.map((t, p) => t === q.tokens[p]);
+        q.msg = `아쉬워요. 초록색은 자리가 맞는 단어, 빨간색은 다시 생각해 볼 단어입니다.${q.attempts >= 2 ? ' 막히면 ‘정답 보기’를 눌러도 됩니다.' : ''}`;
+      }
+      show();
+    };
+    if ($('b-reveal')) $('b-reveal').onclick = () => {
+      const taken = new Set();
+      q.picked = q.tokens.map((t) => {
+        const k = q.bank.findIndex((b, idx) => b.t === t && !taken.has(idx));
+        taken.add(k);
+        return k;
+      });
+      q.solved = true;
+      q.checked = q.picked.map(() => true);
+      q.msg = '정답을 확인했습니다. 소리 내어 한 번 읽어 보세요.';
+      missed.push(q);
+      show();
+    };
+    if ($('b-next')) $('b-next').onclick = () => { i++; show(); };
+  };
+
+  const result = () => {
+    const pct = Math.round((score / qs.length) * 100);
+    session.checkScore = pct;
+    markDone(st);
+    const review = missed.length
+      ? `<h3>다시 볼 문장</h3>${missed.map((q) => `<div class="example">
+          <span class="hanzi sm">${esc(q.line.zh)}</span> <button class="icon" data-say="${esc(q.line.zh)}">🔊</button>
+          <div class="py">${esc(q.line.py)}</div><div class="ko">${esc(q.line.ko)}</div></div>`).join('')}`
+      : '';
+    app.innerHTML = frame(`<div class="center"><h2>${score} / ${qs.length} (${pct}점)</h2>
+      <p class="muted">${pct >= 80 ? '훌륭해요! 👏' : '틀린 문장은 아래에서 다시 읽어 보세요.'}</p></div>
+      ${review}
+      <div class="row"><button id="nx" class="primary">계속 →</button></div>`);
+    document.getElementById('nx').onclick = next;
+  };
+  show();
+}
+
+// 학습 도중 돌아가기: 미리 보기/다시 학습은 바로 차시 화면으로, 오늘 진도 학습은 확인 후 홈으로
+// 아직 끝내지 않은 일차가 있는데 그 뒤 일차를 열려고 할 때 경고
+async function warnIncomplete(target) {
+  const c = S.cursor, cw = weekOf(c), cd = dayOf(c);
+  const data = await getJSON(weekPath(cw));
+  const prog = S.progress && S.progress.cursor === c ? S.progress.done : [];
+  const left = data ? buildSteps(data, DAY_TYPES[cd], false, false).filter((x) => !prog.includes(x.kind)).map((x) => x.title) : [];
+  const msg = `⚠️ ${cw}주차 ${cd + 1}일차(${DAY_TYPES[cd].label})를 아직 마치지 않았어요.\n` +
+    (left.length ? `남은 단계: ${left.join(' · ')}\n` : '') +
+    `\n각 일차의 모든 단계를 완료해야 다음 일차로 넘어갈 수 있고 진척률에 반영됩니다.\n\n[확인] 지금 일차를 이어서 학습\n[취소] 선택한 일차를 미리 보기만 하기(진척률 미반영)`;
+  return (await askConfirm(msg)) ? startSession(false) : startSession(false, target);
+}
+
+async function exitSession() {
+  if (!session) return go('home');
+  const { free, week } = session;
+  if (free) return renderWeek(week);
+  if (!(await askConfirm('학습을 중단하고 홈으로 돌아갈까요?\n(완료한 단계는 저장되며, 모든 단계를 마쳐야 오늘 진도에 반영됩니다)'))) return;
+  go('home');
+}
+
+function finish() {
+  const { practice, free, week } = session;
+  if (!practice && !free) {
+    if (session.type.id === 'check' && session.checkScore !== null) S.checks[week] = session.checkScore;
+    S.completed[todayStr()] = (Number(S.completed[todayStr()]) || 0) + 1;
+    S.cursor++;
+    S.progress = null;
+    save();
+  }
+  const title = practice ? '복습 완료! 👍' : free ? '학습 완료! 👍' : '오늘 학습 완료! 🎉';
+  const todayN = Number(S.completed[todayStr()]) || 0;
+  const more = !practice && !free && S.cursor < TOTAL_SESSIONS;
+  const note = free ? '<p class="muted">현재 진도가 아닌 차시여서 진척률에는 반영되지 않았습니다.</p>'
+    : practice ? '' : `<p>연속 학습 <b>${streak()}일</b> · 오늘 <b>${todayN}일차</b> 완료</p>`;
+  app.innerHTML = `<section class="panel center">
+    <h2>${title}</h2>
+    ${note}
+    <div class="row">
+      ${free ? '<button id="toweek">차시 화면으로</button>' : ''}
+      ${more ? '<button id="again">다음 일차 이어서 학습 →</button>' : ''}
+      <button id="home" class="primary">홈으로</button>
+    </div>
+  </section>`;
+  document.getElementById('home').onclick = () => go('home');
+  const tw = document.getElementById('toweek');
+  if (tw) tw.onclick = () => renderWeek(week);
+  const ag = document.getElementById('again');
+  if (ag) ag.onclick = () => startSession(false);
+  session = null;
+}
+
+/* ============ 화면: 로드맵 / 기록 / 녹음 ============ */
+// 주차별 제목(theme) 모으기: 로드맵 툴팁에 사용
+async function loadThemes() {
+  const themes = {};
+  for (let n = 1; n <= TOTAL_WEEKS; n++) {
+    const d = await getJSON(weekPath(n));
+    if (d) themes[n] = d.theme;
+    else if (!window.CN_DATA) break; // 파일 방식에서는 주차가 이어져 있으므로 첫 빈 주차에서 멈춤
+  }
+  return themes;
+}
+
+async function renderRoadmap() {
+  const tk = ++viewToken;
+  hideTip();
+  const themes = await loadThemes();
+  if (tk !== viewToken) return;
+  const cur = Math.min(weekOf(S.cursor), TOTAL_WEEKS);
+  const cells = Array.from({ length: TOTAL_WEEKS }, (_, k) => {
+    const n = k + 1;
+    const tip = `${n}주차 · ${themes[n] || '준비 중'}${n === cur ? ' (현재)' : ''}`;
+    return `<button class="cell ${n < cur ? 'done' : n === cur ? 'now' : ''}" data-week="${n}" data-tip="${esc(tip)}" aria-label="${esc(tip)}">${n}</button>`;
+  }).join('');
+  app.innerHTML = `
+    <section class="panel">
+      <h2>2년 로드맵 (${cur} / ${TOTAL_WEEKS}주차)</h2>
+      ${curriculum.stages.map((s) => `<div class="stage-item">
+        <b>${esc(s.title)}</b> <span class="stage">${esc(s.hsk)} · ${s.from}~${s.to}주차</span>
+        <div class="muted">${esc(s.goal)}</div></div>`).join('')}
+    </section>
+    <section class="panel">
+      <p class="hint">주차 번호에 마우스를 올리면 제목이 보이고, 누르면 해당 차시로 이동합니다.</p>
+      <div class="cells">${cells}</div>
+    </section>`;
+}
+
+async function renderStats() {
+  const tk = ++viewToken;
+  let recCount = '-';
+  try { recCount = (await listRecs()).length; } catch (e) { /* 녹음 저장소 사용 불가 */ }
+  if (tk !== viewToken) return;
+  const cards = Object.values(S.srs);
+  const mastered = cards.filter((c) => c.box >= 3).length;
+  const checks = Object.entries(S.checks).sort((a, b) => a[0] - b[0]);
+  app.innerHTML = `
+    <section class="panel">
+      <h2>학습 기록</h2>
+      <div class="stats-row">
+        <div class="stat"><b>${streak()}</b>연속 학습일</div>
+        <div class="stat"><b>${Object.keys(S.completed).length}</b>총 학습일</div>
+        <div class="stat"><b>${cards.length}</b>배운 단어</div>
+        <div class="stat"><b>${mastered}</b>익숙한 단어</div>
+        <div class="stat"><b>${recCount}</b>녹음</div>
+      </div>
+      <h2>주간 점검 점수</h2>
+      ${checks.length ? checks.map(([w, p]) => `<div>${w}주차: <b>${p}점</b></div>`).join('') : '<p class="muted">아직 주간 점검 기록이 없습니다.</p>'}
+    </section>
+    <section class="panel">
+      <h2>학습 기록 백업 · 복원</h2>
+      <p class="hint">앱 파일을 새로 덮어써도 같은 브라우저(Chrome/Edge)에서 열면 기록은 그대로 남습니다. 다만 브라우저 방문 기록·사이트 데이터를 지우거나 다른 브라우저·PC로 옮길 때를 대비해 가끔 백업해 두세요.</p>
+      <div class="row">
+        <button id="bk-out">⬇ 백업 파일 저장 (진도 + 녹음)</button>
+        <button id="bk-in">⬆ 백업에서 복원</button>
+        <input type="file" id="bk-file" accept=".json,application/json" hidden>
+      </div>
+      <textarea id="bk-text" rows="3" placeholder="백업 내용이 여기에 표시됩니다. 파일 저장이 안 되는 화면(일부 휴대폰 앱)에서는 이 내용을 복사해 두었다가, 복원할 때 여기에 붙여 넣고 '복원'을 누르세요." spellcheck="false"></textarea>
+      <p class="build-msg" id="bk-msg"></p>
+    </section>
+    <section class="panel">
+      <button id="reset">진도 초기화</button>
+      <p class="hint">진도 초기화는 학습 기록만 지우며, 녹음은 '녹음' 탭에서 따로 삭제합니다.</p>
+    </section>`;
+  const bkMsg = (t, cls) => { const m = document.getElementById('bk-msg'); m.textContent = t; m.className = 'build-msg ' + (cls || ''); };
+  document.getElementById('bk-out').onclick = async () => {
+    try {
+      const recs = [];
+      for (const r of await listRecs().catch(() => [])) {
+        const { id, blob, ...rest } = r;
+        recs.push({ ...rest, type: blob.type, data: await blobToDataURL(blob) });
+      }
+      const json = JSON.stringify({ app: 'cn-study', version: 1, saved: new Date().toISOString(), state: S, recs });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
+      a.download = `중국어학습-백업-${todayStr()}.json`;
+      document.body.appendChild(a); a.click(); a.remove();
+      document.getElementById('bk-text').value = json;
+      bkMsg(`백업 파일을 저장했습니다. (진도 ${S.cursor}일차 완료, 녹음 ${recs.length}개)`, 'good');
+    } catch (e) { bkMsg('백업에 실패했습니다: ' + e.message, 'bad'); }
+  };
+  const doRestore = async (text) => {
+    try {
+      const b = JSON.parse(text);
+      if (b.app !== 'cn-study' || !b.state) throw new Error('이 앱의 백업 파일이 아닙니다.');
+      if (!(await askConfirm(`백업(${b.saved ? b.saved.slice(0, 10) : '날짜 미상'}, ${b.state.cursor}일차 완료)으로 복원할까요?\n현재 학습 기록은 백업 내용으로 바뀌고, 백업의 녹음이 추가됩니다.`))) return;
+      S = Object.assign(defaultState(), b.state);
+      save();
+      let n = 0;
+      for (const r of b.recs || []) {
+        const { data, type, ...rest } = r;
+        await saveRec({ ...rest, blob: await (await fetch(data)).blob() }); n++;
+      }
+      bkMsg(`복원했습니다. (진도 ${S.cursor}일차, 녹음 ${n}개 추가)`, 'good');
+    } catch (err) { bkMsg('복원에 실패했습니다: ' + err.message, 'bad'); }
+  };
+  document.getElementById('bk-in').onclick = () => {
+    const t = document.getElementById('bk-text').value.trim();
+    if (t) doRestore(t); else document.getElementById('bk-file').click();
+  };
+  document.getElementById('bk-file').onchange = async (e) => {
+    const f = e.target.files[0]; e.target.value = '';
+    if (f) doRestore(await f.text());
+  };
+  document.getElementById('reset').onclick = async () => {
+    if (await askConfirm('모든 학습 기록을 지우고 처음부터 시작할까요? (녹음은 유지됩니다)')) {
+      S = defaultState();
+      save();
+      go('home');
+    }
+  };
+}
+
+function lineInfo(week, zh) {
+  const d = cache[weekPath(week)];
+  if (!d) return null;
+  return [...d.sentences, ...d.dialogue].find((l) => l.zh === zh) || null;
+}
+
+async function renderRecordings() {
+  const tk = ++viewToken;
+  stopRec();
+  session = null;
+  let recs = [], err = '';
+  try {
+    recs = await listRecs();
+  } catch (e) {
+    err = '<p class="muted">이 브라우저에서는 녹음 보관함을 사용할 수 없습니다. (시크릿 모드이거나 저장이 차단되어 있을 수 있습니다)</p>';
+  }
+  const byWeek = {};
+  recs.forEach((r) => { (byWeek[r.week] = byWeek[r.week] || []).push(r); });
+  const weeks = Object.keys(byWeek).map(Number).sort((a, b) => a - b);
+  await Promise.all(weeks.map((w) => getJSON(weekPath(w))));
+  if (tk !== viewToken) return;
+
+  const groups = weeks.map((w) => {
+    const bySentence = {};
+    byWeek[w].forEach((r) => { (bySentence[r.zh] = bySentence[r.zh] || []).push(r); });
+    const theme = cache[weekPath(w)] ? ' · ' + esc(cache[weekPath(w)].theme) : '';
+    const items = Object.entries(bySentence).map(([zh, list]) => {
+      const info = lineInfo(w, zh);
+      list.sort((a, b) => b.created - a.created);
+      return `<div class="rec-group">
+        <div><span class="hanzi sm">${esc(zh)}</span> <button class="icon" data-say="${esc(zh)}">🔊</button></div>
+        ${info ? `<div class="py">${esc(info.py)}</div><div class="ko">${esc(info.ko)}</div>` : ''}
+        ${list.map(recItemHTML).join('')}
+      </div>`;
+    }).join('');
+    return `<h3 class="rec-week">${w}주차${theme}</h3>${items}`;
+  }).join('');
+
+  app.innerHTML = `<section class="panel" id="recview">
+    <h2>녹음 보관함 <span class="muted small">(${recs.length}개)</span></h2>
+    <p class="hint">녹음은 이 브라우저에만 저장됩니다. 브라우저 데이터를 지우면 함께 사라지니, 보관할 녹음은 ⬇로 파일에 저장해 두세요.</p>
+    ${err}
+    ${groups || '<p class="muted">아직 녹음이 없습니다. 차시 화면이나 오늘의 ‘핵심 문장’에서 ⏺ 녹음을 눌러 보세요.</p>'}
+  </section>`;
+}
+
+/* ============ 공통 이벤트 / 시작 ============ */
+app.addEventListener('click', (e) => {
+  const say = e.target.closest('[data-say]');
+  if (say) return speak(say.dataset.say);
+
+  if (e.target.closest('[data-exit]')) return exitSession();
+
+  const stp = e.target.closest('[data-step]');
+  if (stp && session) {
+    const k = +stp.dataset.step;
+    if (k !== session.i) { session.i = k; renderStep(); }
+    return;
+  }
+
+  const rvb = e.target.closest('[data-rv]');
+  if (rvb) {
+    const scope = rvb.closest('.rv-line, .example');
+    const body = scope.querySelector(`[data-rvb="${rvb.dataset.rv}"]`);
+    body.hidden = !body.hidden;
+    rvb.classList.toggle('on', !body.hidden);
+    rvb.setAttribute('aria-expanded', String(!body.hidden));
+    return;
+  }
+
+  const wk = e.target.closest('[data-week]');
+  if (wk) return renderWeek(+wk.dataset.week);
+
+  const day = e.target.closest('[data-day]');
+  if (day) {
+    if (day.disabled) return;
+    const page = day.closest('[data-weekpage]');
+    const target = { week: +page.dataset.weekpage, day: +day.dataset.day };
+    if ((target.week - 1) * 7 + target.day > S.cursor) return warnIncomplete(target);
+    return startSession(false, target);
+  }
+
+  const rec = e.target.closest('[data-rec]');
+  if (rec) return toggleRec(rec);
+
+  const del = e.target.closest('[data-delrec]');
+  if (del) {
+    askConfirm('이 녹음을 삭제할까요?').then((ok) => { if (ok) deleteRec(+del.dataset.delrec).then(refreshRecUI).catch(() => {}); });
+    return;
+  }
+
+  const mic = e.target.closest('[data-mic]');
+  if (mic) {
+    const line = mic.closest('.line');
+    const out = line.querySelector('.mic-result');
+    out.textContent = '듣는 중…';
+    listen((heard, err) => {
+      if (err) { out.textContent = err; return; }
+      const score = similarity(heard, line.dataset.zh);
+      out.textContent = score >= 0.8
+        ? `✅ 좋아요! (인식: ${heard})`
+        : `다시 한번 해 보세요. (인식: ${heard})`;
+    });
+  }
+});
+
+function go(view) {
+  stopRec();
+  hideTip();
+  session = null;
+  document.querySelectorAll('nav button').forEach((b) => b.classList.toggle('on', b.dataset.view === view));
+  ({ home: renderHome, roadmap: renderRoadmap, stats: renderStats, recs: renderRecordings })[view]();
+}
+// 마우스 올림 / 키보드 포커스 / 터치 길게 누름 중 어느 것으로도 툴팁이 뜨고 사라지게 한다
+app.addEventListener('mouseover', (e) => { const el = e.target.closest('[data-tip]'); if (el) showTip(el); });
+app.addEventListener('mouseout', (e) => { if (e.target.closest('[data-tip]')) hideTip(); });
+app.addEventListener('focusin', (e) => { const el = e.target.closest('[data-tip]'); if (el) showTip(el); });
+app.addEventListener('focusout', (e) => { if (e.target.closest('[data-tip]')) hideTip(); });
+
+document.querySelector('nav').addEventListener('click', (e) => {
+  const b = e.target.closest('button');
+  if (b) go(b.dataset.view);
+});
+
+(async () => {
+  curriculum = await getJSON('data/curriculum.json');
+  if (!curriculum) {
+    app.innerHTML = `<section class="panel"><h2>데이터를 불러올 수 없습니다</h2>
+      <p>index.html을 파일로 직접 열면 JSON을 읽을 수 없습니다. VS Code의 Live Server 확장이나
+      <code>python3 -m http.server 8000</code> 으로 실행한 뒤 접속하세요.
+      (메모장 + 브라우저 방식으로 쓰신다면 chinese-study.html 단일 파일을 여세요.)</p></section>`;
+    return;
+  }
+  go('home');
+})();
+
+</script>
+</body>
+</html>
