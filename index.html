@@ -328,6 +328,16 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
 .lesson .lab { color: #3d3d3d; font-weight: 400; }
 .lesson.now .lab { font-weight: 700; }
 
+/* 차시 칸: 가운데 정렬, 큰 글씨 */
+.lesson { align-items: center; justify-content: center; text-align: center; gap: 6px; padding: 16px 12px; }
+.lesson .lab { font-size: 1.05rem; color: #000; }
+.lesson .wt { font-size: 1.2rem; }
+.lesson.off .wk { font-size: 1.2rem; }
+
+/* 현재 칸: 검정 배경 + 굵은 흰 글씨 */
+.lesson.now { background: #000; border-color: #000; box-shadow: none; }
+.lesson.now .lab, .lesson.now .wt, .lesson.now .wk { color: #fff; font-weight: 700; }
+
 </style>
 </head>
 <body>
@@ -11372,14 +11382,14 @@ async function renderHome() {
   plan.forEach((x) => { if (prog.includes(x.kind)) x.done = true; });
   const dueCount = Object.values(S.srs).filter((x) => x.due <= todayStr()).length;
 
-  const labels = ['이전 차시', '현재 차시', '다음 차시'];
+  const labels = ['이전', '현재', '다음'];
   const lessons = around.map((n, k) => {
     if (n < 1 || n > TOTAL_WEEKS) {
-      return `<div class="lesson off"><span class="lab">${labels[k]}</span><b>—</b><span class="muted">없음</span></div>`;
+      return `<div class="lesson off"><span class="lab">${labels[k]}</span><b class="wk">—</b><span class="muted">없음</span></div>`;
     }
     const d = datas[k];
     return `<button class="lesson ${k === 1 ? 'now' : ''}" data-week="${n}">
-      <span class="lab">${labels[k]}</span><b class="wk">${n}주차</b><span class="wt">${d ? esc(d.theme) : '준비 중'}</span></button>`;
+      <span class="lab">${labels[k]} (${n}주차)</span><span class="wt">${d ? esc(d.theme) : '준비 중'}</span></button>`;
   }).join('');
 
   let action;
@@ -11393,7 +11403,6 @@ async function renderHome() {
 
   app.innerHTML = progress + `
     <section class="panel">
-      <h2>차시</h2>
       <div class="lessons">${lessons}</div>
     </section>
     <section class="panel">
