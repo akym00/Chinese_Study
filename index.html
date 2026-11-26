@@ -319,6 +319,15 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
 .paged.two .py { font-size: 1.15rem; }
 .paged.two .rv-body.ko, .paged.two .ko { font-size: 1.1rem; }
 
+/* 홈: 이전/현재/다음 차시 — 연한 노랑, 제목 파랑, 현재만 굵게 */
+.lesson { background: #fff9c9; border-color: #ecdf8a; }
+.lesson.now { background: #fff9c9; border-color: #d8c640; box-shadow: 0 0 0 2px #ecdf8a; }
+.lesson .wt { color: #1558c0; font-weight: 400; }
+.lesson .wk { color: #000; font-size: 1.05rem; font-weight: 400; }
+.lesson.now .wk, .lesson.now .wt { font-weight: 700; }
+.lesson .lab { color: #3d3d3d; font-weight: 400; }
+.lesson.now .lab { font-weight: 700; }
+
 </style>
 </head>
 <body>
@@ -10936,6 +10945,7 @@ window.CN_DATA = {
 /* ============ 설정 ============ */
 const STORE_KEY = 'cn-study-v1';
 const TOTAL_WEEKS = 104;
+const PEN_GREEN = '#1f9d47'; // 한자 쓰기 펜 색
 const DAYS_PER_WEEK = 6;   // 주 6일 학습 (나머지 하루는 쉬는 날)
 const TOTAL_SESSIONS = TOTAL_WEEKS * DAYS_PER_WEEK;
 const STATE_VER = 2;       // 1 = 주 7일 구조, 2 = 주 6일 구조
@@ -11369,7 +11379,7 @@ async function renderHome() {
     }
     const d = datas[k];
     return `<button class="lesson ${k === 1 ? 'now' : ''}" data-week="${n}">
-      <span class="lab">${labels[k]}</span><b>${n}주차</b><span>${d ? esc(d.theme) : '준비 중'}</span></button>`;
+      <span class="lab">${labels[k]}</span><b class="wk">${n}주차</b><span class="wt">${d ? esc(d.theme) : '준비 중'}</span></button>`;
   }).join('');
 
   let action;
@@ -11385,7 +11395,6 @@ async function renderHome() {
     <section class="panel">
       <h2>차시</h2>
       <div class="lessons">${lessons}</div>
-      <p class="hint">차시를 누르면 그 주차의 6일 학습과 예제 문장 녹음 화면이 열립니다.</p>
     </section>
     <section class="panel">
       <div class="stage">${esc(stage.title)} · ${esc(stage.hsk)} · ${w} / ${TOTAL_WEEKS}주차</div>
@@ -11802,7 +11811,7 @@ function setupPad(zh, onStroke, penW) {
       g.stroke();
       g.setLineDash([]);
       if (showGuide) {
-        g.globalAlpha = 0.3;
+        g.globalAlpha = 0.13;
         g.fillStyle = col('--text', '#222');
         g.font = `${Math.round(cell * 0.78)}px ${WRITE_FONT}`;
         g.textAlign = 'center';
@@ -11817,7 +11826,7 @@ function setupPad(zh, onStroke, penW) {
   d.lineCap = 'round';
   d.lineJoin = 'round';
   d.lineWidth = penW;
-  d.strokeStyle = col('--text', '#222');
+  d.strokeStyle = PEN_GREEN;
   d.fillStyle = d.strokeStyle;
 
   let drawing = false, last = null;
@@ -11960,8 +11969,8 @@ function stepTrace(st, next) {
         const writers = chars.map((ch, k) => HW.create(document.getElementById('hw-' + k), ch, {
           width: cell, height: cell, padding: Math.round(cell * 0.06),
           showOutline: true, showCharacter: false,
-          strokeColor: textCol, outlineColor: dark ? '#5a524c' : '#d8d0c4',
-          drawingColor: textCol, highlightColor: accent, drawingWidth: PEN_HW[pen().w],
+          strokeColor: PEN_GREEN, outlineColor: dark ? '#5a524c' : '#ece7df',
+          drawingColor: PEN_GREEN, highlightColor: accent, drawingWidth: PEN_HW[pen().w],
           strokeAnimationSpeed: 1.2, delayBetweenStrokes: 250, showHintAfterMisses: 2, leniency: 1.1,
           onLoadCharDataError: () => { if (alive()) fallback('획순 데이터를 불러오지 못했어요.'); },
         }));
