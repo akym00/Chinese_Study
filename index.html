@@ -6,34 +6,19 @@
   <title>每天30分钟 중국어</title>
   <style>
 :root {
-  --bg: #fffdf9;
+  color-scheme: light;
+  --bg: #ffffff;
   --panel: #ffffff;
-  --text: #2b2623;
-  --muted: #7a716a;
+  --text: #000000;
+  --muted: #3d3d3d;
   --accent: #c8102e;
   --accent-soft: #fbe9ec;
   --good: #2e7d32;
   --bad: #c62828;
-  --line: #e9e2d8;
-  --soft: #f6f1e8;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #2a2522;
-    --panel: #342e2a;
-    --text: #f6f1ec;
-    --muted: #b5aca4;
-    --accent: #ff6b7d;
-    --accent-soft: #4a2e32;
-    --good: #66bb6a;
-    --bad: #ef5350;
-    --line: #4d4540;
-    --soft: #3f3833;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #2a2522; --panel: #342e2a; --text: #f6f1ec; --muted: #b5aca4;
-  --accent: #ff6b7d; --accent-soft: #4a2e32; --good: #66bb6a; --bad: #ef5350; --line: #4d4540; --soft: #3f3833;
+  --line: #d9d9d9;
+  --soft: #f2f2f2;
+  --mint: #e3f5e1;
+  --mint-line: #b7dfb2;
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
@@ -303,6 +288,36 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
 .tbl th, .tbl td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
 .tbl th { color: var(--muted); font-weight: 700; font-size: 0.85rem; }
 .tbl tr.me td { background: var(--accent-soft); font-weight: 700; }
+
+/* 코너 칸(연한 초록) */
+.line.nosp { background: var(--mint); border: 1px solid var(--mint-line); border-radius: 12px; padding: 10px 12px; margin: 8px 0; }
+
+/* 3·4일차: 한 화면에 하나씩, 큰 글씨 */
+.pg-count { text-align: center; color: var(--muted); font-weight: 700; margin: 4px 0 10px; }
+.paged { min-height: 240px; display: flex; align-items: center; justify-content: center; }
+.paged > * { width: 100%; }
+.paged .line, .paged .line.nosp, .paged .line.rv-line { grid-template-columns: 1fr; text-align: center; justify-items: center; padding: 22px 14px; gap: 14px; }
+.paged .line .sp { font-size: 1.2rem; width: auto; }
+.paged .line .ctl, .paged .line.nosp .ctl { justify-content: center; flex-wrap: wrap; }
+.paged .hanzi.sm { font-size: 2.6rem; line-height: 1.3; }
+.paged .rv-base.ko.big { font-size: 1.9rem; line-height: 1.4; }
+.paged .py { font-size: 1.4rem; }
+.paged .rv-body.ko, .paged .ko { font-size: 1.3rem; }
+.paged .rv-btn { font-size: 1.05rem; padding: 6px 16px; }
+.paged .icon { font-size: 1.3rem; padding: 8px 16px; }
+.paged .grammar h3 { font-size: 1.5rem; text-align: center; }
+.paged .grammar > .hint { font-size: 1.1rem; color: var(--text); text-align: center; }
+.paged .example { text-align: center; border-left: 0; background: var(--soft); border-radius: 12px; padding: 14px 10px; }
+.pg-nav button { min-width: 120px; font-size: 1.1rem; }
+.pg-nav button:disabled { opacity: 0.4; }
+.paged .line .mic-result, .paged .line .recs { grid-column: 1 / -1; }
+
+/* 대화문: 두 줄씩 */
+.paged.two { display: block; min-height: 0; }
+.paged.two .line, .paged.two .line.nosp, .paged.two .line.rv-line { padding: 14px 12px; gap: 8px; margin: 0 0 12px; }
+.paged.two .hanzi.sm { font-size: 2rem; }
+.paged.two .py { font-size: 1.15rem; }
+.paged.two .rv-body.ko, .paged.two .ko { font-size: 1.1rem; }
 
 </style>
 </head>
@@ -630,76 +645,11 @@ window.CN_DATA = {
     }
   ],
   "corner": {
-    "title": "직업과 인사말",
-    "intro": "직업 이름과 상황별 인사말을 들으며 따라 읽고, 한국어 뜻만 보고 중국어로 말해 본 뒤 눌러서 확인해 보세요.",
+    "title": "쉬운 인사와 직업",
+    "intro": "자주 쓰는 인사말과 아주 쉬운 직업 이름을 듣고 따라 읽은 뒤, 한국어 뜻만 보고 중국어로 말해 보세요.",
     "groups": [
       {
-        "name": "직업 이름",
-        "items": [
-          {
-            "zh": "医生",
-            "py": "yīshēng",
-            "ko": "의사"
-          },
-          {
-            "zh": "护士",
-            "py": "hùshi",
-            "ko": "간호사"
-          },
-          {
-            "zh": "工程师",
-            "py": "gōngchéngshī",
-            "ko": "엔지니어"
-          },
-          {
-            "zh": "公司职员",
-            "py": "gōngsī zhíyuán",
-            "ko": "회사원"
-          },
-          {
-            "zh": "警察",
-            "py": "jǐngchá",
-            "ko": "경찰관"
-          },
-          {
-            "zh": "厨师",
-            "py": "chúshī",
-            "ko": "요리사"
-          },
-          {
-            "zh": "律师",
-            "py": "lǜshī",
-            "ko": "변호사"
-          },
-          {
-            "zh": "歌手",
-            "py": "gēshǒu",
-            "ko": "가수"
-          },
-          {
-            "zh": "司机",
-            "py": "sījī",
-            "ko": "운전기사"
-          },
-          {
-            "zh": "演员",
-            "py": "yǎnyuán",
-            "ko": "배우"
-          },
-          {
-            "zh": "记者",
-            "py": "jìzhě",
-            "ko": "기자"
-          },
-          {
-            "zh": "农民",
-            "py": "nóngmín",
-            "ko": "농부"
-          }
-        ]
-      },
-      {
-        "name": "인사와 소개 표현",
+        "name": "인사말",
         "items": [
           {
             "zh": "早上好",
@@ -707,34 +657,14 @@ window.CN_DATA = {
             "ko": "좋은 아침입니다"
           },
           {
-            "zh": "晚上好",
-            "py": "Wǎnshang hǎo",
-            "ko": "좋은 저녁입니다"
-          },
-          {
             "zh": "晚安",
             "py": "Wǎn'ān",
             "ko": "안녕히 주무세요"
           },
           {
-            "zh": "好久不见",
-            "py": "Hǎojiǔ bújiàn",
-            "ko": "오랜만이에요"
-          },
-          {
-            "zh": "请多关照",
-            "py": "Qǐng duō guānzhào",
-            "ko": "잘 부탁드립니다"
-          },
-          {
-            "zh": "初次见面",
-            "py": "Chūcì jiànmiàn",
-            "ko": "처음 뵙겠습니다"
-          },
-          {
-            "zh": "欢迎",
-            "py": "Huānyíng",
-            "ko": "환영합니다"
+            "zh": "谢谢",
+            "py": "xièxie",
+            "ko": "고맙습니다"
           },
           {
             "zh": "不客气",
@@ -742,14 +672,39 @@ window.CN_DATA = {
             "ko": "천만에요"
           },
           {
+            "zh": "对不起",
+            "py": "Duìbuqǐ",
+            "ko": "죄송합니다"
+          },
+          {
             "zh": "没关系",
             "py": "Méi guānxi",
             "ko": "괜찮아요"
           },
           {
-            "zh": "对不起",
-            "py": "Duìbuqǐ",
-            "ko": "죄송합니다"
+            "zh": "再见",
+            "py": "zàijiàn",
+            "ko": "안녕히 가세요 / 또 만나요"
+          }
+        ]
+      },
+      {
+        "name": "쉬운 직업",
+        "items": [
+          {
+            "zh": "老师",
+            "py": "lǎoshī",
+            "ko": "선생님"
+          },
+          {
+            "zh": "学生",
+            "py": "xuésheng",
+            "ko": "학생"
+          },
+          {
+            "zh": "医生",
+            "py": "yīshēng",
+            "ko": "의사"
           }
         ]
       }
@@ -1020,31 +975,6 @@ window.CN_DATA = {
             "zh": "美国",
             "py": "Měiguó",
             "ko": "미국"
-          },
-          {
-            "zh": "英国",
-            "py": "Yīngguó",
-            "ko": "영국"
-          },
-          {
-            "zh": "法国",
-            "py": "Fǎguó",
-            "ko": "프랑스"
-          },
-          {
-            "zh": "德国",
-            "py": "Déguó",
-            "ko": "독일"
-          },
-          {
-            "zh": "俄罗斯",
-            "py": "Èluósī",
-            "ko": "러시아"
-          },
-          {
-            "zh": "泰国",
-            "py": "Tàiguó",
-            "ko": "태국"
           }
         ]
       },
@@ -1065,36 +995,6 @@ window.CN_DATA = {
             "zh": "东京",
             "py": "Dōngjīng",
             "ko": "도쿄(일본의 수도)"
-          },
-          {
-            "zh": "华盛顿",
-            "py": "Huáshèngdùn",
-            "ko": "워싱턴(미국의 수도)"
-          },
-          {
-            "zh": "伦敦",
-            "py": "Lúndūn",
-            "ko": "런던(영국의 수도)"
-          },
-          {
-            "zh": "巴黎",
-            "py": "Bālí",
-            "ko": "파리(프랑스의 수도)"
-          },
-          {
-            "zh": "柏林",
-            "py": "Bólín",
-            "ko": "베를린(독일의 수도)"
-          },
-          {
-            "zh": "莫斯科",
-            "py": "Mòsīkē",
-            "ko": "모스크바(러시아의 수도)"
-          },
-          {
-            "zh": "曼谷",
-            "py": "Màngǔ",
-            "ko": "방콕(태국의 수도)"
           }
         ]
       },
@@ -1102,9 +1002,9 @@ window.CN_DATA = {
         "name": "나이 말하기",
         "items": [
           {
-            "zh": "我八岁。",
-            "py": "Wǒ bā suì.",
-            "ko": "저는 여덟 살이에요."
+            "zh": "我二十岁。",
+            "py": "Wǒ èrshí suì.",
+            "ko": "저는 스무 살이에요."
           },
           {
             "zh": "她十五岁。",
@@ -1112,24 +1012,9 @@ window.CN_DATA = {
             "ko": "그녀는 열다섯 살이에요."
           },
           {
-            "zh": "我二十岁。",
-            "py": "Wǒ èrshí suì.",
-            "ko": "저는 스무 살이에요."
-          },
-          {
             "zh": "我三十五岁。",
             "py": "Wǒ sānshíwǔ suì.",
             "ko": "저는 서른다섯 살이에요."
-          },
-          {
-            "zh": "我四十八岁。",
-            "py": "Wǒ sìshíbā suì.",
-            "ko": "저는 마흔여덟 살이에요."
-          },
-          {
-            "zh": "他今年六十岁。",
-            "py": "Tā jīnnián liùshí suì.",
-            "ko": "그는 올해 예순 살이에요."
           }
         ]
       }
@@ -1412,26 +1297,6 @@ window.CN_DATA = {
             "ko": "35"
           },
           {
-            "zh": "四十四",
-            "py": "sìshísì",
-            "ko": "44"
-          },
-          {
-            "zh": "五十六",
-            "py": "wǔshíliù",
-            "ko": "56"
-          },
-          {
-            "zh": "六十八",
-            "py": "liùshíbā",
-            "ko": "68"
-          },
-          {
-            "zh": "八十一",
-            "py": "bāshíyī",
-            "ko": "81"
-          },
-          {
             "zh": "九十九",
             "py": "jiǔshíjiǔ",
             "ko": "99"
@@ -1447,29 +1312,9 @@ window.CN_DATA = {
             "ko": "100"
           },
           {
-            "zh": "两百",
-            "py": "liǎngbǎi",
-            "ko": "200"
-          },
-          {
-            "zh": "三百五十",
-            "py": "sānbǎi wǔshí",
-            "ko": "350"
-          },
-          {
-            "zh": "一百零五",
-            "py": "yìbǎi língwǔ",
-            "ko": "105"
-          },
-          {
             "zh": "一千",
             "py": "yìqiān",
             "ko": "1,000"
-          },
-          {
-            "zh": "两千",
-            "py": "liǎngqiān",
-            "ko": "2,000"
           },
           {
             "zh": "一万",
@@ -1479,23 +1324,8 @@ window.CN_DATA = {
         ]
       },
       {
-        "name": "전화번호·층수·호수",
+        "name": "번호·층수",
         "items": [
-          {
-            "zh": "电话号码",
-            "py": "diànhuà hàomǎ",
-            "ko": "전화번호"
-          },
-          {
-            "zh": "一三八",
-            "py": "yāo sān bā",
-            "ko": "138 (전화번호에서 숫자 1은 yāo로 읽어요)"
-          },
-          {
-            "zh": "一一零",
-            "py": "yāo yāo líng",
-            "ko": "110 (중국의 경찰 신고번호)"
-          },
           {
             "zh": "一一九",
             "py": "yāo yāo jiǔ",
@@ -1507,19 +1337,9 @@ window.CN_DATA = {
             "ko": "3층"
           },
           {
-            "zh": "八楼",
-            "py": "bā lóu",
-            "ko": "8층"
-          },
-          {
             "zh": "五零一号",
             "py": "wǔ líng yāo hào",
             "ko": "501호"
-          },
-          {
-            "zh": "二零八号",
-            "py": "èr líng bā hào",
-            "ko": "208호"
           }
         ]
       }
@@ -1805,26 +1625,6 @@ window.CN_DATA = {
             "zh": "外婆",
             "py": "wàipó",
             "ko": "외할머니"
-          },
-          {
-            "zh": "叔叔",
-            "py": "shūshu",
-            "ko": "작은아버지·삼촌(아버지의 남동생)"
-          },
-          {
-            "zh": "姑姑",
-            "py": "gūgu",
-            "ko": "고모(아버지의 누나·여동생)"
-          },
-          {
-            "zh": "舅舅",
-            "py": "jiùjiu",
-            "ko": "외삼촌(어머니의 남자 형제)"
-          },
-          {
-            "zh": "阿姨",
-            "py": "āyí",
-            "ko": "이모(어머니의 여자 형제)"
           }
         ]
       },
@@ -1842,24 +1642,9 @@ window.CN_DATA = {
             "ko": "딸"
           },
           {
-            "zh": "丈夫",
-            "py": "zhàngfu",
-            "ko": "남편"
-          },
-          {
-            "zh": "妻子",
-            "py": "qīzi",
-            "ko": "아내"
-          },
-          {
             "zh": "哥哥",
             "py": "gēge",
             "ko": "형·오빠"
-          },
-          {
-            "zh": "兄弟姐妹",
-            "py": "xiōngdì jiěmèi",
-            "ko": "형제자매"
           }
         ]
       },
@@ -1880,21 +1665,6 @@ window.CN_DATA = {
             "zh": "这是我奶奶。",
             "py": "Zhè shì wǒ nǎinai.",
             "ko": "이분은 우리 할머니예요."
-          },
-          {
-            "zh": "我爷爷七十岁。",
-            "py": "Wǒ yéye qīshí suì.",
-            "ko": "우리 할아버지는 일흔 살이세요."
-          },
-          {
-            "zh": "他是我舅舅。",
-            "py": "Tā shì wǒ jiùjiu.",
-            "ko": "그는 저의 외삼촌이에요."
-          },
-          {
-            "zh": "我家有五口人。",
-            "py": "Wǒ jiā yǒu wǔ kǒu rén.",
-            "ko": "우리 집은 다섯 식구예요."
           }
         ]
       }
@@ -2175,7 +1945,7 @@ window.CN_DATA = {
     }
   ],
   "corner": {
-    "title": "요일·달·시각",
+    "title": "요일·계절·시각",
     "intro": "요일, 달, 시각, 계절 표현을 듣고 따라 한 뒤, 뜻을 보고 중국어로 말해 보세요.",
     "groups": [
       {
@@ -2185,21 +1955,6 @@ window.CN_DATA = {
             "zh": "星期一",
             "py": "xīngqīyī",
             "ko": "월요일"
-          },
-          {
-            "zh": "星期二",
-            "py": "xīngqī'èr",
-            "ko": "화요일"
-          },
-          {
-            "zh": "星期三",
-            "py": "xīngqīsān",
-            "ko": "수요일"
-          },
-          {
-            "zh": "星期四",
-            "py": "xīngqīsì",
-            "ko": "목요일"
           },
           {
             "zh": "星期五",
@@ -2219,28 +1974,8 @@ window.CN_DATA = {
         ]
       },
       {
-        "name": "달과 계절",
+        "name": "계절",
         "items": [
-          {
-            "zh": "一月",
-            "py": "yīyuè",
-            "ko": "1월"
-          },
-          {
-            "zh": "三月",
-            "py": "sānyuè",
-            "ko": "3월"
-          },
-          {
-            "zh": "六月",
-            "py": "liùyuè",
-            "ko": "6월"
-          },
-          {
-            "zh": "十月",
-            "py": "shíyuè",
-            "ko": "10월"
-          },
           {
             "zh": "春天",
             "py": "chūntiān",
@@ -2272,24 +2007,9 @@ window.CN_DATA = {
             "ko": "8시 정각"
           },
           {
-            "zh": "三点十分",
-            "py": "sān diǎn shí fēn",
-            "ko": "3시 10분"
-          },
-          {
             "zh": "两点半",
             "py": "liǎng diǎn bàn",
             "ko": "2시 반"
-          },
-          {
-            "zh": "九点一刻",
-            "py": "jiǔ diǎn yí kè",
-            "ko": "9시 15분"
-          },
-          {
-            "zh": "五点五分",
-            "py": "wǔ diǎn wǔ fēn",
-            "ko": "5시 5분"
           }
         ]
       }
@@ -2582,39 +2302,14 @@ window.CN_DATA = {
             "ko": "포도"
           },
           {
-            "zh": "橙子",
-            "py": "chéngzi",
-            "ko": "오렌지"
-          },
-          {
-            "zh": "草莓",
-            "py": "cǎoméi",
-            "ko": "딸기"
-          },
-          {
-            "zh": "梨",
-            "py": "lí",
-            "ko": "배"
-          },
-          {
-            "zh": "桃子",
-            "py": "táozi",
-            "ko": "복숭아"
-          },
-          {
             "zh": "苹果",
             "py": "píngguǒ",
             "ko": "사과"
           },
           {
-            "zh": "芒果",
-            "py": "mángguǒ",
-            "ko": "망고"
-          },
-          {
-            "zh": "柠檬",
-            "py": "níngméng",
-            "ko": "레몬"
+            "zh": "草莓",
+            "py": "cǎoméi",
+            "ko": "딸기"
           }
         ]
       },
@@ -2622,29 +2317,9 @@ window.CN_DATA = {
         "name": "단위",
         "items": [
           {
-            "zh": "斤",
-            "py": "jīn",
-            "ko": "근(500g)"
-          },
-          {
-            "zh": "公斤",
-            "py": "gōngjīn",
-            "ko": "킬로그램"
-          },
-          {
             "zh": "瓶",
             "py": "píng",
             "ko": "병"
-          },
-          {
-            "zh": "双",
-            "py": "shuāng",
-            "ko": "켤레·쌍"
-          },
-          {
-            "zh": "条",
-            "py": "tiáo",
-            "ko": "벌·마리(바지·생선처럼 길쭉한 것)"
           },
           {
             "zh": "件",
@@ -2662,16 +2337,6 @@ window.CN_DATA = {
             "ko": "얼마예요"
           },
           {
-            "zh": "一块五",
-            "py": "yí kuài wǔ",
-            "ko": "1.5위안"
-          },
-          {
-            "zh": "三块二",
-            "py": "sān kuài èr",
-            "ko": "3.2위안"
-          },
-          {
             "zh": "十八块",
             "py": "shíbā kuài",
             "ko": "18위안"
@@ -2680,11 +2345,6 @@ window.CN_DATA = {
             "zh": "两百块",
             "py": "liǎngbǎi kuài",
             "ko": "200위안"
-          },
-          {
-            "zh": "五毛",
-            "py": "wǔ máo",
-            "ko": "5마오(0.5위안)"
           }
         ]
       }
@@ -2977,29 +2637,9 @@ window.CN_DATA = {
             "ko": "오리구이"
           },
           {
-            "zh": "火锅",
-            "py": "huǒguō",
-            "ko": "훠궈(중국식 샤브샤브)"
-          },
-          {
-            "zh": "麻婆豆腐",
-            "py": "mápó dòufu",
-            "ko": "마파두부"
-          },
-          {
             "zh": "米饭",
             "py": "mǐfàn",
             "ko": "쌀밥"
-          },
-          {
-            "zh": "鱼",
-            "py": "yú",
-            "ko": "생선"
-          },
-          {
-            "zh": "汤",
-            "py": "tāng",
-            "ko": "국, 탕"
           }
         ]
       },
@@ -3017,24 +2657,9 @@ window.CN_DATA = {
             "ko": "과일 주스"
           },
           {
-            "zh": "牛奶",
-            "py": "niúnǎi",
-            "ko": "우유"
-          },
-          {
-            "zh": "矿泉水",
-            "py": "kuàngquánshuǐ",
-            "ko": "생수"
-          },
-          {
             "zh": "茶",
             "py": "chá",
             "ko": "차"
-          },
-          {
-            "zh": "热水",
-            "py": "rèshuǐ",
-            "ko": "뜨거운 물"
           }
         ]
       },
@@ -3042,34 +2667,14 @@ window.CN_DATA = {
         "name": "주문 표현",
         "items": [
           {
-            "zh": "菜单",
-            "py": "càidān",
-            "ko": "메뉴판"
-          },
-          {
             "zh": "请给我菜单。",
             "py": "Qǐng gěi wǒ càidān.",
             "ko": "메뉴판 좀 주세요."
           },
           {
-            "zh": "一碗米饭",
-            "py": "yì wǎn mǐfàn",
-            "ko": "밥 한 그릇"
-          },
-          {
             "zh": "不要辣。",
             "py": "Bú yào là.",
             "ko": "맵지 않게 해 주세요."
-          },
-          {
-            "zh": "我要一杯可乐。",
-            "py": "Wǒ yào yì bēi kělè.",
-            "ko": "콜라 한 잔 주세요."
-          },
-          {
-            "zh": "打包",
-            "py": "dǎbāo",
-            "ko": "포장하다"
           }
         ]
       }
@@ -3352,50 +2957,15 @@ window.CN_DATA = {
             "ko": "우체국"
           },
           {
-            "zh": "书店",
-            "py": "shūdiàn",
-            "ko": "서점"
-          },
-          {
-            "zh": "酒店",
-            "py": "jiǔdiàn",
-            "ko": "호텔"
-          },
-          {
             "zh": "洗手间",
             "py": "xǐshǒujiān",
             "ko": "화장실"
-          },
-          {
-            "zh": "电影院",
-            "py": "diànyǐngyuàn",
-            "ko": "영화관"
           }
         ]
       },
       {
         "name": "방향과 위치",
         "items": [
-          {
-            "zh": "东",
-            "py": "dōng",
-            "ko": "동쪽"
-          },
-          {
-            "zh": "南",
-            "py": "nán",
-            "ko": "남쪽"
-          },
-          {
-            "zh": "西",
-            "py": "xī",
-            "ko": "서쪽"
-          },
-          {
-            "zh": "北",
-            "py": "běi",
-            "ko": "북쪽"
-          },
           {
             "zh": "上面",
             "py": "shàngmiàn",
@@ -3405,21 +2975,6 @@ window.CN_DATA = {
             "zh": "下面",
             "py": "xiàmiàn",
             "ko": "아래쪽"
-          },
-          {
-            "zh": "里面",
-            "py": "lǐmiàn",
-            "ko": "안쪽"
-          },
-          {
-            "zh": "外面",
-            "py": "wàimiàn",
-            "ko": "바깥쪽"
-          },
-          {
-            "zh": "中间",
-            "py": "zhōngjiān",
-            "ko": "가운데"
           }
         ]
       },
@@ -3445,21 +3000,6 @@ window.CN_DATA = {
             "zh": "红绿灯",
             "py": "hónglǜdēng",
             "ko": "신호등"
-          },
-          {
-            "zh": "路口",
-            "py": "lùkǒu",
-            "ko": "교차로"
-          },
-          {
-            "zh": "过马路",
-            "py": "guò mǎlù",
-            "ko": "길을 건너다"
-          },
-          {
-            "zh": "请问，洗手间在哪儿？",
-            "py": "Qǐngwèn, xǐshǒujiān zài nǎr?",
-            "ko": "실례지만, 화장실이 어디예요?"
           }
         ]
       }
@@ -3747,16 +3287,6 @@ window.CN_DATA = {
             "ko": "등산하다"
           },
           {
-            "zh": "骑车",
-            "py": "qíchē",
-            "ko": "자전거를 타다"
-          },
-          {
-            "zh": "网球",
-            "py": "wǎngqiú",
-            "ko": "테니스"
-          },
-          {
             "zh": "看书",
             "py": "kànshū",
             "ko": "책을 보다"
@@ -3765,26 +3295,6 @@ window.CN_DATA = {
             "zh": "旅游",
             "py": "lǚyóu",
             "ko": "여행하다"
-          },
-          {
-            "zh": "跳舞",
-            "py": "tiàowǔ",
-            "ko": "춤추다"
-          },
-          {
-            "zh": "画画",
-            "py": "huàhuà",
-            "ko": "그림을 그리다"
-          },
-          {
-            "zh": "照相",
-            "py": "zhàoxiàng",
-            "ko": "사진을 찍다"
-          },
-          {
-            "zh": "做饭",
-            "py": "zuòfàn",
-            "ko": "요리하다"
           }
         ]
       },
@@ -3800,11 +3310,6 @@ window.CN_DATA = {
             "zh": "吉他",
             "py": "jítā",
             "ko": "기타"
-          },
-          {
-            "zh": "小提琴",
-            "py": "xiǎotíqín",
-            "ko": "바이올린"
           }
         ]
       },
@@ -3817,29 +3322,9 @@ window.CN_DATA = {
             "ko": "저는 수영을 좋아해요."
           },
           {
-            "zh": "我喜欢听音乐。",
-            "py": "Wǒ xǐhuan tīng yīnyuè.",
-            "ko": "저는 음악 듣는 것을 좋아해요."
-          },
-          {
-            "zh": "你喜欢什么运动？",
-            "py": "Nǐ xǐhuan shénme yùndòng?",
-            "ko": "어떤 운동을 좋아해요?"
-          },
-          {
             "zh": "我会弹钢琴。",
             "py": "Wǒ huì tán gāngqín.",
             "ko": "저는 피아노를 칠 줄 알아요."
-          },
-          {
-            "zh": "周末我去爬山。",
-            "py": "Zhōumò wǒ qù páshān.",
-            "ko": "주말에 저는 등산을 가요."
-          },
-          {
-            "zh": "我不会跳舞。",
-            "py": "Wǒ bú huì tiàowǔ.",
-            "ko": "저는 춤을 못 춰요."
           }
         ]
       }
@@ -4137,34 +3622,9 @@ window.CN_DATA = {
             "ko": "손"
           },
           {
-            "zh": "脚",
-            "py": "jiǎo",
-            "ko": "발"
-          },
-          {
             "zh": "肚子",
             "py": "dùzi",
             "ko": "배"
-          },
-          {
-            "zh": "牙",
-            "py": "yá",
-            "ko": "이, 치아"
-          },
-          {
-            "zh": "腿",
-            "py": "tuǐ",
-            "ko": "다리"
-          },
-          {
-            "zh": "脸",
-            "py": "liǎn",
-            "ko": "얼굴"
-          },
-          {
-            "zh": "头发",
-            "py": "tóufa",
-            "ko": "머리카락"
           }
         ]
       },
@@ -4177,16 +3637,6 @@ window.CN_DATA = {
             "ko": "맑은 날"
           },
           {
-            "zh": "阴天",
-            "py": "yīntiān",
-            "ko": "흐린 날"
-          },
-          {
-            "zh": "刮风",
-            "py": "guāfēng",
-            "ko": "바람이 불다"
-          },
-          {
             "zh": "下雨",
             "py": "xiàyǔ",
             "ko": "비가 오다"
@@ -4195,11 +3645,6 @@ window.CN_DATA = {
             "zh": "下雪",
             "py": "xiàxuě",
             "ko": "눈이 오다"
-          },
-          {
-            "zh": "打雷",
-            "py": "dǎléi",
-            "ko": "천둥이 치다"
           }
         ]
       },
@@ -4210,21 +3655,6 @@ window.CN_DATA = {
             "zh": "我肚子疼。",
             "py": "Wǒ dùzi téng.",
             "ko": "배가 아파요."
-          },
-          {
-            "zh": "我牙疼。",
-            "py": "Wǒ yá téng.",
-            "ko": "이가 아파요."
-          },
-          {
-            "zh": "今天是晴天。",
-            "py": "Jīntiān shì qíngtiān.",
-            "ko": "오늘은 맑아요."
-          },
-          {
-            "zh": "明天下雨吗？",
-            "py": "Míngtiān xiàyǔ ma?",
-            "ko": "내일 비가 와요?"
           }
         ]
       }
@@ -4512,35 +3942,15 @@ window.CN_DATA = {
             "ko": "의학"
           },
           {
-            "zh": "工程",
-            "py": "gōngchéng",
-            "ko": "공학"
-          },
-          {
             "zh": "设计",
             "py": "shèjì",
             "ko": "디자인"
-          },
-          {
-            "zh": "历史",
-            "py": "lìshǐ",
-            "ko": "역사"
-          },
-          {
-            "zh": "数学",
-            "py": "shùxué",
-            "ko": "수학"
           }
         ]
       },
       {
         "name": "사무 어휘",
         "items": [
-          {
-            "zh": "复印",
-            "py": "fùyìn",
-            "ko": "복사하다"
-          },
           {
             "zh": "打印",
             "py": "dǎyìn",
@@ -4557,40 +3967,15 @@ window.CN_DATA = {
             "ko": "문서, 파일"
           },
           {
-            "zh": "会议室",
-            "py": "huìyìshì",
-            "ko": "회의실"
-          },
-          {
             "zh": "办公室",
             "py": "bàngōngshì",
             "ko": "사무실"
-          },
-          {
-            "zh": "手机",
-            "py": "shǒujī",
-            "ko": "휴대전화"
-          },
-          {
-            "zh": "名片",
-            "py": "míngpiàn",
-            "ko": "명함"
           }
         ]
       },
       {
         "name": "일과 학교 문장",
         "items": [
-          {
-            "zh": "我的专业是经济。",
-            "py": "Wǒ de zhuānyè shì jīngjì.",
-            "ko": "제 전공은 경제예요."
-          },
-          {
-            "zh": "你学什么专业？",
-            "py": "Nǐ xué shénme zhuānyè?",
-            "ko": "전공이 뭐예요?"
-          },
           {
             "zh": "我在公司工作。",
             "py": "Wǒ zài gōngsī gōngzuò.",
@@ -4600,11 +3985,6 @@ window.CN_DATA = {
             "zh": "我每天九点上班。",
             "py": "Wǒ měitiān jiǔ diǎn shàngbān.",
             "ko": "저는 매일 9시에 출근해요."
-          },
-          {
-            "zh": "请发邮件给我。",
-            "py": "Qǐng fā yóujiàn gěi wǒ.",
-            "ko": "저에게 이메일을 보내 주세요."
           }
         ]
       }
@@ -4908,21 +4288,6 @@ window.CN_DATA = {
             "ko": "어떻게 말해요?"
           },
           {
-            "zh": "怎么写？",
-            "py": "Zěnme xiě?",
-            "ko": "어떻게 써요?"
-          },
-          {
-            "zh": "这个字怎么读？",
-            "py": "Zhège zì zěnme dú?",
-            "ko": "이 글자는 어떻게 읽어요?"
-          },
-          {
-            "zh": "你说什么？",
-            "py": "Nǐ shuō shénme?",
-            "ko": "뭐라고 하셨어요?"
-          },
-          {
             "zh": "请再说一遍。",
             "py": "Qǐng zài shuō yí biàn.",
             "ko": "한 번 더 말씀해 주세요."
@@ -4931,11 +4296,6 @@ window.CN_DATA = {
             "zh": "请慢一点儿。",
             "py": "Qǐng màn yìdiǎnr.",
             "ko": "조금만 천천히 해 주세요."
-          },
-          {
-            "zh": "可以再说一次吗？",
-            "py": "Kěyǐ zài shuō yí cì ma?",
-            "ko": "한 번 더 말해 줄 수 있어요?"
           }
         ]
       },
@@ -4953,24 +4313,9 @@ window.CN_DATA = {
             "ko": "들어도 무슨 말인지 모르겠어요."
           },
           {
-            "zh": "听不清楚。",
-            "py": "Tīng bù qīngchu.",
-            "ko": "잘 안 들려요."
-          },
-          {
             "zh": "说得太快了。",
             "py": "Shuō de tài kuài le.",
             "ko": "너무 빨리 말하셨어요."
-          },
-          {
-            "zh": "对不起，我没听懂。",
-            "py": "Duìbuqǐ, wǒ méi tīngdǒng.",
-            "ko": "죄송해요, 못 알아들었어요."
-          },
-          {
-            "zh": "请写下来。",
-            "py": "Qǐng xiě xiàlai.",
-            "ko": "적어 주세요."
           }
         ]
       },
@@ -4978,19 +4323,9 @@ window.CN_DATA = {
         "name": "확인하기",
         "items": [
           {
-            "zh": "是这个意思吗？",
-            "py": "Shì zhège yìsi ma?",
-            "ko": "이런 뜻인가요?"
-          },
-          {
             "zh": "我明白了。",
             "py": "Wǒ míngbai le.",
             "ko": "이해했어요."
-          },
-          {
-            "zh": "我懂了。",
-            "py": "Wǒ dǒng le.",
-            "ko": "무슨 말인지 알겠어요."
           },
           {
             "zh": "对吗？",
@@ -12248,13 +11583,30 @@ function revealLineHTML(l, o = {}) {
   </div>`;
 }
 
+// 한 화면에 항목 하나씩, 큰 글씨로 보여 주는 공통 도우미 (3·4일차)
+function pagedStep(pages, next, o) {
+  let k = 0;
+  const render = () => {
+    stopRec();
+    const last = k === pages.length - 1;
+    app.innerHTML = frame(`${o.hint ? `<p class="hint">${o.hint}</p>` : ''}
+      <div class="pg-count">${k + 1} / ${pages.length}</div>
+      <div class="paged${o.cls ? ' ' + o.cls : ''}">${pages[k]}</div>
+      <div class="row pg-nav"><button id="pg-prev" ${k ? '' : 'disabled'}>← 이전</button>
+      <button id="next" class="primary">${last ? o.done : '다음 →'}</button></div>`);
+    document.getElementById('pg-prev').onclick = () => { k--; render(); };
+    document.getElementById('next').onclick = () => { if (k < pages.length - 1) { k++; render(); } else next(); };
+    if (o.after) o.after();
+    window.scrollTo(0, 0);
+  };
+  render();
+}
+
 function stepSentences(st, next) {
-  app.innerHTML = frame(`
-    <p class="hint">한글 뜻을 보고 중국어로 말해 본 뒤, '한자'·'한어병음' 버튼을 눌러 확인하세요. 🔊로 듣고 ⏺ 녹음으로 내 목소리를 남기면 나중에 다시 들을 수 있습니다.</p>
-    ${st.items.map((l) => revealLineHTML(l, { week: session.week, rec: true, base: 'ko', hide: ['zh', 'py'] })).join('')}
-    <div class="row"><button id="next" class="primary">다 봤어요 →</button></div>`);
-  document.getElementById('next').onclick = next;
-  hydrateRecs();
+  pagedStep(st.items.map((l) => revealLineHTML(l, { week: session.week, rec: true, base: 'ko', hide: ['zh', 'py'] })), next, {
+    hint: "한글 뜻을 보고 중국어로 말해 본 뒤, '한자'·'한어병음' 버튼을 눌러 확인하세요. 🔊로 듣고 ⏺ 녹음으로 내 목소리를 남길 수 있습니다.",
+    done: '다 봤어요 →', after: hydrateRecs,
+  });
 }
 
 // 주제 확장 코너 ① 듣고 읽기: 그룹별 목록을 🔊로 듣고 따라 읽는다
@@ -12279,7 +11631,7 @@ function stepCornerSay(st, next) {
 }
 
 function stepGrammar(st, next) {
-  app.innerHTML = frame(`${st.items.map((g) => `
+  pagedStep(st.items.map((g) => `
     <div class="grammar">
       <h3>${esc(g.title)}</h3>
       <p class="hint">${esc(g.rule)}</p>
@@ -12288,9 +11640,7 @@ function stepGrammar(st, next) {
         <div class="rv-row"><button type="button" class="rv-btn" data-rv="py" aria-expanded="false">한어병음</button>
         <button type="button" class="rv-btn" data-rv="ko" aria-expanded="false">한글</button></div>
         <div class="rv-body py" data-rvb="py" hidden>${esc(e.py)}</div><div class="rv-body ko" data-rvb="ko" hidden>${esc(e.ko)}</div></div>`).join('')}
-    </div>`).join('')}
-    <div class="row"><button id="next" class="primary">다 봤어요 →</button></div>`);
-  document.getElementById('next').onclick = next;
+    </div>`), next, { done: '다 봤어요 →' });
 }
 
 function lineHTML(l, o = {}) {
@@ -12313,12 +11663,13 @@ function stepLines(st, next) {
   const hint = st.roleplay
     ? 'A 대사는 🔊로 듣고, B 대사는 🎤로 말해 확인해 보세요. ⏺ 녹음으로 내 목소리를 남길 수도 있습니다. 다음에는 역할을 바꿔 보세요.'
     : mic ? '🔊로 듣고 🎤로 따라 말해 보세요. ⏺ 녹음으로 내 목소리를 남길 수 있습니다. (음성 인식은 Chrome 권장)' : '🔊로 들으며 대화 흐름을 익히세요. 모르는 줄은 \'한어병음\'·\'한글\' 버튼으로 확인하세요.';
-  app.innerHTML = frame(`<p class="hint">${hint}</p>
-    ${st.lines.map((l) => mic ? lineHTML(l, { week: session.week, mic, rec: mic })
-      : revealLineHTML(l, { week: session.week, base: 'zh', hide: ['py', 'ko'] })).join('')}
-    <div class="row"><button id="next" class="primary">마쳤어요 →</button></div>`);
-  document.getElementById('next').onclick = next;
-  if (mic) hydrateRecs();
+  const html = (l) => mic ? lineHTML(l, { week: session.week, mic, rec: mic })
+    : revealLineHTML(l, { week: session.week, base: 'zh', hide: ['py', 'ko'] });
+  // 대화문(듣기·롤플레이)은 두 줄씩 한 화면에, 문장 따라 말하기는 한 줄씩
+  const pair = st.kind === 'dialogue' || st.roleplay;
+  const pages = [];
+  for (let i = 0; i < st.lines.length; i += pair ? 2 : 1) pages.push(st.lines.slice(i, i + (pair ? 2 : 1)).map(html).join(''));
+  pagedStep(pages, next, { hint, done: '마쳤어요 →', after: mic ? hydrateRecs : null, cls: pair ? 'two' : '' });
 }
 
 function stepQuiz(st, next) {
@@ -13330,7 +12681,9 @@ async function cloudPush(event) {
 // 학습 한 번이 끝날 때 app.js의 finish()가 호출한다
 function cloudSync(event) { if (CLOUD.user) cloudPush(event); }
 
+const cloudSkipped = () => { try { return sessionStorage.getItem('cn-login-skip') === '1'; } catch (e) { return false; } };
 async function cloudOnAuth(u) {
+  const first = !CLOUD.authSeen; CLOUD.authSeen = true;
   CLOUD.user = u || null;
   CLOUD.isAdmin = !!u && cloudEmailIsAdmin(u.email);
   if (u) {
@@ -13348,6 +12701,8 @@ async function cloudOnAuth(u) {
     await cloudPush({ kind: 'login' });
   }
   if (document.querySelector('nav button[data-view="cloud"].on')) renderCloud();
+  // 앱을 처음 켰을 때: 로그인 정보가 없으면 로그인 화면을 먼저 보여 준다(이전에 로그인했다면 자동으로 이어짐)
+  else if (first && !u && !cloudSkipped() && !session && document.querySelector('nav button[data-view="home"].on')) go('cloud');
 }
 
 /* ---------- 화면 ---------- */
@@ -13387,9 +12742,11 @@ function renderCloudOut(mode = 'in') {
       <div class="row"><button class="primary" type="submit">${signup ? '가입하고 시작' : '로그인'}</button>
         <button type="button" id="cl-switch">${signup ? '이미 계정이 있어요' : '계정 만들기'}</button></div>
       ${signup ? '' : '<div class="row"><button type="button" id="cl-reset" class="icon">비밀번호를 잊었어요</button></div>'}
+      <div class="row"><button type="button" id="cl-skip" class="icon">로그인 없이 학습하기</button></div>
     </form></section>`;
   const msg = (t, cls) => { const m = document.getElementById('cl-msg'); m.textContent = t; m.className = 'build-msg ' + (cls || ''); };
   document.getElementById('cl-switch').onclick = () => renderCloudOut(signup ? 'in' : 'up');
+  document.getElementById('cl-skip').onclick = () => { try { sessionStorage.setItem('cn-login-skip', '1'); } catch (e) {} go('home'); };
   const rs = document.getElementById('cl-reset');
   if (rs) rs.onclick = async () => {
     const em = document.getElementById('cl-email').value.trim();
