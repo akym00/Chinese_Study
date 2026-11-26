@@ -292,6 +292,18 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
 .line.nosp { grid-template-columns: 1fr auto; }
 .line.nosp .mic-result, .line.nosp .recs { grid-column: 1 / 3; }
 
+/* 계정·진척 현황 */
+.cl-form { display: grid; gap: 12px; max-width: 420px; }
+.cl-form label { display: grid; gap: 4px; font-weight: 600; }
+.cl-form input { font: inherit; font-weight: 400; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); color: var(--text); }
+.cl-form input:focus { outline: 2px solid var(--accent); }
+.badge { font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); vertical-align: middle; }
+.tbl-wrap { overflow-x: auto; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.tbl th, .tbl td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.tbl th { color: var(--muted); font-weight: 700; font-size: 0.85rem; }
+.tbl tr.me td { background: var(--accent-soft); font-weight: 700; }
+
 </style>
 </head>
 <body>
@@ -302,6 +314,7 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
       <button data-view="roadmap">로드맵</button>
       <button data-view="recs">녹음</button>
       <button data-view="stats">기록</button>
+      <button data-view="cloud">함께</button>
     </nav>
   </header>
   <main id="app">
@@ -312,6 +325,24 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
     </section>
   </main>
   <script>
+/* =====================================================================
+   서버(클라우드) 연결 설정 — 계정·진척 공유 기능
+   값을 비우면(firebase: null) 앱은 이 기기 안에서만 동작합니다.
+   ===================================================================== */
+window.CN_CONFIG = {
+  firebase: {
+    apiKey: "AIzaSyBSO_QTYXpGU29cSuvgov-BtW-Hcd_y4n4",
+    authDomain: "cn-study-4e619.firebaseapp.com",
+    projectId: "cn-study-4e619",
+    storageBucket: "cn-study-4e619.firebasestorage.app",
+    messagingSenderId: "99992054244",
+    appId: "1:99992054244:web:6a99507cf1b7605ea7fff1"
+  },
+  admins: ["akym00@naver.com"],  // 화면 표시용. 실제 권한은 Firestore 규칙이 정합니다.
+};
+
+</script>
+<script>
 /* =====================================================================
    학습 데이터 (메모장으로 수정하세요)
 
@@ -12933,6 +12964,9 @@ function finish() {
     S.progress = null;
     save();
   }
+  if (typeof cloudSync === 'function') {
+    cloudSync({ kind: practice ? 'practice' : free ? 'free' : 'real', week, day: session.type.id, dayNo: (practice || free) ? null : ((S.cursor - 1) % DAYS_PER_WEEK) + 1, score: session.checkScore });
+  }
   const title = practice ? '복습 완료! 👍' : free ? '학습 완료! 👍' : '오늘 학습 완료! 🎉';
   const todayN = Number(S.completed[todayStr()]) || 0;
   const more = !practice && !free && S.cursor < TOTAL_SESSIONS;
@@ -13187,7 +13221,7 @@ function go(view) {
   hideTip();
   session = null;
   document.querySelectorAll('nav button').forEach((b) => b.classList.toggle('on', b.dataset.view === view));
-  ({ home: renderHome, roadmap: renderRoadmap, stats: renderStats, recs: renderRecordings })[view]();
+  ({ home: renderHome, roadmap: renderRoadmap, stats: renderStats, recs: renderRecordings, cloud: () => renderCloud() })[view]();
 }
 // 마우스 올림 / 키보드 포커스 / 터치 길게 누름 중 어느 것으로도 툴팁이 뜨고 사라지게 한다
 app.addEventListener('mouseover', (e) => { const el = e.target.closest('[data-tip]'); if (el) showTip(el); });
@@ -13211,6 +13245,245 @@ document.querySelector('nav').addEventListener('click', (e) => {
   }
   go('home');
 })();
+
+</script>
+<script>
+'use strict';
+/* ============ 계정 · 진척 공유 (Firebase Auth + Firestore) ============
+   - 설정(window.CN_CONFIG.firebase)이 없으면 아무 것도 하지 않는다.
+   - 서버 연결이 막혀도 앱의 학습 기능은 그대로 동작한다(저장 실패는 무시).
+   - 컬렉션
+       public/{uid}              이름·진척률 등 '간단한 진척' (로그인한 모두가 읽기)
+       private/{uid}             이메일·상세 상태 (본인·관리자만 읽기)
+       private/{uid}/events/{id} 학습 이력 한 건씩 (본인·관리자만 읽기)
+   ===================================================================== */
+const CLOUD = { user: null, isAdmin: false, err: null, busy: false, msg: '', loading: false };
+const FB_VER = '10.12.2';
+const FB_SCRIPTS = ['app', 'auth', 'firestore'].map((n) => `https://www.gstatic.com/firebasejs/${FB_VER}/firebase-${n}-compat.js`);
+
+const cloudConfigured = () => !!(window.CN_CONFIG && window.CN_CONFIG.firebase && window.CN_CONFIG.firebase.apiKey);
+const cloudEmailIsAdmin = (email) => !!email && (window.CN_CONFIG.admins || []).map((x) => String(x).toLowerCase()).includes(String(email).toLowerCase());
+
+function cloudLoadScript(src) {
+  return new Promise((resolve, reject) => {
+    const sc = document.createElement('script');
+    sc.src = src; sc.onload = resolve; sc.onerror = () => reject(new Error('load ' + src));
+    document.head.appendChild(sc);
+  });
+}
+let cloudInitP = null;
+function initCloud() {
+  if (cloudInitP) return cloudInitP;
+  cloudInitP = (async () => {
+    if (!cloudConfigured()) throw new Error('not-configured');
+    if (!window.firebase) { for (const u of FB_SCRIPTS) await cloudLoadScript(u); }
+    if (!firebase.apps.length) firebase.initializeApp(window.CN_CONFIG.firebase);
+    CLOUD.auth = firebase.auth(); CLOUD.db = firebase.firestore();
+    CLOUD.auth.onAuthStateChanged((u) => cloudOnAuth(u));
+    return true;
+  })().catch((e) => { cloudInitP = null; CLOUD.err = e; throw e; });
+  return cloudInitP;
+}
+
+const FRIENDLY = {
+  'auth/email-already-in-use': '이미 가입된 이메일입니다. 로그인해 주세요.',
+  'auth/invalid-email': '이메일 형식이 올바르지 않습니다.',
+  'auth/weak-password': '비밀번호는 6자 이상으로 해 주세요.',
+  'auth/user-not-found': '가입되지 않은 이메일입니다.',
+  'auth/wrong-password': '비밀번호가 맞지 않습니다.',
+  'auth/invalid-credential': '이메일 또는 비밀번호가 맞지 않습니다.',
+  'auth/too-many-requests': '시도가 너무 많습니다. 잠시 후 다시 해 주세요.',
+  'auth/network-request-failed': '인터넷 연결을 확인해 주세요.',
+  'auth/unauthorized-domain': '이 주소가 Firebase 승인 도메인에 없습니다. FIREBASE-SETUP.md의 4번 단계를 확인하세요.',
+  'permission-denied': '서버 접근 권한이 없습니다(Firestore 규칙을 확인하세요).',
+};
+const cloudErrText = (e) => FRIENDLY[e && e.code] || ('오류: ' + ((e && e.message) || e));
+
+// 지금 상태에서 만든 '간단한 진척' 요약
+function cloudSummary() {
+  const dates = Object.keys(S.completed).sort();
+  return {
+    cursor: S.cursor,
+    pct: Math.round(Math.min(100, (S.cursor / TOTAL_SESSIONS) * 100) * 10) / 10,
+    week: Math.min(TOTAL_WEEKS, weekOf(S.cursor)),
+    streak: streak(),
+    studyDays: dates.length,
+    last: dates[dates.length - 1] || '',
+  };
+}
+
+async function cloudPush(event) {
+  const u = CLOUD.user; if (!u || !CLOUD.db) return;
+  try {
+    const sm = cloudSummary(), ts = firebase.firestore.FieldValue.serverTimestamp();
+    const name = u.displayName || (u.email || '').split('@')[0];
+    await CLOUD.db.doc(`public/${u.uid}`).set({ name, ...sm, updated: ts });
+    await CLOUD.db.doc(`private/${u.uid}`).set({
+      email: u.email || '', name, ...sm, checks: S.checks || {},
+      state: { cursor: S.cursor, completed: S.completed, checks: S.checks || {}, progress: S.progress || null },
+      updated: ts,
+    }, { merge: true });
+    if (event) await CLOUD.db.collection(`private/${u.uid}/events`).add({ ...event, at: Date.now(), ts, cursor: S.cursor });
+    CLOUD.err = null;
+  } catch (e) { CLOUD.err = e; }
+}
+// 학습 한 번이 끝날 때 app.js의 finish()가 호출한다
+function cloudSync(event) { if (CLOUD.user) cloudPush(event); }
+
+async function cloudOnAuth(u) {
+  CLOUD.user = u || null;
+  CLOUD.isAdmin = !!u && cloudEmailIsAdmin(u.email);
+  if (u) {
+    try {
+      const snap = await CLOUD.db.doc(`private/${u.uid}`).get();
+      const st = snap.exists ? (snap.data().state || null) : null;
+      if (st && Number(st.cursor) > S.cursor && await askConfirm(`서버에 더 진행된 기록(${st.cursor}일차 완료)이 있습니다.\n이 기기에 불러올까요?\n(현재 이 기기: ${S.cursor}일차 완료)`)) {
+        S.cursor = Number(st.cursor);
+        S.completed = Object.assign({}, S.completed, st.completed || {});
+        S.checks = Object.assign({}, S.checks, st.checks || {});
+        S.progress = st.progress || null;
+        save();
+      }
+    } catch (e) { CLOUD.err = e; }
+    await cloudPush({ kind: 'login' });
+  }
+  if (document.querySelector('nav button[data-view="cloud"].on')) renderCloud();
+}
+
+/* ---------- 화면 ---------- */
+const fmtTime = (ms) => { if (!ms) return '-'; const d = new Date(ms); const p = (n) => String(n).padStart(2, '0'); return `${d.getMonth() + 1}/${d.getDate()} ${p(d.getHours())}:${p(d.getMinutes())}`; };
+const KIND_LABEL = { real: '진도 학습', free: '복습·미리보기', practice: '복습 카드', login: '로그인' };
+
+async function renderCloud() {
+  const tk = ++viewToken;
+  if (!cloudConfigured()) {
+    app.innerHTML = `<section class="panel"><h2>함께 학습하기</h2>
+      <p>가입하면 진척률이 서버에 저장되고, 다른 학습자의 진척 현황을 볼 수 있습니다.</p>
+      <p class="hint">아직 서버가 연결되어 있지 않습니다. 관리자가 FIREBASE-SETUP.md 순서대로 서버를 만든 뒤 설정 값을 넣으면 이 화면이 열립니다. 그 전에도 학습은 지금처럼 이 기기에서 그대로 쓸 수 있습니다.</p></section>`;
+    return;
+  }
+  app.innerHTML = '<section class="panel"><p class="muted">서버에 연결하는 중…</p></section>';
+  try { await initCloud(); } catch (e) {
+    if (tk !== viewToken) return;
+    app.innerHTML = `<section class="panel"><h2>서버에 연결할 수 없습니다</h2><p class="hint">인터넷이 연결되어 있는지, 회사·학교 보안이 외부 주소(gstatic.com, firebaseio.com 등)를 막고 있지 않은지 확인해 주세요. 학습 기능은 그대로 사용할 수 있습니다.</p>
+      <div class="row"><button id="cl-retry">다시 시도</button></div></section>`;
+    document.getElementById('cl-retry').onclick = renderCloud;
+    return;
+  }
+  if (tk !== viewToken) return;
+  CLOUD.user ? renderCloudIn(tk) : renderCloudOut();
+}
+
+function renderCloudOut(mode = 'in') {
+  const signup = mode === 'up';
+  app.innerHTML = `<section class="panel">
+    <h2>${signup ? '계정 만들기' : '로그인'}</h2>
+    <p class="hint">이름(닉네임)과 진척률은 가입한 모든 학습자에게 보입니다. 이메일은 관리자에게만 보입니다.</p>
+    <form id="cl-form" class="cl-form">
+      ${signup ? '<label>이름(닉네임)<input id="cl-name" maxlength="20" autocomplete="nickname" required></label>' : ''}
+      <label>이메일<input id="cl-email" type="email" autocomplete="email" required></label>
+      <label>비밀번호 (6자 이상)<input id="cl-pw" type="password" autocomplete="${signup ? 'new-password' : 'current-password'}" minlength="6" required></label>
+      <p class="build-msg" id="cl-msg"></p>
+      <div class="row"><button class="primary" type="submit">${signup ? '가입하고 시작' : '로그인'}</button>
+        <button type="button" id="cl-switch">${signup ? '이미 계정이 있어요' : '계정 만들기'}</button></div>
+      ${signup ? '' : '<div class="row"><button type="button" id="cl-reset" class="icon">비밀번호를 잊었어요</button></div>'}
+    </form></section>`;
+  const msg = (t, cls) => { const m = document.getElementById('cl-msg'); m.textContent = t; m.className = 'build-msg ' + (cls || ''); };
+  document.getElementById('cl-switch').onclick = () => renderCloudOut(signup ? 'in' : 'up');
+  const rs = document.getElementById('cl-reset');
+  if (rs) rs.onclick = async () => {
+    const em = document.getElementById('cl-email').value.trim();
+    if (!em) return msg('위에 이메일을 먼저 적어 주세요.', 'bad');
+    try { await CLOUD.auth.sendPasswordResetEmail(em); msg('비밀번호 재설정 메일을 보냈습니다. 메일함을 확인해 주세요.', 'good'); } catch (e) { msg(cloudErrText(e), 'bad'); }
+  };
+  document.getElementById('cl-form').onsubmit = async (ev) => {
+    ev.preventDefault();
+    const em = document.getElementById('cl-email').value.trim(), pw = document.getElementById('cl-pw').value;
+    msg('처리 중…');
+    try {
+      if (signup) {
+        const name = document.getElementById('cl-name').value.trim();
+        if (!name) return msg('이름(닉네임)을 적어 주세요.', 'bad');
+        const cred = await CLOUD.auth.createUserWithEmailAndPassword(em, pw);
+        await cred.user.updateProfile({ displayName: name });
+        CLOUD.user = CLOUD.auth.currentUser || cred.user;
+        await cloudPush({ kind: 'login' });
+      } else {
+        await CLOUD.auth.signInWithEmailAndPassword(em, pw);
+      }
+    } catch (e) { return msg(cloudErrText(e), 'bad'); }
+    renderCloud();
+  };
+}
+
+async function renderCloudIn(tk) {
+  const u = CLOUD.user, sm = cloudSummary();
+  app.innerHTML = `<section class="panel">
+    <h2>${esc(u.displayName || u.email)}님 ${CLOUD.isAdmin ? '<span class="badge">관리자</span>' : ''}</h2>
+    <div class="stats-row">
+      <div class="stat"><b>${sm.pct}%</b>진척률</div>
+      <div class="stat"><b>${sm.cursor}</b>완료 일차</div>
+      <div class="stat"><b>${sm.streak}</b>연속 학습일</div>
+    </div>
+    <p class="hint" id="cl-status">학습을 마칠 때마다 진척률이 서버에 자동 저장됩니다.</p>
+    <div class="row"><button id="cl-sync">지금 저장</button><button id="cl-out">로그아웃</button></div>
+  </section>
+  <section class="panel"><h2>학습자 진척 현황</h2><div id="cl-board"><p class="muted">불러오는 중…</p></div></section>
+  ${CLOUD.isAdmin ? '<section class="panel"><h2>관리자: 사용 이력</h2><div id="cl-admin"><p class="muted">불러오는 중…</p></div><div id="cl-events"></div></section>' : ''}`;
+  document.getElementById('cl-out').onclick = async () => { await CLOUD.auth.signOut(); renderCloud(); };
+  document.getElementById('cl-sync').onclick = async () => {
+    const st = document.getElementById('cl-status'); st.textContent = '저장 중…';
+    await cloudPush(null);
+    st.textContent = CLOUD.err ? cloudErrText(CLOUD.err) : '저장했습니다.';
+    loadBoard(tk);
+  };
+  loadBoard(tk);
+  if (CLOUD.isAdmin) loadAdmin(tk);
+}
+
+async function loadBoard(tk) {
+  const box = document.getElementById('cl-board'); if (!box) return;
+  try {
+    const snap = await CLOUD.db.collection('public').orderBy('cursor', 'desc').limit(100).get();
+    if (tk !== viewToken || !document.getElementById('cl-board')) return;
+    const rows = []; snap.forEach((d) => rows.push({ id: d.id, ...d.data() }));
+    box.innerHTML = rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>이름</th><th>진척률</th><th>완료</th><th>연속</th><th>최근 학습</th></tr></thead><tbody>
+      ${rows.map((r, i) => `<tr class="${CLOUD.user && r.id === CLOUD.user.uid ? 'me' : ''}"><td>${i + 1}</td><td>${esc(r.name || '-')}</td><td>${r.pct ?? 0}%</td><td>${r.cursor ?? 0}일차</td><td>${r.streak ?? 0}일</td><td>${esc(r.last || '-')}</td></tr>`).join('')}
+      </tbody></table></div>` : '<p class="muted">아직 등록된 학습자가 없습니다.</p>';
+  } catch (e) { box.innerHTML = `<p class="build-msg bad">${esc(cloudErrText(e))}</p>`; }
+}
+
+async function loadAdmin(tk) {
+  const box = document.getElementById('cl-admin'); if (!box) return;
+  try {
+    const snap = await CLOUD.db.collection('private').get();
+    if (tk !== viewToken || !document.getElementById('cl-admin')) return;
+    const rows = []; snap.forEach((d) => rows.push({ id: d.id, ...d.data() }));
+    rows.sort((a, b) => (b.cursor || 0) - (a.cursor || 0));
+    box.innerHTML = rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>이름</th><th>이메일</th><th>진척</th><th>학습일</th><th>주간 점검 점수</th><th></th></tr></thead><tbody>
+      ${rows.map((r) => {
+        const ck = Object.entries(r.checks || {}).sort((a, b) => a[0] - b[0]).map(([w, s]) => `${w}주 ${s}`).join(', ') || '-';
+        return `<tr><td>${esc(r.name || '-')}</td><td>${esc(r.email || '-')}</td><td>${r.pct ?? 0}% (${r.cursor ?? 0}일차)</td><td>${r.studyDays ?? 0}일</td><td>${esc(ck)}</td><td><button class="icon" data-ev="${esc(r.id)}" data-nm="${esc(r.name || r.email || '')}">이력</button></td></tr>`;
+      }).join('')}</tbody></table></div>` : '<p class="muted">데이터가 없습니다.</p>';
+    box.querySelectorAll('[data-ev]').forEach((b) => { b.onclick = () => showEvents(b.dataset.ev, b.dataset.nm, tk); });
+  } catch (e) { box.innerHTML = `<p class="build-msg bad">${esc(cloudErrText(e))}</p>`; }
+}
+
+async function showEvents(uid, name, tk) {
+  const box = document.getElementById('cl-events'); if (!box) return;
+  box.innerHTML = '<p class="muted">불러오는 중…</p>';
+  try {
+    const snap = await CLOUD.db.collection(`private/${uid}/events`).orderBy('at', 'desc').limit(60).get();
+    if (tk !== viewToken || !document.getElementById('cl-events')) return;
+    const rows = []; snap.forEach((d) => rows.push(d.data()));
+    box.innerHTML = `<h3>${esc(name)}님의 최근 이력</h3>` + (rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>시각</th><th>구분</th><th>주차·일차</th><th>점수</th></tr></thead><tbody>
+      ${rows.map((r) => `<tr><td>${fmtTime(r.at)}</td><td>${esc(KIND_LABEL[r.kind] || r.kind || '-')}</td><td>${r.week ? `${r.week}주차${r.dayNo ? ' ' + r.dayNo + '일차' : ''}` : '-'}</td><td>${r.score != null ? esc(r.score) + '점' : '-'}</td></tr>`).join('')}
+      </tbody></table></div>` : '<p class="muted">이력이 없습니다.</p>');
+  } catch (e) { box.innerHTML = `<p class="build-msg bad">${esc(cloudErrText(e))}</p>`; }
+}
+
+// 설정이 있으면 시작할 때 미리 연결(로그인 유지 확인)
+if (cloudConfigured()) setTimeout(() => { initCloud().catch(() => {}); }, 500);
 
 </script>
 </body>
