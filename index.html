@@ -372,6 +372,10 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
 .cl-inline { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
 .cl-inline input { font: inherit; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); flex: 1 1 140px; min-width: 0; background: var(--panel); color: var(--text); }
 
+/* 막대 구간과 아래 칸의 폭을 같게 */
+.lvbar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+.lvseg { min-width: 0; }
+
 </style>
 </head>
 <body>
@@ -11409,7 +11413,7 @@ async function renderHome() {
   const segs = curriculum.stages.map((s, i) => {
     const L = LV(i), a0 = (s.from - 1) * DAYS_PER_WEEK, a1 = s.to * DAYS_PER_WEEK;
     const f = Math.max(0, Math.min(100, ((c - a0) / (a1 - a0)) * 100));
-    return `<div class="lvseg" style="flex:${s.to - s.from + 1};background:${L.tint}" title="${L.name}"><div style="width:${f}%;background:${L.color}"></div></div>`;
+    return `<div class="lvseg" style="background:${L.tint}" title="${L.name}"><div style="width:${f}%;background:${L.color}"></div></div>`;
   }).join('');
   const legend = curriculum.stages.map((s, i) => {
     const L = LV(i);
