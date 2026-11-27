@@ -338,6 +338,40 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
 .lesson.now { background: #000; border-color: #000; box-shadow: none; }
 .lesson.now .lab, .lesson.now .wt, .lesson.now .wk { color: #fff; font-weight: 700; }
 
+/* 미니 퀴즈: 제시어 칸 초록, 보기 가운데 정렬·큰 글씨 */
+.card.big:has(+ .opts) { background: #cfeccb; border: 1px solid #8fcf88; padding: 26px 14px; text-align: center; }
+.card.big:has(+ .opts) .hanzi { font-size: 3.6rem; line-height: 1.25; }
+.card.big:has(+ .opts) .ko.big { font-size: 2.3rem; line-height: 1.35; }
+.opts { margin-top: 14px; }
+.opt { text-align: center; font-size: 1.35rem; padding: 16px 10px; }
+.stage { margin-bottom: 14px; }
+
+/* 레벨 구간 진척 막대 */
+.lvbar { display: flex; gap: 3px; height: 16px; margin: 8px 0 10px; }
+.lvseg { border-radius: 6px; overflow: hidden; min-width: 8px; }
+.lvseg > div { height: 100%; }
+.lvlegend { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-bottom: 10px; }
+.lvcell { border: 2px solid; border-radius: 10px; padding: 6px 2px; text-align: center; display: grid; gap: 1px; opacity: 0.85; }
+.lvcell b { font-size: 0.9rem; font-weight: 500; }
+.lvcell small { font-size: 0.68rem; color: #333; }
+.lvcell .lvi { font-size: 1.25rem; line-height: 1.2; }
+.lvcell.now { opacity: 1; box-shadow: 0 0 0 2px #000; }
+.lvcell.now b { font-weight: 800; }
+/* 내 정보 */
+.lv-card { display: flex; align-items: center; gap: 12px; border: 2px solid var(--lc); background: var(--lt); border-radius: 14px; padding: 10px 14px; margin: 8px 0 12px; }
+.lv-card .lv-ic { font-size: 2.2rem; line-height: 1; }
+.lv-card b { font-size: 1.3rem; color: var(--lc); }
+.lv-card small { display: block; color: #333; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.chips button { border-radius: 999px; padding: 6px 12px; font-size: 0.95rem; }
+.chips button.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.rk-me { font-weight: 700; margin: 6px 0; }
+.room-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.room-row b { flex: 1 1 auto; }
+.room-code { font-family: ui-monospace, Menlo, Consolas, monospace; letter-spacing: 0.12em; background: var(--soft); padding: 3px 8px; border-radius: 8px; }
+.cl-inline { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0; }
+.cl-inline input { font: inherit; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); flex: 1 1 140px; min-width: 0; background: var(--panel); color: var(--text); }
+
 </style>
 </head>
 <body>
@@ -348,7 +382,7 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
       <button data-view="roadmap">로드맵</button>
       <button data-view="recs">녹음</button>
       <button data-view="stats">기록</button>
-      <button data-view="cloud">함께</button>
+      <button data-view="cloud">내 정보</button>
     </nav>
   </header>
   <main id="app">
@@ -11085,6 +11119,18 @@ function streak() {
 }
 const stageOf = (w) => curriculum.stages.find((s) => w >= s.from && w <= s.to);
 
+/* ============ 레벨 (학습 단계 = 레벨) ============ */
+const LEVEL_STYLE = [
+  { name: '입문', icon: '🌱', color: '#2e9d4f', tint: '#dcf3e2' },
+  { name: '초급', icon: '🌿', color: '#1d7fd1', tint: '#dbeafb' },
+  { name: '중급', icon: '🌳', color: '#7b4fc9', tint: '#ebe1fa' },
+  { name: '중고급', icon: '🔥', color: '#e07b1a', tint: '#fde8d2' },
+  { name: '고급', icon: '👑', color: '#c8102e', tint: '#fbdde2' },
+];
+const levelIdxOfWeek = (w) => Math.max(0, curriculum.stages.findIndex((s) => w >= s.from && w <= s.to));
+const levelOfCursor = (c) => levelIdxOfWeek(Math.min(TOTAL_WEEKS, weekOf(c)));
+const LV = (i) => Object.assign({ i }, curriculum.stages[i] || {}, LEVEL_STYLE[i] || LEVEL_STYLE[0]);
+
 /* ============ 간격 반복(SRS) ============ */
 function dueCards() {
   const t = todayStr();
@@ -11359,9 +11405,20 @@ async function renderHome() {
   const c = S.cursor;
   const pct = Math.min(100, (c / TOTAL_SESSIONS) * 100);
   const curWeek = Math.min(weekOf(c), TOTAL_WEEKS);
+  const curLv = levelOfCursor(c);
+  const segs = curriculum.stages.map((s, i) => {
+    const L = LV(i), a0 = (s.from - 1) * DAYS_PER_WEEK, a1 = s.to * DAYS_PER_WEEK;
+    const f = Math.max(0, Math.min(100, ((c - a0) / (a1 - a0)) * 100));
+    return `<div class="lvseg" style="flex:${s.to - s.from + 1};background:${L.tint}" title="${L.name}"><div style="width:${f}%;background:${L.color}"></div></div>`;
+  }).join('');
+  const legend = curriculum.stages.map((s, i) => {
+    const L = LV(i);
+    return `<div class="lvcell${i === curLv ? ' now' : ''}" style="background:${L.tint};border-color:${L.color}"><span class="lvi">${L.icon}</span><b style="color:${L.color}">${L.name}</b><small>${s.from}~${s.to}주</small></div>`;
+  }).join('');
   const progress = `<section class="panel">
     <div class="prog-head"><b>전체 진척률</b><span class="prog-pct">${pct.toFixed(1)}%</span></div>
-    <div class="bar"><div style="width:${pct}%"></div></div>
+    <div class="lvbar">${segs}</div>
+    <div class="lvlegend">${legend}</div>
     <div class="muted small">${Math.min(c, TOTAL_SESSIONS)} / ${TOTAL_SESSIONS} 학습일 완료 · ${curWeek} / ${TOTAL_WEEKS}주차 진행 중</div>
   </section>`;
 
@@ -11406,7 +11463,7 @@ async function renderHome() {
       <div class="lessons">${lessons}</div>
     </section>
     <section class="panel">
-      <div class="stage">${esc(stage.title)} · ${esc(stage.hsk)} · ${w} / ${TOTAL_WEEKS}주차</div>
+      <div class="stage">${esc(stage.title)} · ${esc(stage.hsk)}</div>
       <h2>${data ? esc(data.theme) : `${w}주차`} — ${esc(type.label)}</h2>
       ${data ? `<p class="hint">이번 주 목표: ${esc(data.goal)}</p>` : ''}
       ${plan.length ? `<ol class="plan">${plan.map((s) => `<li>${s.done ? '✓ ' : ''}${esc(s.title)} · ${s.min}분</li>`).join('')}</ol>` : ''}
@@ -12626,7 +12683,7 @@ document.querySelector('nav').addEventListener('click', (e) => {
        private/{uid}             이메일·상세 상태 (본인·관리자만 읽기)
        private/{uid}/events/{id} 학습 이력 한 건씩 (본인·관리자만 읽기)
    ===================================================================== */
-const CLOUD = { user: null, isAdmin: false, err: null, busy: false, msg: '', loading: false };
+const CLOUD = { rooms: {}, scope: 'all', sort: 'pct', user: null, isAdmin: false, err: null, busy: false, msg: '', loading: false };
 const FB_VER = '10.12.2';
 const FB_SCRIPTS = ['app', 'auth', 'firestore'].map((n) => `https://www.gstatic.com/firebasejs/${FB_VER}/firebase-${n}-compat.js`);
 
@@ -12671,10 +12728,13 @@ const cloudErrText = (e) => FRIENDLY[e && e.code] || ('오류: ' + ((e && e.mess
 // 지금 상태에서 만든 '간단한 진척' 요약
 function cloudSummary() {
   const dates = Object.keys(S.completed).sort();
+  const sc = Object.values(S.checks || {}).filter((v) => typeof v === 'number');
   return {
     cursor: S.cursor,
     pct: Math.round(Math.min(100, (S.cursor / TOTAL_SESSIONS) * 100) * 10) / 10,
     week: Math.min(TOTAL_WEEKS, weekOf(S.cursor)),
+    level: levelOfCursor(S.cursor),
+    score: sc.length ? Math.round(sc.reduce((x, y) => x + y, 0) / sc.length) : null,
     streak: streak(),
     studyDays: dates.length,
     last: dates[dates.length - 1] || '',
@@ -12692,6 +12752,9 @@ async function cloudPush(event) {
       state: { cursor: S.cursor, completed: S.completed, checks: S.checks || {}, progress: S.progress || null },
       updated: ts,
     }, { merge: true });
+    for (const code of Object.keys(CLOUD.rooms || {})) {   // 내가 들어간 방에도 내 현황 갱신
+      try { await CLOUD.db.doc(`rooms/${code}/members/${u.uid}`).set({ name, ...sm, checks: S.checks || {}, updated: ts }); } catch (e) { /* 방이 없어졌거나 권한 없음 */ }
+    }
     if (event) await CLOUD.db.collection(`private/${u.uid}/events`).add({ ...event, at: Date.now(), ts, cursor: S.cursor });
     CLOUD.err = null;
   } catch (e) { CLOUD.err = e; }
@@ -12716,8 +12779,9 @@ async function cloudOnAuth(u) {
         save();
       }
     } catch (e) { CLOUD.err = e; }
+    await cloudLoadRooms();
     await cloudPush({ kind: 'login' });
-  }
+  } else { CLOUD.rooms = {}; }
   if (document.querySelector('nav button[data-view="cloud"].on')) renderCloud();
   // 앱을 처음 켰을 때: 로그인 정보가 없으면 로그인 화면을 먼저 보여 준다(이전에 로그인했다면 자동으로 이어짐)
   else if (first && !u && !cloudSkipped() && !session && document.querySelector('nav button[data-view="home"].on')) go('cloud');
@@ -12787,44 +12851,163 @@ function renderCloudOut(mode = 'in') {
         await CLOUD.auth.signInWithEmailAndPassword(em, pw);
       }
     } catch (e) { return msg(cloudErrText(e), 'bad'); }
-    renderCloud();
+    go('home');   // 로그인하면 바로 오늘 학습 화면으로
   };
 }
 
+async function cloudLoadRooms() {
+  const u = CLOUD.user; if (!u) return;
+  try {
+    const snap = await CLOUD.db.collection(`private/${u.uid}/rooms`).get();
+    const m = {}; snap.forEach((d) => { m[d.id] = (d.data() || {}).name || d.id; });
+    CLOUD.rooms = m;
+  } catch (e) { CLOUD.err = e; }
+}
+
+const ROOM_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const roomCode = () => { const a = new Uint8Array(6); (window.crypto || window.msCrypto).getRandomValues(a); return [...a].map((n) => ROOM_CHARS[n % ROOM_CHARS.length]).join(''); };
+
+async function cloudJoinRoom(code, name) {
+  const u = CLOUD.user, sm = cloudSummary(), ts = firebase.firestore.FieldValue.serverTimestamp();
+  const nm = u.displayName || (u.email || '').split('@')[0];
+  await CLOUD.db.doc(`rooms/${code}/members/${u.uid}`).set({ name: nm, ...sm, checks: S.checks || {}, updated: ts });
+  await CLOUD.db.doc(`private/${u.uid}/rooms/${code}`).set({ name, at: Date.now() });
+  CLOUD.rooms[code] = name;
+}
+
 async function renderCloudIn(tk) {
-  const u = CLOUD.user, sm = cloudSummary();
+  const u = CLOUD.user, sm = cloudSummary(), L = LV(sm.level);
+  const myName = u.displayName || u.email;
   app.innerHTML = `<section class="panel">
-    <h2>${esc(u.displayName || u.email)}님 ${CLOUD.isAdmin ? '<span class="badge">관리자</span>' : ''}</h2>
+    <h2>${esc(myName)}님 ${CLOUD.isAdmin ? '<span class="badge">관리자</span>' : ''}</h2>
+    <div class="lv-card" style="--lc:${L.color};--lt:${L.tint}"><span class="lv-ic">${L.icon}</span>
+      <div><b>${L.name}</b><small>${esc(L.title)} · ${esc(L.hsk)}</small></div></div>
     <div class="stats-row">
       <div class="stat"><b>${sm.pct}%</b>진척률</div>
       <div class="stat"><b>${sm.cursor}</b>완료 일차</div>
+      <div class="stat"><b>${sm.score == null ? '-' : sm.score}</b>평균 성적</div>
       <div class="stat"><b>${sm.streak}</b>연속 학습일</div>
     </div>
-    <p class="hint" id="cl-status">학습을 마칠 때마다 진척률이 서버에 자동 저장됩니다.</p>
+    <p class="hint" id="cl-status">학습을 마칠 때마다 진척률이 서버에 자동 저장됩니다. (성적 = 주간 점검 점수의 평균)</p>
     <div class="row"><button id="cl-sync">지금 저장</button><button id="cl-out">로그아웃</button></div>
   </section>
-  <section class="panel"><h2>학습자 진척 현황</h2><div id="cl-board"><p class="muted">불러오는 중…</p></div></section>
+  <section class="panel"><h2>순위</h2>
+    <div class="chips" id="rk-scope"></div>
+    <div class="chips" id="rk-sort"><button data-s="pct">진척율 순</button><button data-s="score">성적 순</button></div>
+    <div id="rk-me" class="rk-me"></div>
+    <div id="cl-board"><p class="muted">불러오는 중…</p></div>
+  </section>
+  <section class="panel"><h2>방</h2>
+    <p class="hint">방에 들어간 사람끼리만 서로의 점검 점수와 진척을 볼 수 있습니다. 방을 만들면 나오는 코드를 친구에게 알려 주세요.</p>
+    <div class="cl-inline"><input id="rm-name" maxlength="20" placeholder="새 방 이름"><button id="rm-new" class="primary">방 만들기</button></div>
+    <div class="cl-inline"><input id="rm-code" maxlength="6" placeholder="방 코드 6자리" autocapitalize="characters"><button id="rm-join">들어가기</button></div>
+    <p class="build-msg" id="rm-msg"></p>
+    <div id="rm-list"></div>
+  </section>
   ${CLOUD.isAdmin ? '<section class="panel"><h2>관리자: 사용 이력</h2><div id="cl-admin"><p class="muted">불러오는 중…</p></div><div id="cl-events"></div></section>' : ''}`;
   document.getElementById('cl-out').onclick = async () => { await CLOUD.auth.signOut(); renderCloud(); };
   document.getElementById('cl-sync').onclick = async () => {
     const st = document.getElementById('cl-status'); st.textContent = '저장 중…';
     await cloudPush(null);
     st.textContent = CLOUD.err ? cloudErrText(CLOUD.err) : '저장했습니다.';
-    loadBoard(tk);
+    CLOUD.cache = {}; loadBoard(tk);
   };
-  loadBoard(tk);
+  CLOUD.cache = {};
+  drawRooms(tk); drawScope(tk); loadBoard(tk);
+  document.querySelectorAll('#rk-sort button').forEach((b) => { b.onclick = () => { CLOUD.sort = b.dataset.s; drawScope(tk); loadBoard(tk); }; });
+  const msg = (t, cls) => { const m = document.getElementById('rm-msg'); if (m) { m.textContent = t; m.className = 'build-msg ' + (cls || ''); } };
+  document.getElementById('rm-new').onclick = async () => {
+    const name = document.getElementById('rm-name').value.trim();
+    if (!name) return msg('방 이름을 적어 주세요.', 'bad');
+    msg('만드는 중…');
+    try {
+      let code = '';
+      for (let t = 0; t < 6 && !code; t++) { const c = roomCode(); if (!(await CLOUD.db.doc(`rooms/${c}`).get()).exists) code = c; }
+      if (!code) return msg('잠시 후 다시 시도해 주세요.', 'bad');
+      await CLOUD.db.doc(`rooms/${code}`).set({ name, owner: u.uid, ownerName: myName, created: Date.now() });
+      await cloudJoinRoom(code, name);
+      CLOUD.scope = 'room:' + code; CLOUD.cache = {};
+      msg(`'${name}' 방을 만들었습니다. 코드: ${code}`, 'good');
+      document.getElementById('rm-name').value = '';
+      drawRooms(tk); drawScope(tk); loadBoard(tk);
+    } catch (e) { msg(cloudErrText(e), 'bad'); }
+  };
+  document.getElementById('rm-join').onclick = async () => {
+    const code = document.getElementById('rm-code').value.trim().toUpperCase();
+    if (code.length !== 6) return msg('방 코드는 6자리입니다.', 'bad');
+    if (CLOUD.rooms[code]) return msg('이미 들어간 방입니다.', 'bad');
+    msg('확인 중…');
+    try {
+      const snap = await CLOUD.db.doc(`rooms/${code}`).get();
+      if (!snap.exists) return msg('없는 방 코드입니다.', 'bad');
+      const name = snap.data().name || code;
+      await cloudJoinRoom(code, name);
+      CLOUD.scope = 'room:' + code; CLOUD.cache = {};
+      msg(`'${name}' 방에 들어왔습니다.`, 'good');
+      document.getElementById('rm-code').value = '';
+      drawRooms(tk); drawScope(tk); loadBoard(tk);
+    } catch (e) { msg(cloudErrText(e), 'bad'); }
+  };
   if (CLOUD.isAdmin) loadAdmin(tk);
+}
+
+function drawRooms(tk) {
+  const box = document.getElementById('rm-list'); if (!box) return;
+  const ks = Object.keys(CLOUD.rooms);
+  box.innerHTML = ks.length ? ks.map((k) => `<div class="room-row"><b>${esc(CLOUD.rooms[k])}</b><span class="room-code">${k}</span>
+    <button class="icon" data-copy="${k}">코드 복사</button><button class="icon" data-leave="${k}">나가기</button></div>`).join('') : '<p class="muted">아직 들어간 방이 없습니다.</p>';
+  box.querySelectorAll('[data-copy]').forEach((b) => { b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.copy); toast('코드를 복사했습니다', 'good'); } catch (e) { toast('코드: ' + b.dataset.copy); } }; });
+  box.querySelectorAll('[data-leave]').forEach((b) => {
+    b.onclick = async () => {
+      const k = b.dataset.leave;
+      if (!(await askConfirm(`'${CLOUD.rooms[k]}' 방에서 나갈까요?\n나가면 이 방의 순위에서 빠집니다.`))) return;
+      try {
+        await CLOUD.db.doc(`rooms/${k}/members/${CLOUD.user.uid}`).delete();
+        await CLOUD.db.doc(`private/${CLOUD.user.uid}/rooms/${k}`).delete();
+        delete CLOUD.rooms[k]; CLOUD.cache = {};
+        if (CLOUD.scope === 'room:' + k) CLOUD.scope = 'all';
+        drawRooms(tk); drawScope(tk); loadBoard(tk);
+      } catch (e) { toast(cloudErrText(e), 'bad'); }
+    };
+  });
+}
+
+function drawScope(tk) {
+  const box = document.getElementById('rk-scope'); if (!box) return;
+  const L = LV(levelOfCursor(S.cursor));
+  const items = [['all', '🌏 전체'], ['level', `${L.icon} ${L.name} 레벨`], ...Object.keys(CLOUD.rooms).map((k) => ['room:' + k, '🏠 ' + CLOUD.rooms[k]])];
+  if (!items.some((x) => x[0] === CLOUD.scope)) CLOUD.scope = 'all';
+  box.innerHTML = items.map(([k, t]) => `<button data-sc="${esc(k)}" class="${k === CLOUD.scope ? 'on' : ''}">${esc(t)}</button>`).join('');
+  box.querySelectorAll('button').forEach((b) => { b.onclick = () => { CLOUD.scope = b.dataset.sc; drawScope(tk); loadBoard(tk); }; });
+  document.querySelectorAll('#rk-sort button').forEach((b) => b.classList.toggle('on', b.dataset.s === CLOUD.sort));
 }
 
 async function loadBoard(tk) {
   const box = document.getElementById('cl-board'); if (!box) return;
+  const scope = CLOUD.scope, sort = CLOUD.sort;
   try {
-    const snap = await CLOUD.db.collection('public').orderBy('cursor', 'desc').limit(100).get();
-    if (tk !== viewToken || !document.getElementById('cl-board')) return;
-    const rows = []; snap.forEach((d) => rows.push({ id: d.id, ...d.data() }));
-    box.innerHTML = rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>이름</th><th>진척률</th><th>완료</th><th>연속</th><th>최근 학습</th></tr></thead><tbody>
-      ${rows.map((r, i) => `<tr class="${CLOUD.user && r.id === CLOUD.user.uid ? 'me' : ''}"><td>${i + 1}</td><td>${esc(r.name || '-')}</td><td>${r.pct ?? 0}%</td><td>${r.cursor ?? 0}일차</td><td>${r.streak ?? 0}일</td><td>${esc(r.last || '-')}</td></tr>`).join('')}
-      </tbody></table></div>` : '<p class="muted">아직 등록된 학습자가 없습니다.</p>';
+    CLOUD.cache = CLOUD.cache || {};
+    const isRoom = scope.startsWith('room:');
+    const key = isRoom ? scope : 'all';
+    if (!CLOUD.cache[key]) {
+      const snap = await CLOUD.db.collection(isRoom ? `rooms/${scope.slice(5)}/members` : 'public').get();
+      const rows = []; snap.forEach((d) => rows.push({ id: d.id, ...d.data() })); CLOUD.cache[key] = rows;
+    }
+    if (tk !== viewToken || !document.getElementById('cl-board') || scope !== CLOUD.scope || sort !== CLOUD.sort) return;
+    const myLv = levelOfCursor(S.cursor);
+    let rows = CLOUD.cache[key].map((r) => ({ ...r, lv: levelOfCursor(r.cursor || 0) }));
+    if (scope === 'level') rows = rows.filter((r) => r.lv === myLv);
+    const sv = (r) => (sort === 'score' ? (r.score == null ? -1 : r.score) : (r.cursor || 0));
+    rows.sort((a, b) => sv(b) - sv(a) || (b.cursor || 0) - (a.cursor || 0) || String(a.name).localeCompare(String(b.name)));
+    const mine = rows.findIndex((r) => CLOUD.user && r.id === CLOUD.user.uid);
+    const me = document.getElementById('rk-me');
+    const label = sort === 'score' ? '성적' : '진척율';
+    if (me) me.textContent = mine >= 0 ? `내 ${label} 순위: ${rows.length}명 중 ${mine + 1}위` : `${rows.length}명`;
+    const detail = isRoom;
+    box.innerHTML = rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>이름</th><th>레벨</th><th>진척률</th><th>완료</th><th>성적</th><th>연속</th>${detail ? '<th>주간 점검</th>' : ''}<th>최근 학습</th></tr></thead><tbody>
+      ${rows.map((r, i) => { const Lr = LV(r.lv); const ck = Object.entries(r.checks || {}).sort((a, b) => a[0] - b[0]).map(([w, s]) => `${w}주 ${s}`).join(', ') || '-';
+        return `<tr class="${CLOUD.user && r.id === CLOUD.user.uid ? 'me' : ''}"><td>${i + 1}</td><td>${esc(r.name || '-')}</td><td title="${Lr.name}">${Lr.icon} ${Lr.name}</td><td>${r.pct ?? 0}%</td><td>${r.cursor ?? 0}일차</td><td>${r.score == null ? '-' : r.score}</td><td>${r.streak ?? 0}일</td>${detail ? `<td>${esc(ck)}</td>` : ''}<td>${esc(r.last || '-')}</td></tr>`; }).join('')}
+      </tbody></table></div>` : '<p class="muted">아직 해당하는 학습자가 없습니다.</p>';
   } catch (e) { box.innerHTML = `<p class="build-msg bad">${esc(cloudErrText(e))}</p>`; }
 }
 
@@ -12835,10 +13018,10 @@ async function loadAdmin(tk) {
     if (tk !== viewToken || !document.getElementById('cl-admin')) return;
     const rows = []; snap.forEach((d) => rows.push({ id: d.id, ...d.data() }));
     rows.sort((a, b) => (b.cursor || 0) - (a.cursor || 0));
-    box.innerHTML = rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>이름</th><th>이메일</th><th>진척</th><th>학습일</th><th>주간 점검 점수</th><th></th></tr></thead><tbody>
+    box.innerHTML = rows.length ? `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>이름</th><th>이메일</th><th>레벨</th><th>진척</th><th>학습일</th><th>주간 점검 점수</th><th></th></tr></thead><tbody>
       ${rows.map((r) => {
         const ck = Object.entries(r.checks || {}).sort((a, b) => a[0] - b[0]).map(([w, s]) => `${w}주 ${s}`).join(', ') || '-';
-        return `<tr><td>${esc(r.name || '-')}</td><td>${esc(r.email || '-')}</td><td>${r.pct ?? 0}% (${r.cursor ?? 0}일차)</td><td>${r.studyDays ?? 0}일</td><td>${esc(ck)}</td><td><button class="icon" data-ev="${esc(r.id)}" data-nm="${esc(r.name || r.email || '')}">이력</button></td></tr>`;
+        return `<tr><td>${esc(r.name || '-')}</td><td>${esc(r.email || '-')}</td><td>${LV(levelOfCursor(r.cursor || 0)).icon} ${LV(levelOfCursor(r.cursor || 0)).name}</td><td>${r.pct ?? 0}% (${r.cursor ?? 0}일차)</td><td>${r.studyDays ?? 0}일</td><td>${esc(ck)}</td><td><button class="icon" data-ev="${esc(r.id)}" data-nm="${esc(r.name || r.email || '')}">이력</button></td></tr>`;
       }).join('')}</tbody></table></div>` : '<p class="muted">데이터가 없습니다.</p>';
     box.querySelectorAll('[data-ev]').forEach((b) => { b.onclick = () => showEvents(b.dataset.ev, b.dataset.nm, tk); });
   } catch (e) { box.innerHTML = `<p class="build-msg bad">${esc(cloudErrText(e))}</p>`; }
