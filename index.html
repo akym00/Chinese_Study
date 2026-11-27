@@ -376,6 +376,51 @@ button.tone { padding: 4px 10px; font-size: 1.05rem; }
 .lvbar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
 .lvseg { min-width: 0; }
 
+/* 막대 구간 길이 = 실제 주차 수에 비례, 아래 칸도 같은 폭 */
+.lvbar, .lvlegend { display: flex; gap: 3px; }
+.lvseg, .lvcell { min-width: 0; }
+.lvcell { padding: 5px 0; border-width: 2px; overflow: hidden; }
+.lvcell b { font-size: 0.8rem; white-space: nowrap; }
+.lvcell small { font-size: 0.6rem; white-space: nowrap; }
+.lvcell .lvi { font-size: 1.1rem; }
+.lvnote { margin: -2px 0 8px; font-size: 0.72rem; }
+
+/* 로드맵: 홈 화면과 같은 레벨 색 */
+.lvstage { display: flex; gap: 10px; align-items: center; background: var(--lt); border: 2px solid var(--lc); border-radius: 12px; padding: 10px 12px; margin: 8px 0; }
+.lvstage:last-child { border-bottom: 2px solid var(--lc); }
+.lvstage .lvi { font-size: 1.8rem; line-height: 1; }
+.lvstage b { color: var(--lc); font-size: 1.1rem; font-weight: 500; }
+.lvstage .stg { color: #000; font-size: 0.85rem; }
+.lvstage .muted { color: #333; }
+.lvstage.now b { font-weight: 800; }
+.lvstage.now { box-shadow: 0 0 0 2px #000; }
+.cell { background: var(--lt, var(--soft)); color: var(--lc, var(--muted)); border: 0; }
+.cell.done { background: var(--lc, var(--accent)); color: #fff; }
+.cell.now { background: #000; color: #fff; }
+
+/* 로드맵 레벨 박스: 기본은 테두리 없음, 현재 구간만 연한 테두리 */
+.lvstage, .lvstage:last-child { border: 2px solid transparent; }
+.lvstage.now { border-color: var(--lc); border-color: color-mix(in srgb, var(--lc) 45%, #fff); box-shadow: none; }
+
+/* 현재 레벨 박스: 연한 검정 테두리 (로드맵·홈 공통), 나머지는 테두리 없음 */
+.lvstage.now { border-color: rgba(0, 0, 0, 0.35); }
+.lvcell { border: 2px solid transparent !important; }
+.lvcell.now { border-color: rgba(0, 0, 0, 0.35) !important; box-shadow: none; }
+
+/* 홈 차시 박스: 마우스를 올리면 볼록하게 솟아오르는 입체 효과 */
+button.lesson { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+button.lesson:hover, button.lesson:focus-visible {
+  transform: translateY(-4px) scale(1.02);
+  border-color: transparent;
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 45%, rgba(0,0,0,0.10) 100%);
+  box-shadow: inset 0 2px 3px rgba(255,255,255,0.8), inset 0 -4px 6px rgba(0,0,0,0.12), 0 8px 14px rgba(0,0,0,0.22);
+}
+button.lesson.now:hover, button.lesson.now:focus-visible {
+  background-image: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.35) 100%);
+  box-shadow: inset 0 2px 3px rgba(255,255,255,0.35), inset 0 -4px 6px rgba(0,0,0,0.4), 0 8px 14px rgba(0,0,0,0.3);
+}
+button.lesson:active { transform: translateY(-1px) scale(1.0); box-shadow: inset 0 3px 6px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.2); }
+
 </style>
 </head>
 <body>
@@ -11413,16 +11458,17 @@ async function renderHome() {
   const segs = curriculum.stages.map((s, i) => {
     const L = LV(i), a0 = (s.from - 1) * DAYS_PER_WEEK, a1 = s.to * DAYS_PER_WEEK;
     const f = Math.max(0, Math.min(100, ((c - a0) / (a1 - a0)) * 100));
-    return `<div class="lvseg" style="background:${L.tint}" title="${L.name}"><div style="width:${f}%;background:${L.color}"></div></div>`;
+    return `<div class="lvseg" style="flex:${s.to - s.from + 1};background:${L.tint}" title="${L.name}"><div style="width:${f}%;background:${L.color}"></div></div>`;
   }).join('');
   const legend = curriculum.stages.map((s, i) => {
     const L = LV(i);
-    return `<div class="lvcell${i === curLv ? ' now' : ''}" style="background:${L.tint};border-color:${L.color}"><span class="lvi">${L.icon}</span><b style="color:${L.color}">${L.name}</b><small>${s.from}~${s.to}주</small></div>`;
+    return `<div class="lvcell${i === curLv ? ' now' : ''}" style="flex:${s.to - s.from + 1};background:${L.tint};border-color:${L.color}"><span class="lvi">${L.icon}</span><b style="color:${L.color}">${L.name}</b><small>${s.from}~${s.to}</small></div>`;
   }).join('');
   const progress = `<section class="panel">
     <div class="prog-head"><b>전체 진척률</b><span class="prog-pct">${pct.toFixed(1)}%</span></div>
     <div class="lvbar">${segs}</div>
     <div class="lvlegend">${legend}</div>
+    <div class="muted small lvnote">구간 길이는 실제 학습 기간(주차)에 비례합니다 · 칸 아래 숫자는 주차</div>
     <div class="muted small">${Math.min(c, TOTAL_SESSIONS)} / ${TOTAL_SESSIONS} 학습일 완료 · ${curWeek} / ${TOTAL_WEEKS}주차 진행 중</div>
   </section>`;
 
@@ -12440,14 +12486,15 @@ async function renderRoadmap() {
   const cells = Array.from({ length: TOTAL_WEEKS }, (_, k) => {
     const n = k + 1;
     const tip = `${n}주차 · ${themes[n] || '준비 중'}${n === cur ? ' (현재)' : ''}`;
-    return `<button class="cell ${n < cur ? 'done' : n === cur ? 'now' : ''}" data-week="${n}" data-tip="${esc(tip)}" aria-label="${esc(tip)}">${n}</button>`;
+    const L = LV(levelIdxOfWeek(n));
+    return `<button class="cell ${n < cur ? 'done' : n === cur ? 'now' : ''}" style="--lc:${L.color};--lt:${L.tint}" data-week="${n}" data-tip="${esc(tip)}" aria-label="${esc(tip)}">${n}</button>`;
   }).join('');
   app.innerHTML = `
     <section class="panel">
       <h2>2년 로드맵 (${cur} / ${TOTAL_WEEKS}주차)</h2>
-      ${curriculum.stages.map((s) => `<div class="stage-item">
-        <b>${esc(s.title)}</b> <span class="stage">${esc(s.hsk)} · ${s.from}~${s.to}주차</span>
-        <div class="muted">${esc(s.goal)}</div></div>`).join('')}
+      ${curriculum.stages.map((s, i) => { const L = LV(i); return `<div class="stage-item lvstage${i === levelIdxOfWeek(cur) ? ' now' : ''}" style="--lc:${L.color};--lt:${L.tint}">
+        <span class="lvi">${L.icon}</span><div><b>${L.name}</b> <span class="stg">${esc(s.title)} · ${esc(s.hsk)} · ${s.from}~${s.to}주차</span>
+        <div class="muted">${esc(s.goal)}</div></div></div>`; }).join('')}
     </section>
     <section class="panel">
       <p class="hint">주차 번호에 마우스를 올리면 제목이 보이고, 누르면 해당 차시로 이동합니다.</p>
