@@ -421,6 +421,9 @@ button.lesson.now:hover, button.lesson.now:focus-visible {
 }
 button.lesson:active { transform: translateY(-1px) scale(1.0); box-shadow: inset 0 3px 6px rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.2); }
 
+h1 { cursor: pointer; }
+h1:hover { opacity: 0.8; }
+
 </style>
 </head>
 <body>
@@ -11442,7 +11445,6 @@ function buildSteps(w, type, practiceOnly, free) {
 }
 
 const frame = (body) => `<section class="panel">
-  <div class="sess-top"><button data-exit>← ${session.free ? `${session.week}주차 화면으로 돌아가기` : '홈으로 돌아가기'}</button></div>
   <div class="steps">${session.steps.map((s, k) =>
     `<button type="button" class="dot ${s.done ? 'done' : ''} ${k === session.i ? 'now' : ''}" data-step="${k}">${esc(s.title)}</button>`).join('')}</div>
   ${body}
@@ -11542,9 +11544,8 @@ async function renderWeek(n) {
   const data = await getJSON(weekPath(n));
   if (tk !== viewToken) return;
   if (!data) {
-    app.innerHTML = `<section class="panel"><button id="back">← 홈</button>
+    app.innerHTML = `<section class="panel">
       <h2>${n}주차</h2><p class="muted">이 주차 콘텐츠가 아직 없습니다.</p></section>`;
-    document.getElementById('back').onclick = () => go('home');
     return;
   }
   const stage = stageOf(n);
@@ -11561,7 +11562,6 @@ async function renderWeek(n) {
 
   app.innerHTML = `
     <section class="panel" data-weekpage="${n}">
-      <button id="back">← 홈</button>
       <div class="stage">${esc(stage.title)} · ${esc(stage.hsk)}</div>
       <h2>${n}주차 · ${esc(data.theme)}</h2>
       <p class="hint">목표: ${esc(data.goal)}</p>
@@ -11573,7 +11573,6 @@ async function renderWeek(n) {
       <p class="hint">🔊로 먼저 듣고, ⏺ 녹음을 눌러 문장을 읽은 뒤 ⏹ 정지를 누르세요. 녹음은 바로 아래에서 다시 들을 수 있고, 전체 목록은 '녹음' 탭에 모입니다.</p>
       ${data.sentences.map((l) => lineHTML(l, { week: n, rec: true })).join('')}
     </section>`;
-  document.getElementById('back').onclick = () => go('home');
   hydrateRecs();
 }
 
@@ -12161,6 +12160,15 @@ function stepTrace(st, next) {
       };
     });
     mount();
+    // 글자 쓰는 칸과 '다 썼어요' 버튼이 한 화면 가운데 오도록 스크롤 (획순 모드는 글자판이 늦게 뜨므로 몇 번 맞춤)
+    const centerWork = () => {
+      if (!alive()) return;
+      const r1 = area.getBoundingClientRect(), r2 = done.getBoundingClientRect();
+      const top = r1.top, bottom = r2.bottom, vh = window.innerHeight;
+      const want = bottom - top <= vh - 16 ? (top + bottom) / 2 - vh / 2 : top - 12;
+      if (Math.abs(want) > 4) window.scrollBy(0, want);
+    };
+    [30, 350, 1100].forEach((ms) => setTimeout(centerWork, ms));
   };
   show();
 }
@@ -12634,6 +12642,14 @@ async function renderRecordings() {
 }
 
 /* ============ 공통 이벤트 / 시작 ============ */
+// 상단 제목(每天30分钟)을 누르면 홈으로 (학습 중이면 중단 확인)
+const titleEl = document.querySelector('h1');
+if (titleEl) {
+  titleEl.setAttribute('role', 'button'); titleEl.setAttribute('tabindex', '0'); titleEl.title = '홈으로';
+  const goHome = () => { if (session && !session.free && document.querySelector('[data-step]')) exitSession(); else go('home'); };
+  titleEl.addEventListener('click', goHome);
+  titleEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goHome(); } });
+}
 app.addEventListener('click', (e) => {
   const say = e.target.closest('[data-say]');
   if (say) return speak(say.dataset.say);
